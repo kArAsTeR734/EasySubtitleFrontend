@@ -9,7 +9,7 @@ export class TranscriptionService {
       return response.data;
   }
 
-  public static async getTranscriptionResult(id:string):Promise<string> {
+  public static async getTranscriptionHello():Promise<string> {
     const response = await TranscriptionInstance.get(`/api/v1/scripts/hello`);
 
     return response.data;
