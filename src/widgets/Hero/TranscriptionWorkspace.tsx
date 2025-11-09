@@ -28,14 +28,14 @@ export const TranscriptionWorkspace = () => {
   const handleFileUpload = async (file: File) => {
     setUploadedFile(file);
     try {
-      await simulateProcessing();
       await uploadFileFetching(file);
-      }
+    }
     catch (e){
       console.log(e)
     }
   };
 
+  /*
   const simulateProcessing = async () => {
     try {
       setTimeout(() => {
@@ -71,6 +71,7 @@ export const TranscriptionWorkspace = () => {
       console.error('Ошибка обработки:', error);
     }
   };
+  */
 
   const handleNext = () => {
     if (currentStep === 'upload' && uploadedFile) {

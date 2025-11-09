@@ -17,10 +17,13 @@ export const DropboxMenu: React.FC<DropboxMenuProps> = ({
     className = ''
   }) => {
   const [isDragOver, setIsDragOver] = useState(false);
+  const [fileName, setFileName] = useState<string>('');
 
   const handleFileSelect = (files: FileList | null): void => {
     if (files && files.length > 0) {
-      onFileUpload(files[0]);
+      const file = files[0];
+      setFileName(file.name);
+      onFileUpload(file);
     }
   };
 
@@ -52,6 +55,8 @@ export const DropboxMenu: React.FC<DropboxMenuProps> = ({
             Перетащите файлы сюда или нажмите для выбора
           </p>
           <UploadButton
+              fileName={fileName}
+              setFileName={setFileName}
               acceptedFileTypes={acceptedFileTypes}
               onFileUpload={onFileUpload}
               maxFileSize={maxFileSize}

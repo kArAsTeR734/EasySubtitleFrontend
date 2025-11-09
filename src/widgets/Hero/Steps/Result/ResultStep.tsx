@@ -10,15 +10,15 @@ interface ResultStepProps extends StepProps{
 
 export const ResultStep: FC<ResultStepProps> = ({fileId,processingResult}) => {
 
-  //const [timestamps, setTimestamps] = useState<GetTranscriptionResult | null>(null);
-  const [script, setScript] = useState<GetTranscriptionResult | null>(null);
+  const [timestamps, setTimestamps] = useState<GetTranscriptionResult | null>(null);
+  //const [script, setScript] = useState<GetTranscriptionResult | null>(null);
   const {
     error: transcriptionError,
     fetching: fetchTranscription
   } = useFetching<GetTranscriptionResult, [string]>(getTranscription, {
     onSuccess: (data) => {
       console.log('Транскрипция получена:', data.scripts);
-      setScript(data);
+      setTimestamps(data);
     },
     onError: (error) => {
       console.error('Ошибка получения транскрипции:', error);
@@ -30,8 +30,6 @@ export const ResultStep: FC<ResultStepProps> = ({fileId,processingResult}) => {
       fetchTranscription(fileId);
     }
   }, [fileId, fetchTranscription]);
-
-  console.log(script);
 
   if (!processingResult) {
     return <h1>Нет данных для отображения</h1>;
@@ -45,8 +43,8 @@ export const ResultStep: FC<ResultStepProps> = ({fileId,processingResult}) => {
       <div className="results-step">
         <div className="results-step__timestamps">
           <h3>Таймкоды:</h3>
-          {processingResult.timestamps.map((timestamp, index) => (
-              <div key={`${timestamp.start.seconds}-${index}`} className="timestamp-item">
+          {timestamps?.scripts.map((timestamp, index) => (
+              <div key={`${timestamp.start}-${index}`} className="timestamp-item">
                 <span className="timestamp-time">
                   {formatTime(timestamp.start)} - {formatTime(timestamp.end)}
                 </span>

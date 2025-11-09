@@ -1,4 +1,4 @@
-import {useState, useRef, type FC} from 'react';
+import {useRef, type FC} from 'react';
 import Button from "../Button";
 import clsx from "clsx";
 
@@ -6,17 +6,20 @@ interface UploadButtonProps {
   onFileUpload: (file: File) => void,
   acceptedFileTypes?: string,
   className?: string,
+  fileName: string,
+  setFileName: (fileName: string) => void,
   maxFileSize?: number
 }
 
 export const UploadButton: FC<UploadButtonProps> = ({
-                                                      onFileUpload,
-                                                      acceptedFileTypes = ".wav",
-                                                      maxFileSize = 100 * 1024 * 1024,
-                                                      className = ''
-                                                    }) => {
+  onFileUpload,
+  acceptedFileTypes = ".wav",
+  maxFileSize = 100 * 1024 * 1024,
+  fileName,
+  setFileName,
+  className = ''
+  }) => {
 
-  const [fileName, setFileName] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleButtonClick = () => {
