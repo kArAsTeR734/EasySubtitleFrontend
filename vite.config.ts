@@ -3,7 +3,6 @@ import {resolve} from "path";
 import react from '@vitejs/plugin-react'
 import svgr from "vite-plugin-svgr";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), svgr(),
   ],
@@ -12,6 +11,7 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
       '@components': resolve(__dirname, './src/shared/components'),
       '@widgets': resolve(__dirname, './src/widgets'),
+      '@shared': resolve(__dirname, './src/shared'),
       '@pages': resolve(__dirname, './src/pages'),
       '@styles': resolve(__dirname, './src/styles'),
       '@utils': resolve(__dirname, './src/utils'),
@@ -38,7 +38,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3030,
+    port: 3031,
     cors: true,
   },
 })

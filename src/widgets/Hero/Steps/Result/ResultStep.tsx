@@ -1,8 +1,8 @@
 import type {GetTranscriptionResult, StepProps} from "../../../../shared/types/types.ts";
 import {formatTime} from "../../../../utils/formatTime.ts";
-import {useFetching} from "../../../../shared/hooks/useFetching.ts";
 import {getTranscription} from "../../../../features/GetTranscription.ts";
 import {type FC, useEffect, useState} from "react";
+import useFetching from "../../../../shared/hooks/useFetching.ts";
 
 interface ResultStepProps extends StepProps{
   fileId: string | null

@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import type {FetchingCallback, UseFetchingOptions, UseFetchingResult} from "../types/types.ts";
 
-export const useFetching = <T, Args extends unknown[]>(
+const useFetching = <T, Args extends unknown[]>(
     callback: FetchingCallback<T, Args>,
     options: UseFetchingOptions<T> = {}
 ): UseFetchingResult<T, Args> => {
@@ -36,3 +36,5 @@ export const useFetching = <T, Args extends unknown[]>(
     clearError,
   };
 };
+
+export default useFetching;

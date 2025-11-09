@@ -2,11 +2,11 @@ import './TranscriptionWorkspace.scss'
 import {useState} from "react";
 import type {TranscriptionSteps, UploadResponse} from "../../shared/types/types.ts";
 import StepNavigation from "../../shared/components/StepNavigation";
-import {getStepNumber} from "../../utils/getStepNumber.ts";
 import type {TranscriptionResult} from "../../shared/types/transcriptions.ts";
 import {stepConfig} from "../../shared/config/stepConfig.ts";
-import {useFetching} from "../../shared/hooks/useFetching.ts";
 import {uploadFile} from "../../features/FileUpload.ts";
+import useFetching from "../../shared/hooks/useFetching.ts";
+import {getStepNumber} from "../../utils/getStepNumber.ts";
 
 export const TranscriptionWorkspace = () => {
   const [currentStep, setCurrentStep] = useState<TranscriptionSteps>('upload');
@@ -29,6 +29,7 @@ export const TranscriptionWorkspace = () => {
     setUploadedFile(file);
     try {
       await simulateProcessing();
+      await uploadFileFetching(file);
       }
     catch (e){
       console.log(e)
