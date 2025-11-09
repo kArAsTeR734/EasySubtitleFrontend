@@ -9,8 +9,15 @@ export class TranscriptionService {
       return response.data;
   }
 
-  public static async sendTranscriptionFile(file:File): Promise<TranscriptionId> {
-    const request = await TranscriptionInstance.post('/api/v1/scripts', file)
+  public static async sendTranscriptionFile(file: File): Promise<TranscriptionId> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const request = await TranscriptionInstance.post('/api/v1/scripts', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
 
     return request.data;
   }

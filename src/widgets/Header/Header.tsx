@@ -7,9 +7,8 @@ import Logo from "../../shared/components/Logo";
 interface HeaderProps{
   isLoggedIn: boolean
 }
-
-const Header:FC<HeaderProps> = (props) => {
-  const { isLoggedIn } = props
+// Переделать логику логина через Redux
+const Header:FC<HeaderProps> = ({isLoggedIn}) => {
 
   const menuItems = [
     {
@@ -21,7 +20,6 @@ const Header:FC<HeaderProps> = (props) => {
       href: '/about',
     },
   ]
-
   return (
     <header className="header" data-js-overlay-menu="">
       <div className="header__inner container">
@@ -45,7 +43,9 @@ const Header:FC<HeaderProps> = (props) => {
           </nav>
         {isLoggedIn &&
           <div className="header__actions">
-            <Button className="button button--login">
+            <Button
+
+              className="button button--login">
               <span>Войти</span>
             </Button>
           </div>
