@@ -6,15 +6,16 @@ interface UploadButtonProps {
   onFileUpload: (file: File) => void,
   acceptedFileTypes?: string,
   className?: string,
-  maxFileSize?:number
+  maxFileSize?: number
 }
 
 export const UploadButton: FC<UploadButtonProps> = ({
-    onFileUpload,
-    acceptedFileTypes = ".mp4,.avi,.mov,.wav,.mp3,.m4a",
-    maxFileSize = 100 * 1024 * 1024,
-    className = ''
-  }) => {
+                                                      onFileUpload,
+                                                      acceptedFileTypes = ".wav",
+                                                      maxFileSize = 100 * 1024 * 1024,
+                                                      className = ''
+                                                    }) => {
+
   const [fileName, setFileName] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -40,7 +41,7 @@ export const UploadButton: FC<UploadButtonProps> = ({
       <div className={clsx('file-upload', className)}>
         <Button
             type="button"
-            className={clsx('button button--upload-file h6', { 'has-file': fileName })}
+            className={clsx('button button--upload-file h6', {'has-file': fileName})}
             onClick={handleButtonClick}
         >
           {fileName ? `Файл: ${fileName}` : 'Загрузить файл'}

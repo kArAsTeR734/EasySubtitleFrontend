@@ -4,20 +4,18 @@ import About from "../../About";
 import DropboxMenu from "../../DropboxMenu";
 import AdvantagesButtons from "../../AdvantagesButtons";
 
-export const UploadStep:FC<StepProps> = ({onFileUpload}) => {
-
-
+export const UploadStep: FC<StepProps> = ({onFileUpload}) => {
 
   return (
       <>
-        <AdvantagesButtons />
+        <AdvantagesButtons/>
         <DropboxMenu
             onFileUpload={onFileUpload}
-            acceptedFileTypes=".mp4,.avi,.mov,.wav,.mp3,.m4a,.ogg,.flac,.aac"
+            acceptedFileTypes=".wav"
             maxFileSize={500 * 1024 * 1024}
             className="upload-step__dropbox"
         />
-        <About />
+        <About/>
       </>
   );
 };

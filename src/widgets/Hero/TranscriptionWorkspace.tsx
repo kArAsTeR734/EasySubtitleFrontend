@@ -12,39 +12,65 @@ export const TranscriptionWorkspace = () => {
   const [currentStep, setCurrentStep] = useState<TranscriptionSteps>('upload');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [processingResult, setProcessingResult] = useState<TranscriptionResult | null>(null);
-  const [error, setError] = useState<string>('');
+  const [fileId, setFileId] = useState<string | null>(null);
 
-  const {isLoading: isUploading, error: uploadError, fetching: uploadFileFetching}
+  const { isLoading: isUploading, error: uploadError, fetching: uploadFileFetching }
       = useFetching<UploadResponse, [File]>(uploadFile, {
-    onSuccess: (data) => console.log('Файл загружен:', data.id),
-    onError: (error) => console.error('Ошибка загрузки:', error),
+    onSuccess: (data) => {
+      console.log('Файл загружен, ID:', data.id);
+      setFileId(data.id);
+    },
+    onError: (error) => {
+      console.error('Ошибка загрузки:', error);
+    },
   });
 
   const handleFileUpload = async (file: File) => {
     setUploadedFile(file);
-    setError(uploadError);
-    await uploadFileFetching(file);
+    try {
+      await simulateProcessing();
+      }
+    catch (e){
+      console.log(e)
+    }
   };
 
-  /*
   const simulateProcessing = async () => {
     try {
       setTimeout(() => {
         const mockResult = {
           timestamps: [
-            { start: 0, end: 30, text: "Первая часть текста" },
-            { start: 30, end: 60, text: "Вторая часть текста" }
+            { start: {
+                hours:0,
+                minutes:0,
+                seconds:0
+              }, end: {
+                hours:0,
+                minutes:0,
+                seconds:30
+              },
+              text: "Первая часть текста" },
+            { start: {
+                hours:0,
+                minutes: 0,
+                seconds: 30
+              }, end:{
+                hours:0,
+                minutes: 1,
+                seconds: 0
+              },
+              text: "Вторая часть текста" }
           ],
           summary: "Краткое содержание текста..."
         };
         setProcessingResult(mockResult);
         setCurrentStep('result');
-      }, 3000);
+      }, 5000);
     } catch (error) {
       console.error('Ошибка обработки:', error);
     }
   };
-  */
+
   const handleNext = () => {
     if (currentStep === 'upload' && uploadedFile) {
       setCurrentStep('processing');
@@ -76,7 +102,7 @@ export const TranscriptionWorkspace = () => {
 
           {uploadError && (
                   <div className="error-message">
-                    {error}
+                    {uploadError}
                     <button>Перезагрузить страницу</button>
                   </div>
               )
@@ -85,8 +111,9 @@ export const TranscriptionWorkspace = () => {
               onFileUpload={handleFileUpload}
               uploadedFile={uploadedFile}
               processingResult={processingResult}
-              error={error}
+              error={uploadError}
               isLoading={isUploading}
+              fileId={fileId}
           />
 
           {showNavigation && (

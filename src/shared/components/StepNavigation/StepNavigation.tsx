@@ -64,7 +64,7 @@ export const StepNavigation: FC<StepNavigationProps> = ({
                 { 'step-navigation__button--finish': isLastStep }
             )}
             onClick={handleNextClick}
-            disabled={nextDisabled}
+            disabled={nextDisabled || isLastStep}
             aria-label='Далее'
         >
           Далее

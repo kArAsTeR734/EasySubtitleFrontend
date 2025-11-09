@@ -1,10 +1,44 @@
-import type {StepProps} from "../../../../shared/types/types.ts";
-import type {FC} from "react";
+import type {GetTranscriptionResult, StepProps} from "../../../../shared/types/types.ts";
 import {formatTime} from "../../../../utils/formatTime.ts";
+import {useFetching} from "../../../../shared/hooks/useFetching.ts";
+import {getTranscription} from "../../../../features/GetTranscription.ts";
+import {type FC, useEffect, useState} from "react";
 
-export const ResultStep:FC<StepProps> = ({processingResult}) => {
+interface ResultStepProps extends StepProps{
+  fileId: string | null
+}
+
+export const ResultStep: FC<ResultStepProps> = ({fileId,processingResult}) => {
+
+  //const [timestamps, setTimestamps] = useState<GetTranscriptionResult | null>(null);
+  const [script, setScript] = useState<GetTranscriptionResult | null>(null);
+  const {
+    error: transcriptionError,
+    fetching: fetchTranscription
+  } = useFetching<GetTranscriptionResult, [string]>(getTranscription, {
+    onSuccess: (data) => {
+      console.log('Транскрипция получена:', data.scripts);
+      setScript(data);
+    },
+    onError: (error) => {
+      console.error('Ошибка получения транскрипции:', error);
+    },
+  });
+
+  useEffect(() => {
+    if (fileId) {
+      fetchTranscription(fileId);
+    }
+  }, [fileId, fetchTranscription]);
+
+  console.log(script);
+
   if (!processingResult) {
-    return <div>Нет данных для отображения</div>;
+    return <h1>Нет данных для отображения</h1>;
+  }
+
+  if(transcriptionError){
+    return <h1>Возникла непредвиденная ошибка</h1>
   }
 
   return (
@@ -12,10 +46,10 @@ export const ResultStep:FC<StepProps> = ({processingResult}) => {
         <div className="results-step__timestamps">
           <h3>Таймкоды:</h3>
           {processingResult.timestamps.map((timestamp, index) => (
-              <div key={index} className="timestamp-item">
-            <span className="timestamp-time">
-              {formatTime(timestamp.start)} - {formatTime(timestamp.end)}
-            </span>
+              <div key={`${timestamp.start.seconds}-${index}`} className="timestamp-item">
+                <span className="timestamp-time">
+                  {formatTime(timestamp.start)} - {formatTime(timestamp.end)}
+                </span>
                 <p className="timestamp-text">{timestamp.text}</p>
               </div>
           ))}

@@ -1,7 +1,7 @@
-import type {Timestamp} from "../../shared/types/transcriptions.ts";
+import type {TranscriptionTimestamp} from "../../shared/types/transcriptions.ts";
 
-interface TranslationResultInterface{
-  scripts:Timestamp[],
+interface TranscriptionResultInterface{
+  scripts:TranscriptionTimestamp[],
   count:number
 }
 
@@ -9,6 +9,6 @@ interface TranscriptionIdInterface{
   id:string
 }
 
-export type TranslationResult = TranslationResultInterface;
+export type TranscriptionResult = TranscriptionResultInterface;
 
 export type TranscriptionId = TranscriptionIdInterface;

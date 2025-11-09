@@ -1,10 +1,9 @@
 import {TranscriptionInstance} from "./config/api.config.ts";
-import type {TranscriptionResult} from "../shared/types/transcriptions.ts";
-import type {TranscriptionId} from "./types/api-types.ts";
+import type {TranscriptionId, TranscriptionResult} from "./types/api-types.ts";
 
 export class TranscriptionService {
 
-  public static async getTranscriptionResult(id:number):Promise<TranscriptionResult> {
+  public static async getTranscriptionResult(id:string):Promise<TranscriptionResult> {
       const response = await TranscriptionInstance.get(`/api/v1/scripts/${id}`);
 
       return response.data;

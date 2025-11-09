@@ -1,19 +1,24 @@
-interface TimestampStandard{
-  hours:number,
-  minutes:number,
-  seconds:number,
+interface TimestampInterface {
+  hours: number,
+  minutes: number,
+  seconds: number,
 }
 
-export interface Timestamp {
-  start: TimestampStandard;
-  end: TimestampStandard;
+export type Timestamp = TimestampInterface;
+
+interface TranscriptionTimestampInterface {
+  start: Timestamp;
+  end: Timestamp;
   text: string;
 }
 
-export interface TranscriptionResult {
-  timestamps: Timestamp[];
+export type TranscriptionTimestamp = TranscriptionTimestampInterface;
+
+interface TranscriptionResultInterface {
+  timestamps: TranscriptionTimestamp[];
   summary: string;
   duration?: number;
-  language?: string;
-  confidence?: number;
 }
+
+export type TranscriptionResult = TranscriptionResultInterface;
+

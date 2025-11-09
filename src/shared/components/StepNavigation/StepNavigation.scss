@@ -48,10 +48,10 @@
     }
 
     &--finish {
-      background: var(--color-success);
+      background: var(--button-accent);
 
       &:hover:not(:disabled) {
-        background: var(--color-success-dark);
+        background: var(--button-accent-active);
       }
     }
   }

@@ -1,5 +1,5 @@
 import React from "react";
-import type {TranscriptionResult} from "./transcriptions.ts";
+import type {TranscriptionResult, TranscriptionTimestamp} from "./transcriptions.ts";
 
 const TranscriptionSteps = {
   UPLOAD: 'upload',
@@ -43,4 +43,11 @@ interface UploadResponseInterface{
   id: string;
 }
 
+interface GetTranscriptionInterface{
+  scripts:TranscriptionTimestamp[],
+  count:number,
+}
+
 export type UploadResponse = UploadResponseInterface;
+
+export type GetTranscriptionResult = GetTranscriptionInterface;

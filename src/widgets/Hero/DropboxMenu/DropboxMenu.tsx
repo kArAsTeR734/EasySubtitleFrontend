@@ -11,11 +11,11 @@ export interface DropboxMenuProps {
 }
 
 export const DropboxMenu: React.FC<DropboxMenuProps> = ({
-   onFileUpload,
-   acceptedFileTypes = ".mp4,.avi,.mov,.wav,.mp3,.m4a",
-   maxFileSize = 100 * 1024 * 1024,
-   className = ''
- }) => {
+                                                          onFileUpload,
+                                                          acceptedFileTypes = ".wav",
+                                                          maxFileSize = 100 * 1024 * 1024,
+                                                          className = ''
+                                                        }) => {
   const [isDragOver, setIsDragOver] = useState(false);
 
   const handleFileSelect = (files: FileList | null): void => {
