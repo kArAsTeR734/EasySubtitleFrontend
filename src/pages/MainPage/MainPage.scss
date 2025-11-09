@@ -1,0 +1,12 @@
+.page-wrapper {
+  display: flex;
+  min-height: calc(100vh - 80px);
+  background-color: #fff;
+}
+
+.main-content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  background-color: #fff;
+}

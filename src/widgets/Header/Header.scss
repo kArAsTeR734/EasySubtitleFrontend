@@ -1,0 +1,61 @@
+.header {
+  padding-block: 20px;
+  background-color: var(--color-gray);
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 16px;
+
+    @include tablet {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  &__menu {
+    @include tablet {
+      overflow-y: auto;
+      display: flex;
+      justify-content: center;
+      height: 100%;
+      border-radius: 0;
+    }
+
+    &-list {
+      display: flex;
+      align-items: center;
+      column-gap: 6px;
+
+      @include tablet {
+        flex-direction: column;
+        row-gap: 16px;
+        margin-block: auto;
+      }
+    }
+
+    &-link {
+      padding: 14px 20px;
+      color: var(--color-black);
+
+      &.is-active {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+
+    @include tablet-above {
+      justify-content: end;
+    }
+  }
+
+  &__burger-button {
+    position: relative;
+  }
+}

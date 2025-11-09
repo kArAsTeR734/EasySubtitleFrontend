@@ -1,0 +1,13 @@
+.hero{
+  background-color: #F4F9FE;
+  padding-inline: 100px;
+  &--inner{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    row-gap: 55px;
+  }
+  &__title{
+    margin-top: 20px;
+  }
+}

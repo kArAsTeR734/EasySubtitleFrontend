@@ -1,0 +1,80 @@
+.button {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: var(--button-accent-hover);
+  }
+
+  &:active {
+    background-color: var(--button-accent-active);
+  }
+
+  &--login {
+    width: 115px;
+    height: 35px;
+  }
+
+  &--add-material {
+    width: 195px;
+    height: 45px;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &--toggle-sidebar {
+    --size: #{36px};
+    @include square(var(--size));
+
+  }
+
+  &--advantage {
+    color: var(--color-black);
+    font-weight: 500;
+    font-size: 20px;
+    background-color: var(--color-white);
+    padding-inline: 45px;
+    cursor: auto;
+    &:hover {
+      color: var(--color-white);
+    }
+  }
+
+  &--upload-file {
+    padding: 12px 24px;
+    background: var(--color-accent);
+    color: var(--color-white);
+    border: none;
+    justify-self: center;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: var(--button-accent-active);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(var(--button-accent-hover), 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &::before {
+      content: '📁';
+      font-size: 18px;
+    }
+  }
+}

@@ -1,0 +1,1 @@
+export * as MainPage from './MainPage'

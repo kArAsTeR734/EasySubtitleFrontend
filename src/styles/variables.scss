@@ -1,0 +1,47 @@
+
+:root {
+
+  //Colors
+  --color-white: #F9FAFB;
+  --color-black: #111827;
+
+  --color-accent: #2563EB;
+
+  --color-gray: #F0F0F0;
+
+  //Border
+  --border: var(--border-width-m) solid var(--color-accent);
+
+  --border-width-xl: 6px;
+  --border-width-l: 4px;
+  --border-width-m: 2px;
+
+  --border-radius-l: 12px;
+  --border-radius-m: 10px;
+  --border-radius: 8px;
+  --border-radius-xs: 6px;
+
+  //Buttons
+  --button-accent: var(--color-accent);
+  --button-accent-hover: #1D4ED8;
+  --button-accent-active: #1D4ED8;
+
+  --button-common: #10B981;
+  --button-common-hover: #059669;
+  --button-common-active: #047857;
+
+  //Fonts
+  --font-family-base: 'Inter';
+
+  $container-desktop-width: 1400;
+  $container-laptop-width: 1280;
+
+  --container-width: #{fluid-to-laptop(
+      $container-desktop-width,
+      $container-laptop-width
+    )};
+  --container-padding-x: 16px;
+  --scrollbar-width:15px;
+  //Transition
+  --transition-duration: 0.2s;
+}

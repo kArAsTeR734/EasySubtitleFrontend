@@ -1,0 +1,21 @@
+.sidebar{
+  width: 280px;
+  transition: 0.5s all;
+  &--inner{
+    min-height: 100vh;
+    background-color: #E4F1FE;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    transition: all 0.3s;
+  }
+  &__actions{
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    &-closed{
+      margin-top: 15px;
+    }
+  }
+}
