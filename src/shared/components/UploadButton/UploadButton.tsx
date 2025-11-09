@@ -14,7 +14,7 @@ interface UploadButtonProps {
 export const UploadButton: FC<UploadButtonProps> = ({
   onFileUpload,
   acceptedFileTypes = ".wav",
-  maxFileSize = 100 * 1024 * 1024,
+  maxFileSize = 1024 * 1024 * 1024 * 5,
   fileName,
   setFileName,
   className = ''

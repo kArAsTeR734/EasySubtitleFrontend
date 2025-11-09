@@ -13,11 +13,7 @@ export class TranscriptionService {
     const formData = new FormData();
     formData.append('file', file);
 
-    const request = await TranscriptionInstance.post('/api/v1/scripts', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
+    const request = await TranscriptionInstance.post('/api/v1/scripts', formData);
 
     return request.data;
   }

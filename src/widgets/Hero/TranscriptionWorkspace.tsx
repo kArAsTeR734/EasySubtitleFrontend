@@ -1,5 +1,5 @@
 import './TranscriptionWorkspace.scss'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import type {TranscriptionSteps, UploadResponse} from "../../shared/types/types.ts";
 import StepNavigation from "../../shared/components/StepNavigation";
 import type {TranscriptionResult} from "../../shared/types/transcriptions.ts";
@@ -34,6 +34,19 @@ export const TranscriptionWorkspace = () => {
       console.log(e)
     }
   };
+
+  const checkBackend = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/scripts');
+      console.log('Backend доступен, статус:', response.status);
+    } catch (error) {
+      console.error('Backend НЕ доступен:', error);
+    }
+  };
+
+  useEffect(() => {
+    checkBackend();
+  }, []);
 
   /*
   const simulateProcessing = async () => {
