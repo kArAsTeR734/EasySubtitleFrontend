@@ -1,6 +1,12 @@
+interface TimestampStandard{
+  hours:number,
+  minutes:number,
+  seconds:number,
+}
+
 export interface Timestamp {
-  start: number;
-  end: number;
+  start: TimestampStandard;
+  end: TimestampStandard;
   text: string;
 }
 
@@ -10,10 +16,4 @@ export interface TranscriptionResult {
   duration?: number;
   language?: string;
   confidence?: number;
-}
-
-export interface ProcessingError {
-  code: string;
-  message: string;
-  details?: unknown;
 }

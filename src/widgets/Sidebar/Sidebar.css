@@ -1,0 +1,18 @@
+.sidebar {
+  display: flex;
+  padding-block: 50px;
+  align-items: flex-start;
+  column-gap: 15px;
+  transition: 0.5s all;
+}
+.sidebar--inner {
+  min-height: 100vh;
+  background-color: #E4F1FE;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+/*# sourceMappingURL=Sidebar.css.map */

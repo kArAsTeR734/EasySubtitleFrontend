@@ -18,8 +18,8 @@
     min-width: 120px;
 
     &--back {
-      background: var(--color-gray-light);
-      color: var(--color-text);
+      background: var(--color-white);
+      color: var(--color-black);
 
       &:hover:not(:disabled) {
         background:var(--button-accent-hover);
@@ -37,7 +37,7 @@
       color: var(--color-white);
 
       &:hover:not(:disabled) {
-        background: var(--color-accent-dark);
+        background: var(--button-accent-hover);
         transform: translateY(-1px);
       }
 

@@ -1,16 +1,18 @@
-import React, {useState, useRef} from 'react';
+import {useState, useRef, type FC} from 'react';
 import Button from "../Button";
 import clsx from "clsx";
 
 interface UploadButtonProps {
-  onFileUpload: (file: File) => void;
-  acceptedFileTypes?: string;
-  className?: string;
+  onFileUpload: (file: File) => void,
+  acceptedFileTypes?: string,
+  className?: string,
+  maxFileSize?:number
 }
 
-export const UploadButton: React.FC<UploadButtonProps> = ({
+export const UploadButton: FC<UploadButtonProps> = ({
     onFileUpload,
     acceptedFileTypes = ".mp4,.avi,.mov,.wav,.mp3,.m4a",
+    maxFileSize = 100 * 1024 * 1024,
     className = ''
   }) => {
   const [fileName, setFileName] = useState<string>('');
@@ -20,15 +22,18 @@ export const UploadButton: React.FC<UploadButtonProps> = ({
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      const file = files[0];
-      setFileName(file.name);
-      console.log('Выбран файл:', file);
+  const handleFileSelect = (files: FileList | null): void => {
+    if (!files || files.length === 0) return;
 
-      onFileUpload(file);
+    const file = files[0];
+
+    if (file.size > maxFileSize) {
+      alert(`Файл слишком большой. Максимальный размер: ${maxFileSize / 1024 / 1024}MB`);
+      return;
     }
+
+    setFileName(file.name);
+    onFileUpload(file);
   };
 
   return (
@@ -40,6 +45,14 @@ export const UploadButton: React.FC<UploadButtonProps> = ({
         >
           {fileName ? `Файл: ${fileName}` : 'Загрузить файл'}
         </Button>
+
+        <input
+            ref={fileInputRef}
+            type="file"
+            onChange={(e) => handleFileSelect(e.target.files)}
+            className="visually-hidden"
+            accept={acceptedFileTypes}
+        />
       </div>
   );
 };

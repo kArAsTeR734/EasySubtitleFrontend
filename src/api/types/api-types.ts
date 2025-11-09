@@ -5,4 +5,10 @@ interface TranslationResultInterface{
   count:number
 }
 
+interface TranscriptionIdInterface{
+  id:string
+}
+
 export type TranslationResult = TranslationResultInterface;
+
+export type TranscriptionId = TranscriptionIdInterface;

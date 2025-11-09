@@ -5,6 +5,9 @@ import DropboxMenu from "../../DropboxMenu";
 import AdvantagesButtons from "../../AdvantagesButtons";
 
 export const UploadStep:FC<StepProps> = ({onFileUpload}) => {
+
+
+
   return (
       <>
         <AdvantagesButtons />
