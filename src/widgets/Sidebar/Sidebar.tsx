@@ -30,7 +30,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     getNewFiles();
-  }, []);
+  }, [files]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
