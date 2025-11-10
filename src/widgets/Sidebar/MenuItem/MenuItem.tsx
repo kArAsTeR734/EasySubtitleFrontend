@@ -1,7 +1,7 @@
 import './MenuItem.css'
 
 interface MenuItemProps{
-  text:string
+  text:string | null
 }
 
 const MenuItem = ({text}:MenuItemProps) => {

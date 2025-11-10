@@ -1,18 +1,36 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import './Sidebar.scss'
 import {LeftOutlined, PlusOutlined, RightOutlined} from '@ant-design/icons'
-import type {MenuItemProps} from "./types.ts";
+import type {SideBarTranscriptionList} from "./types.ts";
 import MenuList from "./MenuList";
 import Button from "../../shared/components/Button";
 import clsx from "clsx";
+import useFetching from "../../shared/hooks/useFetching.ts";
+import {getAllTranscriptions} from "../../features/GetAllTranscriptions.ts";
+import type {FileData} from "../../api/types/api-types.ts";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const items: MenuItemProps[] = [
-    { text: 'Материал 1' },
-    { text: 'Материал 2' },
-    { text: 'Материал 3' }
-  ];
+  const [files,setFiles] = useState<FileData[]>([]);
+
+  const {fetching: uploadFileFetching }
+      = useFetching<SideBarTranscriptionList, [number,number]>(getAllTranscriptions, {
+    onSuccess: (files) => {
+      console.log('Файл загружен, ID:', files.data);
+      setFiles(files.data);
+    },
+    onError: (error) => {
+      console.error('Ошибка загрузки:', error);
+    },
+  });
+
+  const getNewFiles = async(page = 1, pageSize = 20) => {
+    await uploadFileFetching(page,pageSize);
+  }
+
+  useEffect(() => {
+    getNewFiles();
+  }, []);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -44,8 +62,7 @@ const Sidebar = () => {
                       </span>
                   </Button>
                 </div>
-                <MenuList items={items}/>
-
+                <MenuList data={files}/>
               </div>
           )}
         </section>

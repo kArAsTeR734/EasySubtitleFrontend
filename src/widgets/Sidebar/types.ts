@@ -1,11 +1,17 @@
-interface MenuListInterface{
-  items:MenuItemInterface[],
-}
+import type {FileData} from "../../api/types/api-types.ts";
 
 interface MenuItemInterface{
-  text:string,
+  text:string | null,
 }
+
+
+interface SidebarTranscriptionListInterface{
+  data:FileData[],
+  total:number
+}
+
+export type MenuListProps = Omit<SidebarTranscriptionListInterface, 'total'>;
 
 export type MenuItemProps = MenuItemInterface;
 
-export type MenuListProps = MenuListInterface;
+export type SideBarTranscriptionList = SidebarTranscriptionListInterface;
