@@ -4,7 +4,7 @@ import type {GetAllTranscriptionsResult, TranscriptionId, TranscriptionResult} f
 export class TranscriptionService {
 
   public static async getAllTranscriptions(page: number = 1, pageSize: number = 20): Promise<GetAllTranscriptionsResult> {
-    const response = await TranscriptionInstance.get('/api/v1.scripts', {
+    const response = await TranscriptionInstance.get('/api/v1/scripts', {
       params: {
         page: page,
         pageSize: pageSize
