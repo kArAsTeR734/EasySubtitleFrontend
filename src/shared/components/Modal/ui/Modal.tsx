@@ -21,10 +21,9 @@ export const Modal: FC<ModalProps> = ({
     ['opened']: isOpen,
   };
 
-  const closeHandler = () => {
-    setIsMounted(false);
+  const closeHandler = useCallback(() => {
     onClose?.();
-  };
+  },[isMounted]);
 
   const onKeyDown = useCallback(
       (e: KeyboardEvent) => {
@@ -54,15 +53,21 @@ export const Modal: FC<ModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      window.addEventListener('keydown', onKeyDown);
+      setIsMounted(true)
+    }
+  }, [isOpen])
+
+  useEffect(() => {
+    if (isOpen) {
+      window.addEventListener('keydown', onKeyDown)
     }
 
     return () => {
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, [isOpen, onKeyDown]);
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [isOpen, onKeyDown])
 
-  if (!isMounted) return null;
+  if (!isMounted) return null
 
   return (
       <>

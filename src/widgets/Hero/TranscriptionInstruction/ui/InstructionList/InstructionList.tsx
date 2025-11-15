@@ -6,7 +6,6 @@ import '../TranscriptionInstruction.scss'
 const InstructionList:FC<InstructionListType> = ({
     instructions,
  }) => {
-  console.log(instructions.map(item => console.log(item)));
   return (
       <>
         <div className="instruction__list">

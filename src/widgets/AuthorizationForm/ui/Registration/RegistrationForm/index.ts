@@ -1,3 +1,3 @@
-import {RegistrationForm} from "./ui/RegistrationForm";
+import {RegistrationForm} from "./RegistrationForm";
 
 export default RegistrationForm;

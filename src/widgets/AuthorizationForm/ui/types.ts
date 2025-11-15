@@ -1,10 +1,10 @@
-export type AuthMode = 'register' | 'login'
-export type AuthTitle= 'Вход' | 'Регистрация'
+export type AuthMode= 'Вход' | 'Регистрация'
 
 interface AuthFormInterface {
-  onClose?: () => void,
+  onClose: () => void,
   switchAuthMode?: () => void,
-  title?:string
+  title?:string,
+  isOpen?:boolean
 }
 
 export interface RegistrationFormInput {

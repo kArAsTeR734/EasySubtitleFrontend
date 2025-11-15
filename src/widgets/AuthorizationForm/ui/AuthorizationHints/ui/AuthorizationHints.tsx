@@ -4,8 +4,11 @@ import './AuthorizationHints.scss'
 import type {AuthForm} from "../../types.ts";
 
 export const AuthorizationHints:FC<AuthForm> = ({
-     switchAuthMode
+     switchAuthMode,
+     title
    }) => {
+
+  const hintTitle = title === 'Вход' ? 'Зарегистрироваться' : 'Войти'
 
   const handleGoogleLogin = () => {
     console.log('Google login clicked');
@@ -16,9 +19,9 @@ export const AuthorizationHints:FC<AuthForm> = ({
         <p className="hints__account-hint">
           Уже есть аккаунт?{"  "}
           <a href="#"
-             onClick={() => switchAuthMode()}
+             onClick={() => switchAuthMode ? switchAuthMode() : ''}
              className="hints__account-link">
-            Зарегистрируйтесь
+            {hintTitle}
           </a>
         </p>
 

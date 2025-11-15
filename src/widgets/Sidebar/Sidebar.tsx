@@ -8,7 +8,7 @@ import clsx from "clsx";
 import useFetching from "../../shared/hooks/useFetching.ts";
 import {getAllTranscriptions} from "../../features/GetAllTranscriptions.ts";
 import type {FileData} from "../../api/types/api-types.ts";
-import getFilesCount from "../../utils/getFilesCount.ts";
+import {mockFileData} from "./data.ts";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -45,7 +45,7 @@ const Sidebar = () => {
           >
             <div className="sidebar--inner">
               <div className="sidebar__actions">
-                {getFilesCount(files) &&
+                {!mockFileData &&
                 <Button className="button button--add-material">
                   <span>Новый материал</span>
                   <PlusOutlined style={{marginLeft: 7}}/>
@@ -64,7 +64,7 @@ const Sidebar = () => {
                     </span>
                 </Button>
               </div>
-              <MenuList data={files}/>
+              <MenuList data={mockFileData}/>
             </div>
           </section>
     );

@@ -1,7 +1,7 @@
 import Modal from "../../../shared/components/Modal";
-import {type FC, useState} from "react";
+import {type FC, useEffect, useState} from "react";
 import './AuthorizationModal.scss'
-import type {AuthMode, AuthTitle} from "./types.ts";
+import type {AuthMode} from "./types.ts";
 import Login from "./Login";
 import {Registration} from "./Registration/Registration.tsx";
 
@@ -15,30 +15,35 @@ export const AuthorizationModal: FC<AuthorizationFormProps> = ({
     onClose
   }) => {
 
-  const [authMode, setAuthMode] = useState<AuthMode>('login');
-  const [authTitle,setAuthTitle] = useState<AuthTitle>('Вход');
+  const [authMode,setAuthMode] = useState<AuthMode>('Вход');
 
   const switchAuthModeToRegister = () => {
-    setAuthMode('register');
-    setAuthTitle('Регистрация')
+    setAuthMode('Регистрация');
   }
 
   const switchAuthModeToLogin = () => {
-    setAuthMode('login');
-    setAuthTitle('Вход')
+    setAuthMode('Вход');
   }
+
+  useEffect(() => {
+    if (!isOpen) {
+      setAuthMode('Вход');
+    }
+  }, [isOpen]);
 
   return (
       <Modal isOpen={isOpen} onClose={onClose}>
         <div className="auth-form">
-          {authMode === 'login'
+          {authMode === 'Вход'
               ? <Login switchAuthMode={switchAuthModeToRegister}
                        onClose={onClose}
-                       title={authTitle}
+                       title={authMode}
+                       isOpen={isOpen}
               />
               : <Registration switchAuthMode={switchAuthModeToLogin}
                                   onClose={onClose}
-                                  title = {authTitle}
+                                  title = {authMode}
+                                  isOpen={isOpen}
               />
           }
         </div>

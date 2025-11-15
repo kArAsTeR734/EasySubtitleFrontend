@@ -3,6 +3,7 @@ import MenuItem from "../MenuItem";
 import type {MenuListProps} from "../types.ts";
 
 const MenuList = ({data}:MenuListProps) => {
+
   return (
       <div className="menu">
         <ul className="menu__list">

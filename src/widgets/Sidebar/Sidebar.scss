@@ -1,14 +1,16 @@
 .sidebar{
-  width: 280px;
+  width: 300px;
   transition: 0.5s all;
   &--inner{
-    min-height: 100vh;
     background-color: #E4F1FE;
+    max-height: 600px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     border-radius: 4px;
     transition: all 0.3s;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   &__actions{
     display: flex;
