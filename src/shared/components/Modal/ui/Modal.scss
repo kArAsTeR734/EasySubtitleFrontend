@@ -1,11 +1,62 @@
-.modal{
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
 
+  &.opened {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
-.overlay{
+.modal {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    background: var(--color-white);
+    border-radius: 12px;
+    padding: 30px;
+    min-width: 450px;
+    width: 100%;
+    min-height: 340px;
+    max-height: 90vh;
+    overflow-y: auto;
+    opacity: 0;
+    transition: all 0.3s ease;
 
+    .modal-overlay.opened & {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
 }
 
-.content{
+@supports not (backdrop-filter: blur(5px)) {
+  .modal {
+    &__overlay {
+      background: rgba(0, 0, 0, 0.7);
+    }
+  }
+}
 
+@media (max-width: 768px) {
+  .modal {
+    &__overlay {
+      padding: 10px;
+    }
+
+    &__content {
+      padding: 24px 20px;
+      max-width: none;
+    }
+  }
 }

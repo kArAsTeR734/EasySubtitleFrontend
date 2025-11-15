@@ -1,4 +1,3 @@
-import React from "react";
 import type {TranscriptionResult, TranscriptionTimestamp} from "./transcriptions.ts";
 
 const TranscriptionSteps = {
@@ -8,12 +7,6 @@ const TranscriptionSteps = {
 } as const;
 
 export type TranscriptionSteps = typeof TranscriptionSteps[keyof typeof TranscriptionSteps];
-
-export interface StepConfig {
-  component: React.ComponentType,
-  title: string,
-  showNavigation?: boolean
-}
 
 interface StepInterface {
   onFileUpload: (file: File) => void,
@@ -51,3 +44,4 @@ interface GetTranscriptionInterface{
 export type UploadResponse = UploadResponseInterface;
 
 export type GetTranscriptionResult = GetTranscriptionInterface;
+

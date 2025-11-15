@@ -5,19 +5,35 @@ interface TranscriptionResultInterface {
   count: number
 }
 
+interface RegistrationRequestDataInterface {
+  login: string,
+  password: string,
+  confirmPassword: string
+}
+
+interface RegistrationReturnDataInterface{
+  id:string,
+  login:string
+}
+
+interface LoginReturnDataInterface {
+  accessToken: string,
+  refreshToken: string
+}
+
 interface TranscriptionIdInterface {
   id: string
 }
 
-export interface FileData{
-  id:number,
-  timeOfUpload:string,
-  text:string | null
+export interface FileData {
+  id: number,
+  timeOfUpload: string,
+  text: string | null
 }
 
-interface GetAllTranscriptionsInterface{
-  data:FileData[],
-  total:number
+interface GetAllTranscriptionsInterface {
+  data: FileData[],
+  total: number
 }
 
 export type TranscriptionResult = TranscriptionResultInterface;
@@ -25,3 +41,12 @@ export type TranscriptionResult = TranscriptionResultInterface;
 export type TranscriptionId = TranscriptionIdInterface;
 
 export type GetAllTranscriptionsResult = GetAllTranscriptionsInterface;
+
+export type LoginRequestData = Omit<RegistrationRequestData, 'confirmPassword'>
+
+export type LoginReturnData = LoginReturnDataInterface;
+
+export type RegistrationRequestData = RegistrationRequestDataInterface;
+
+export type RegistrationReturnData = RegistrationReturnDataInterface;
+

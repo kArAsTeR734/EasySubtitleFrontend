@@ -1,0 +1,40 @@
+.instruction {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: start;
+  row-gap: 15px;
+  padding-inline: 40px;
+  align-self: center;
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  &__item {
+    display: grid;
+    row-gap: 16px;
+    max-width: 563px;
+    &-header{
+      display: flex;
+      column-gap: 10px;
+      align-items: center;
+    }
+    &-id{
+      @include square(32px);
+      @include flex-center();
+      background-color: #0051FF;
+      color: var(--color-white);
+      font-weight: 500;
+      border-radius: 50%;
+    }
+    &-title{
+      font-weight: 600;
+    }
+    &:last-child {
+      grid-column: 1 / span 3;
+      justify-self: center;
+    }
+  }
+}

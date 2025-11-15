@@ -1,0 +1,21 @@
+.auth{
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+
+  &__close{
+    align-self: flex-end;
+    cursor: pointer;
+    @include square(24px);
+    border-radius: 4px;
+    background-color: var(--color-white);
+    color: var(--color-black);
+    &:hover{
+      background-color: #0000000d;
+    }
+  }
+
+  &__title{
+    align-self: center;
+  }
+}

@@ -4,8 +4,8 @@ import './AdvantagesButtons.scss'
 export const AdvantagesButtons = () => {
   return (
       <div className="advantages">
-        <Button className="button--advantage">Без регистрации</Button>
-        <Button className="button--advantage">Бесплатно</Button>
+        <Button className="button button--advantage">Без регистрации</Button>
+        <Button className="button button--advantage">Бесплатно</Button>
       </div>
   );
 };

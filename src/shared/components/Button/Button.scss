@@ -19,8 +19,12 @@
   }
 
   &--login {
-    width: 115px;
-    height: 35px;
+    width: 100%;
+    height: 40px;
+    align-self: center;
+    &:hover{
+      color:var(--color-white);
+    }
   }
 
   &--add-material {

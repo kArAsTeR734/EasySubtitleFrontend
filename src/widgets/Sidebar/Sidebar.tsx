@@ -8,6 +8,7 @@ import clsx from "clsx";
 import useFetching from "../../shared/hooks/useFetching.ts";
 import {getAllTranscriptions} from "../../features/GetAllTranscriptions.ts";
 import type {FileData} from "../../api/types/api-types.ts";
+import getFilesCount from "../../utils/getFilesCount.ts";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -38,34 +39,34 @@ const Sidebar = () => {
 
   if(isOpen){
     return (
-        <section
-            className={clsx('sidebar')}
-            aria-label="sidebar"
-        >
-          {isOpen && (
-              <div className="sidebar--inner">
-                <div className="sidebar__actions">
-                  <Button className="button button--add-material">
-                    <span>Новый материал</span>
-                    <PlusOutlined style={{marginLeft: 7}}/>
-                  </Button>
-                  <Button
-                      onClick={toggleSidebar}
-                      className="button button--toggle-sidebar"
-                      aria-label={isOpen ? "Скрыть сайдбар" : "Показать сайдбар"}
-                  >
-                      <span>
-                        {isOpen ?
-                            <LeftOutlined className="arrow-icon"/> :
-                            <RightOutlined className="arrow-icon"/>
-                        }
-                      </span>
-                  </Button>
-                </div>
-                <MenuList data={files}/>
+          <section
+              className={clsx('sidebar')}
+              aria-label="sidebar"
+          >
+            <div className="sidebar--inner">
+              <div className="sidebar__actions">
+                {getFilesCount(files) &&
+                <Button className="button button--add-material">
+                  <span>Новый материал</span>
+                  <PlusOutlined style={{marginLeft: 7}}/>
+                </Button>}
+
+                <Button
+                    onClick={toggleSidebar}
+                    className="button button--toggle-sidebar"
+                    aria-label={isOpen ? "Скрыть сайдбар" : "Показать сайдбар"}
+                >
+                    <span>
+                      {isOpen ?
+                          <LeftOutlined className="arrow-icon"/> :
+                          <RightOutlined className="arrow-icon"/>
+                      }
+                    </span>
+                </Button>
               </div>
-          )}
-        </section>
+              <MenuList data={files}/>
+            </div>
+          </section>
     );
   }
 

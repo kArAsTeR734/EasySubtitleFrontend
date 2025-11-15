@@ -6,3 +6,10 @@ export const TranscriptionInstance = axios.create({
     'Accept': 'application/json',
   }
 });
+
+export const AuthorizationInstance = axios.create({
+  baseURL: 'http://localhost:8080',
+  headers: {
+    'Accept': 'application/json',
+  }
+});

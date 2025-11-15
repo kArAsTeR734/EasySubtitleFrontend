@@ -1,5 +1,6 @@
 import type {StepProps} from "../../../../shared/types/types.ts";
 import type {FC} from "react";
+import './ProcessingStep.scss'
 
 export const ProcessingStep:FC<StepProps> = ({ uploadedFile, isLoading = true }) => {
   return (
