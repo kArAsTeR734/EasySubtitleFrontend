@@ -26,7 +26,8 @@ interface TranscriptionIdInterface {
 }
 
 export interface FileData {
-  id: number,
+  id: string,
+  title:string,
   timeOfUpload: string,
   text: string | null
 }
@@ -51,4 +52,6 @@ export type RegistrationRequestData = RegistrationRequestDataInterface;
 export type RegistrationReturnData = RegistrationReturnDataInterface;
 
 export type UserData = RegistrationReturnDataInterface;
+
+export type TranscriptionData = GetAllTranscriptionsInterface;
 

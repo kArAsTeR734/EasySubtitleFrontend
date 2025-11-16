@@ -10,11 +10,13 @@ const MainPage = () => {
       <>
         <Header/>
         <div className="page-wrapper">
-          <Sidebar/>
-          <main className="main-content">
-            <TranscriptionWorkspace/>
-            <TranscriptionInstruction/>
-          </main>
+          <div className="page-content">
+            <Sidebar/>
+            <main className="main-content">
+              <TranscriptionWorkspace/>
+              <TranscriptionInstruction/>
+            </main>
+          </div>
         </div>
         <Footer/>
       </>

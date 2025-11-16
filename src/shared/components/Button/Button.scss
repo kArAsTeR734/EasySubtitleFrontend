@@ -56,7 +56,9 @@
     --size: #{36px};
     @include square(var(--size));
     inset: 0;
-    left: 220px;
+    left: 240px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
   }
 
   &--advantage {
@@ -96,6 +98,9 @@
     &::before {
       content: '📁';
       font-size: 18px;
+    }
+    &.disabled{
+      background: rgba(29,78,216,0.5);
     }
   }
 }

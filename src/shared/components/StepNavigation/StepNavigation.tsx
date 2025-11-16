@@ -44,18 +44,6 @@ export const StepNavigation: FC<StepNavigationProps> = ({
           Назад
         </Button>
 
-        <div className="step-navigation__progress">
-        <span className="step-navigation__progress-text">
-          Шаг {currentStep} из {totalSteps}
-        </span>
-          <div className="step-navigation__progress-bar">
-            <div
-                className="step-navigation__progress-fill"
-                style={{ width: `${(currentStep / totalSteps) * 100}%` }}
-            />
-          </div>
-        </div>
-
         <Button
             type="button"
             className={clsx(
@@ -65,9 +53,9 @@ export const StepNavigation: FC<StepNavigationProps> = ({
             )}
             onClick={handleNextClick}
             disabled={nextDisabled || isLastStep}
-            aria-label='Далее'
+            aria-label='Перевести'
         >
-          Далее
+          Перевести
         </Button>
       </div>
   );

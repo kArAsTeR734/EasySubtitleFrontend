@@ -1,6 +1,7 @@
 import {useRef, type FC} from 'react';
 import Button from "../Button";
 import clsx from "clsx";
+import {useAuth} from "../../hooks/useTokenCheck.ts";
 
 interface UploadButtonProps {
   onFileUpload: (file: File) => void,
@@ -21,8 +22,13 @@ export const UploadButton: FC<UploadButtonProps> = ({
   }) => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const {isLoggedIn} = useAuth();
 
   const handleButtonClick = () => {
+    if(!isLoggedIn){
+      alert('Зарегистрируйтесь для добавления фалов для перевода');
+      return;
+    }
     fileInputRef.current?.click();
   };
 
@@ -44,7 +50,7 @@ export const UploadButton: FC<UploadButtonProps> = ({
       <div className={clsx('file-upload', className)}>
         <Button
             type="button"
-            className={clsx('button button--upload-file h6', {'has-file': fileName})}
+            className={clsx('button button--upload-file h6', {'has-file': fileName},{'disabled':!isLoggedIn})}
             onClick={handleButtonClick}
         >
           {fileName ? `Файл: ${fileName}` : 'Загрузить файл'}

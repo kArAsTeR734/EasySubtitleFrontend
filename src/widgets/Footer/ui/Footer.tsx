@@ -3,10 +3,6 @@ import {aboutLinks, translationLinks} from "../config/footerLinks.ts";
 
 const Footer = () => {
 
-
-
-
-
   return (
       <>
         <section className="footer" id="footer">
@@ -19,9 +15,9 @@ const Footer = () => {
                 <div className="footer__header">
                   О EazySubtitle
                 </div>
-                {aboutLinks.map(({label, href}) => (
-                    <div className="footer__item">
-                      <a href={href} className="footer__link">{label}</a>
+                {aboutLinks.map(({label, href,}) => (
+                    <div key={crypto.randomUUID()} className="footer__item">
+                      <a href={href}  key={Date.now()} className="footer__link">{label}</a>
                     </div>
                 ))}
               </div>
@@ -30,8 +26,8 @@ const Footer = () => {
                   Перевод
                 </div>
                 {translationLinks.map(({label, href}) => (
-                    <div className="footer__item">
-                      <a href={href} className="footer__link">{label}</a>
+                    <div key={crypto.randomUUID()} className="footer__item">
+                      <a href={href} key={Date.now()} className="footer__link">{label}</a>
                     </div>
                 ))}
               </div>

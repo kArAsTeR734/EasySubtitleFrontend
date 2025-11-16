@@ -35,7 +35,7 @@
     &--next {
       background: var(--color-accent);
       color: var(--color-white);
-
+      align-self: center;
       &:hover:not(:disabled) {
         background: var(--button-accent-hover);
         transform: translateY(-1px);

@@ -13,7 +13,6 @@ export const TranscriptionWorkspace = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [processingResult, setProcessingResult] = useState<TranscriptionResult | null>(null);
   const [fileId, setFileId] = useState<string | null>(null);
-
   const { isLoading: isUploading, error: uploadError, fetching: uploadFileFetching }
       = useFetching<UploadResponse, [File]>(uploadFile, {
     onSuccess: (data) => {
@@ -26,8 +25,9 @@ export const TranscriptionWorkspace = () => {
   });
 
   const handleFileUpload = async (file: File) => {
-    setUploadedFile(file);
     try {
+      console.log('Загрузка файлов');
+      setUploadedFile(file);
       await uploadFileFetching(file);
     }
     catch (e){

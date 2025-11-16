@@ -1,14 +1,18 @@
 .page-wrapper {
-  display: flex;
+  display: grid;
+  grid-template-rows: 1fr auto;
   min-height: calc(100vh - 80px);
   background-color: #fff;
 }
 
-.main-content {
-  flex: 1;
+.page-content {
   display: grid;
-  row-gap: 30px;
-  padding: 40px;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.main-content {
+  padding: 20px;
   overflow-y: auto;
-  background-color: #fff;
 }

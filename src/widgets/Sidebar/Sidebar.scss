@@ -1,27 +1,90 @@
 .sidebar {
-  width: 300px;
-  transition: 0.5s all;
+  background-color: #E4F1FE;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
 
-  &--inner {
-    background-color: #E4F1FE;
-    max-height: 600px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 4px;
-    transition: all 0.3s;
-    overflow-x: hidden;
-    overflow-y: auto;
+  height: 1120px;
+  &.sidebar--open {
+    width: 300px;
   }
 
-  &__actions {
-    position: relative;
+  &.sidebar--closed {
+    width: 60px;
+    height: 75px;
+  }
+
+  &__header {
+    padding: 10px;
     display: flex;
     align-items: center;
-    column-gap: 10px;
+    justify-content: space-between;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    min-height: 30px;
+    transition: all 0.3s ease;
 
-    &-closed {
-      margin-top: 15px;
+    .sidebar--closed & {
+      justify-content: center;
+      padding: 15px;
+      border-bottom: none;
     }
   }
+
+  &__header-left {
+    display: flex;
+    align-items: center;
+
+    .sidebar--closed & {
+      display: none;
+    }
+  }
+
+  &__header-right {
+    display: flex;
+    align-items: center;
+
+    .sidebar--closed & {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  &__content {
+    padding: 20px;
+    overflow-y: auto;
+    transition: all 0.3s ease-in-out;
+
+    &::-webkit-scrollbar {
+      display: none;
+      width: 0;
+    }
+
+    scrollbar-width: none;
+
+    -ms-overflow-style: none;
+
+    &--visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    &--hidden {
+      opacity: 0;
+      max-height: 0;
+      visibility: hidden;
+      padding: 0 20px;
+    }
+  }
+}
+
+.button--add-material {
+  transition: all 0.3s ease;
+}
+
+.button--toggle-sidebar {
+  transition: all 0.3s ease;
+  flex-shrink: 0;
 }

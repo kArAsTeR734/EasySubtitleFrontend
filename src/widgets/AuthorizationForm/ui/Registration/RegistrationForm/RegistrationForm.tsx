@@ -18,16 +18,18 @@ export const  RegistrationForm: FC<AuthForm> = ({
     onClose
    }) => {
 
-  const {setIsAuthenticated} = userSlice.actions;
+  const {setIsAuthenticated,authenticate} = userSlice.actions;
   const dispatch = useAppDispatch();
-
   const {error:registerError,fetching:registerFetch,clearError}
       = useFetching<RegistrationReturnData,[RegistrationRequestData]>(AuthorizationService.authorizationRegister,{
     onSuccess: (data) => {
-      console.log('Пользователь зарегистрирован:', data.login);
-      console.log('Id пользователя: ', data.id);
-      console.log('Аутентификация успешна')
+
+      const userData = {
+        id:data.id,
+        login:data.login
+      }
       dispatch(() => dispatch(setIsAuthenticated(true)))
+      dispatch(() => dispatch(authenticate(userData)))
       if (onClose) {
         onClose();
       }
@@ -95,7 +97,7 @@ export const  RegistrationForm: FC<AuthForm> = ({
           <TextField {...register("login", loginValidation)}
                      size="small"
                      placeholder="example123"
-                     label="Login"
+                     label="Логин"
                      error={shouldShowError("login")}
                      helperText={shouldShowError("login") ? getErrorMessage("login") : ''}
                      type="text"
@@ -107,7 +109,7 @@ export const  RegistrationForm: FC<AuthForm> = ({
               error={shouldShowError("password")}
               helperText={shouldShowError("password") ? getErrorMessage("password") : ''}
               placeholder="*****"
-              label="Password"
+              label="Пароль"
               type="password"
               fullWidth
           />
@@ -117,7 +119,7 @@ export const  RegistrationForm: FC<AuthForm> = ({
               error={shouldShowError("confirmPassword")}
               helperText={shouldShowError("confirmPassword") ? getErrorMessage("confirmPassword") : ''}
               placeholder="*****"
-              label="Confirm Password"
+              label="Подтвердите пароль"
               type="password"
               fullWidth
           />

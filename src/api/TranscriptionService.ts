@@ -1,5 +1,5 @@
 import {TranscriptionInstance} from "./config/api.config.ts";
-import type {GetAllTranscriptionsResult, TranscriptionId, TranscriptionResult} from "./types/api-types.ts";
+import type {GetAllTranscriptionsResult, TranscriptionResult} from "./types/api-types.ts";
 
 export class TranscriptionService {
 
@@ -10,7 +10,6 @@ export class TranscriptionService {
         pageSize: pageSize
       }
     })
-
     return response.data;
   }
 
@@ -18,14 +17,5 @@ export class TranscriptionService {
     const response = await TranscriptionInstance.get(`/api/v1/scripts/${id}`);
 
     return response.data;
-  }
-
-  public static async sendTranscriptionFile(file: File): Promise<TranscriptionId> {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    const request = await TranscriptionInstance.post('/api/v1/scripts', formData);
-
-    return request.data;
   }
 }

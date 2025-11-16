@@ -80,7 +80,7 @@ export const LoginForm:FC<AuthForm> = ({
                      helperText={shouldShowError("login") ? getErrorMessage("login") : ""}
                      size="small"
                      placeholder="example123"
-                     label="Login"
+                     label="Логин"
                      type="text"
                      fullWidth
           />
@@ -90,7 +90,7 @@ export const LoginForm:FC<AuthForm> = ({
               helperText={shouldShowError("password") ? getErrorMessage("password") : ""}
               size="small"
               placeholder="*****"
-              label="Password"
+              label="Пароль"
               type="password"
               fullWidth
           />

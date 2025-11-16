@@ -1,14 +1,14 @@
 import './MenuItem.css'
 
 interface MenuItemProps{
-  text:string | null
+  title:string | null
 }
 
-const MenuItem = ({text}:MenuItemProps) => {
+const MenuItem = ({title}:MenuItemProps) => {
   return (
       <div>
         <li className="menu__list-item">
-          <span>{text}</span>
+          <span>{title}</span>
         </li>
       </div>
   );

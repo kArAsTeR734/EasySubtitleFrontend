@@ -5,13 +5,15 @@ import Logo from "../../shared/components/Logo";
 import AuthorizationForm from "../AuthorizationForm";
 import {useAppDispatch, useAppSelector} from "../../shared/hooks/redux.ts";
 import {modalSlice} from "../../app/store/reducers/ModalSlice.ts";
+import UserProfile from "../../shared/components/UserProfile/ui/UserProfile.tsx";
+import {useAuth} from "../../shared/hooks/useTokenCheck.ts";
 
 const Header = () => {
 
-  const {isAuthenticated} = useAppSelector(state => state.userReducer);
   const {isOpen} = useAppSelector(state => state.modalReducer);
   const {onClose} = modalSlice.actions
   const dispatch = useAppDispatch();
+  const { isLoggedIn, logout } = useAuth();
 
   const menuItems = [
     {
@@ -47,20 +49,21 @@ const Header = () => {
               ))}
             </ul>
           </nav>
-        {!isAuthenticated &&
-          <>
-            <div className="header__actions">
-              <Button
-                onClick={() => dispatch(onClose(true))}
-                className="button button--login">
-                <span>Войти</span>
-              </Button>
-            </div>
-            <AuthorizationForm isOpen={isOpen}
-                               onClose={() => dispatch(onClose(false))}
-            />
-          </>
-        }
+          <div className="header__actions">
+            {isLoggedIn ? (
+                <>
+                  <UserProfile/>
+                  <Button onClick={logout}>Выйти</Button>
+                </>
+            ) : (
+                <Button onClick={() => dispatch(onClose(true))}>
+                  Войти
+                </Button>
+            )}
+          </div>
+          <AuthorizationForm isOpen={isOpen}
+                             onClose={() => dispatch(onClose(false))}
+          />
 
       </div>
     </header>

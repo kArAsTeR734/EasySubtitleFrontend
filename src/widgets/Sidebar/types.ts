@@ -1,7 +1,7 @@
 import type {FileData} from "../../api/types/api-types.ts";
 
 interface MenuItemInterface{
-  text:string | null,
+  title:string | null,
 }
 
 
