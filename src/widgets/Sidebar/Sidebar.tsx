@@ -8,7 +8,6 @@ import clsx from "clsx";
 import useFetching from "../../shared/hooks/useFetching.ts";
 import {getAllTranscriptions} from "../../features/GetAllTranscriptions.ts";
 import type {FileData} from "../../api/types/api-types.ts";
-import {mockFileData} from "./data.ts";
 import {useAppDispatch} from "../../shared/hooks/redux.ts";
 import {transcriptionSlice} from "../../app/store/reducers/TranscriptionSlice.ts";
 
@@ -35,7 +34,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     getNewFiles();
-  }, [files]);
+  }, []);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -51,7 +50,7 @@ const Sidebar = () => {
       >
         <div className="sidebar__header">
           <div className="sidebar__header-left">
-            {isOpen && !mockFileData && (
+            {isOpen && files.length > 0 && (
                 <Button className="button button--add-material">
                   <span>Новый материал</span>
                   <PlusOutlined style={{ marginLeft: 7 }} />
@@ -79,7 +78,7 @@ const Sidebar = () => {
           'sidebar__content--visible': isOpen,
           'sidebar__content--hidden': !isOpen
         })}>
-          <MenuList data={mockFileData} />
+            <MenuList data={files} />
         </div>
       </section>
   );
