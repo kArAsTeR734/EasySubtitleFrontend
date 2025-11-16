@@ -8,18 +8,19 @@ import clsx from "clsx";
 import useFetching from "../../shared/hooks/useFetching.ts";
 import {getAllTranscriptions} from "../../features/GetAllTranscriptions.ts";
 import type {FileData} from "../../api/types/api-types.ts";
-import {useAppDispatch} from "../../shared/hooks/redux.ts";
+import {useAppDispatch, useAppSelector} from "../../shared/hooks/redux.ts";
 import {transcriptionSlice} from "../../app/store/reducers/TranscriptionSlice.ts";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [files,setFiles] = useState<FileData[]>([]);
+  const [uploadedFiles,setFiles] = useState<FileData[]>([]);
   const {setUploadedFiles} = transcriptionSlice.actions;
   const dispatch = useAppDispatch();
+  const {files} = useAppSelector(state => state.transcriptionReducer)
 
   const { fetching: uploadFileFetching } = useFetching<SideBarTranscriptionList, [number, number]>(getAllTranscriptions, {
     onSuccess: (files) => {
-      console.log('Файл загружен, ID:', files.data);
+      console.log('Данные загружены:', files.data);
       setFiles(files.data);
       dispatch(setUploadedFiles(files.data));
     },
@@ -50,7 +51,7 @@ const Sidebar = () => {
       >
         <div className="sidebar__header">
           <div className="sidebar__header-left">
-            {isOpen && files.length > 0 && (
+            {isOpen && files.length === 0 && (
                 <Button className="button button--add-material">
                   <span>Новый материал</span>
                   <PlusOutlined style={{ marginLeft: 7 }} />
