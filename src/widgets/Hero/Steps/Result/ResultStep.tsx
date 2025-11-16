@@ -62,7 +62,7 @@ export const ResultStep: FC<ResultStepProps> = ({
                   <span className="timestamp-time">
                     {formatTime(timestamp.start)} - {formatTime(timestamp.end)}
                   </span>
-                <p className="timestamp-text">{timestamp.text}</p>
+                <p className="timestamp-text">{timestamp.text + "\n"}</p>
                 <br/>
               </div>
           ))}
@@ -70,7 +70,6 @@ export const ResultStep: FC<ResultStepProps> = ({
 
         <div className="results-step__summary">
           <h3>Краткое содержание:</h3>
-          <p>{selectedFile?.text}</p>
         </div>
       </div>
   );
