@@ -7,7 +7,7 @@ import Button from "../../shared/components/Button";
 import clsx from "clsx";
 import useFetching from "../../shared/hooks/useFetching.ts";
 import {getAllTranscriptions} from "../../features/GetAllTranscriptions.ts";
-import type {FileData} from "../../api/types/api-types.ts";
+import type {FileData, GetAllTranscriptionsInterface} from "../../api/types/api-types.ts";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -56,7 +56,26 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  console.log('Длина массива с данными',files.length);
+  const transcriptionsData2: GetAllTranscriptionsInterface = {
+    data: [
+      {
+        id: "abc-123",
+        filename: "audio_record.m4a",
+        path: "/records/audio_record.m4a",
+        uploadTime: "2024-01-18T16:20:00Z",
+        text: "Это тестовая запись для проверки транскрибации."
+      },
+      {
+        id: "abc-123",
+        filename: "audio_record.m4a",
+        path: "/records/audio_record.m4a",
+        uploadTime: "2024-01-18T16:20:00Z",
+        text: "Это тестовая запись для проверки транскрибации."
+      },
+    ],
+    total: 2
+  };
+
   return (
       <section
           className={clsx('sidebar', {

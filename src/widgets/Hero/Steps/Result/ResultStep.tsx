@@ -50,21 +50,22 @@ export const ResultStep: FC<ResultStepProps> = ({
       <div className="results-step">
         {selectedFile && (
             <div className="file-info">
-              <h4>Файл: {selectedFile.fileName}</h4>
+              <h4>Файл: {selectedFile.filename}</h4>
               <p>Загружен: {selectedFile.uploadTime}</p>
             </div>
         )}
+
         <div className="results-step__timestamps">
           <h3>Таймкоды:</h3>
-          {timestamps?.scripts.map((timestamp, index) => (
+          {timestamps?.scripts?.map((timestamp, index) => (
               <div key={`${timestamp.start}-${index}`} className="timestamp-item">
-                <span className="timestamp-time">
-                  {formatTime(timestamp.start)} - {formatTime(timestamp.end)}
-                </span>
+                  <span className="timestamp-time">
+                    {formatTime(timestamp.start)} - {formatTime(timestamp.end)}
+                  </span>
                 <p className="timestamp-text">{timestamp.text}</p>
+                <br/>
               </div>
           ))}
-
         </div>
 
         <div className="results-step__summary">

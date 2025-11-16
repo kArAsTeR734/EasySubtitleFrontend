@@ -19,8 +19,6 @@ const MenuItem = ({file}:MenuItemProps) => {
     dispatch(setSelectedFile(file));
   }
 
-  console.log(file.fileName);
-
   return (
       <li
           onClick={handleClickItem}
@@ -29,7 +27,8 @@ const MenuItem = ({file}:MenuItemProps) => {
           })}
       >
         <div className="menu-item__header">
-          <span className="menu-item__name">{file.fileName}</span>
+          <span className="menu-item__name">{file.filename}</span>
+          <br/>
           <span className="menu-item__time">{file.uploadTime}</span>
         </div>
         <div className="menu-item__status">
