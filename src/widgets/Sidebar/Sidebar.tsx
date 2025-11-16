@@ -46,6 +46,7 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
   };
 
+  console.log('Длина массива с данными',files.length);
   return (
       <section
           className={clsx('sidebar', {
