@@ -8,15 +8,14 @@ import clsx from "clsx";
 import useFetching from "../../shared/hooks/useFetching.ts";
 import {getAllTranscriptions} from "../../features/GetAllTranscriptions.ts";
 import type {FileData} from "../../api/types/api-types.ts";
-import {useAppDispatch, useAppSelector} from "../../shared/hooks/redux.ts";
+import {useAppDispatch} from "../../shared/hooks/redux.ts";
 import {transcriptionSlice} from "../../app/store/reducers/TranscriptionSlice.ts";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [uploadedFiles,setFiles] = useState<FileData[]>([]);
+  const [files,setFiles] = useState<FileData[]>([]);
   const {setUploadedFiles} = transcriptionSlice.actions;
   const dispatch = useAppDispatch();
-  const {files} = useAppSelector(state => state.transcriptionReducer)
 
   const { fetching: uploadFileFetching } = useFetching<SideBarTranscriptionList, [number, number]>(getAllTranscriptions, {
     onSuccess: (response) => {
