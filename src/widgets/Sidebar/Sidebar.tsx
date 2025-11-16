@@ -35,7 +35,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     getNewFiles();
-  }, []);
+  }, [files, getNewFiles]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
