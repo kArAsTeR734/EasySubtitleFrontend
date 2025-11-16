@@ -11,16 +11,23 @@ import type {
 } from "../../../../../api/types/api-types.ts";
 import {AuthorizationService} from "../../../../../api/AuthorizationService.ts";
 import {useFormValidationContext} from "../../../../../shared/hooks/useFormValidationContext.ts";
+import {useAppDispatch} from "../../../../../shared/hooks/redux.ts";
+import {userSlice} from "../../../../../app/store/reducers/UserSlice.ts";
 
 export const  RegistrationForm: FC<AuthForm> = ({
     onClose
    }) => {
+
+  const {setIsAuthenticated} = userSlice.actions;
+  const dispatch = useAppDispatch();
 
   const {error:registerError,fetching:registerFetch,clearError}
       = useFetching<RegistrationReturnData,[RegistrationRequestData]>(AuthorizationService.authorizationRegister,{
     onSuccess: (data) => {
       console.log('Пользователь зарегистрирован:', data.login);
       console.log('Id пользователя: ', data.id);
+      console.log('Аутентификация успешна')
+      dispatch(() => dispatch(setIsAuthenticated(true)))
       if (onClose) {
         onClose();
       }

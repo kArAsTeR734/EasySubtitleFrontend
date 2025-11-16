@@ -1,7 +1,8 @@
-.sidebar{
+.sidebar {
   width: 300px;
   transition: 0.5s all;
-  &--inner{
+
+  &--inner {
     background-color: #E4F1FE;
     max-height: 600px;
     padding: 20px;
@@ -12,11 +13,14 @@
     overflow-x: hidden;
     overflow-y: auto;
   }
-  &__actions{
+
+  &__actions {
+    position: relative;
     display: flex;
     align-items: center;
     column-gap: 10px;
-    &-closed{
+
+    &-closed {
       margin-top: 15px;
     }
   }

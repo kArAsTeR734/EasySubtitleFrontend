@@ -25,13 +25,18 @@ const Sidebar = () => {
     },
   });
 
-  const getNewFiles = async(page = 1, pageSize = 20) => {
+  const getNewFiles = async(page = 1, pageSize = 0) => {
     await uploadFileFetching(page,pageSize);
   }
 
   useEffect(() => {
     getNewFiles();
   }, [files]);
+
+  const mods = {
+    'button--toggle-sidebar-opened':isOpen,
+    'button--toggle-sidebar-closed':!isOpen,
+  }
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -53,7 +58,7 @@ const Sidebar = () => {
 
                 <Button
                     onClick={toggleSidebar}
-                    className="button button--toggle-sidebar"
+                    className={clsx(mods)}
                     aria-label={isOpen ? "Скрыть сайдбар" : "Показать сайдбар"}
                 >
                     <span>

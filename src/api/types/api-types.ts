@@ -50,3 +50,5 @@ export type RegistrationRequestData = RegistrationRequestDataInterface;
 
 export type RegistrationReturnData = RegistrationReturnDataInterface;
 
+export type UserData = RegistrationReturnDataInterface;
+

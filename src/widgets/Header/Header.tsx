@@ -1,17 +1,17 @@
 import './Header.scss'
 import clsx from 'clsx'
-import {type FC, useState} from "react";
 import Button from "../../shared/components/Button";
 import Logo from "../../shared/components/Logo";
 import AuthorizationForm from "../AuthorizationForm";
+import {useAppDispatch, useAppSelector} from "../../shared/hooks/redux.ts";
+import {modalSlice} from "../../app/store/reducers/ModalSlice.ts";
 
-interface HeaderProps{
-  isLoggedIn: boolean
-}
-// Переделать логику логина через Redux
-const Header:FC<HeaderProps> = ({isLoggedIn}) => {
+const Header = () => {
 
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const {isAuthenticated} = useAppSelector(state => state.userReducer);
+  const {isOpen} = useAppSelector(state => state.modalReducer);
+  const {onClose} = modalSlice.actions
+  const dispatch = useAppDispatch();
 
   const menuItems = [
     {
@@ -25,6 +25,7 @@ const Header:FC<HeaderProps> = ({isLoggedIn}) => {
       active: false
     },
   ]
+
   return (
     <header className="header" data-js-overlay-menu="">
       <div className="header__inner container">
@@ -46,17 +47,17 @@ const Header:FC<HeaderProps> = ({isLoggedIn}) => {
               ))}
             </ul>
           </nav>
-        {isLoggedIn &&
+        {!isAuthenticated &&
           <>
             <div className="header__actions">
               <Button
-                onClick={() => setIsAuthModalOpen(true)}
+                onClick={() => dispatch(onClose(true))}
                 className="button button--login">
                 <span>Войти</span>
               </Button>
             </div>
-            <AuthorizationForm isOpen={isAuthModalOpen}
-                               onClose={() => setIsAuthModalOpen(false)}
+            <AuthorizationForm isOpen={isOpen}
+                               onClose={() => dispatch(onClose(false))}
             />
           </>
         }

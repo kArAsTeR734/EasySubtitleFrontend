@@ -8,7 +8,7 @@ import Footer from "../../widgets/Footer/ui/Footer";
 const MainPage = () => {
   return (
       <>
-        <Header isLoggedIn={true}/>
+        <Header/>
         <div className="page-wrapper">
           <Sidebar/>
           <main className="main-content">

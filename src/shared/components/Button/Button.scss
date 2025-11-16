@@ -51,10 +51,12 @@
     }
   }
 
-  &--toggle-sidebar {
+  &--toggle-sidebar-opened {
+    position: absolute;
     --size: #{36px};
     @include square(var(--size));
-
+    inset: 0;
+    left: 220px;
   }
 
   &--advantage {
