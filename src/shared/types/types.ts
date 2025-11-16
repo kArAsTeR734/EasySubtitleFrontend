@@ -1,4 +1,5 @@
 import type {TranscriptionResult, TranscriptionTimestamp} from "./transcriptions.ts";
+import type {FileData} from "../../api/types/api-types.ts";
 
 const TranscriptionSteps = {
   UPLOAD: 'upload',
@@ -9,11 +10,13 @@ const TranscriptionSteps = {
 export type TranscriptionSteps = typeof TranscriptionSteps[keyof typeof TranscriptionSteps];
 
 interface StepInterface {
-  onFileUpload: (file: File) => void,
-  uploadedFile?: File | null,
-  processingResult?: TranscriptionResult | null,
-  error?: string,
-  isLoading?: boolean
+  onFileUpload: (file: File) => void;
+  uploadedFile?: File | null;
+  processingResult?: TranscriptionResult | null;
+  error?: string;
+  isLoading?: boolean;
+  fileId?: string | null;
+  selectedFile?: FileData | null;
 }
 
 export type StepProps = StepInterface;

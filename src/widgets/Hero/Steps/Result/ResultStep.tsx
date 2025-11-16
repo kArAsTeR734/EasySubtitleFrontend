@@ -5,10 +5,14 @@ import {type FC, useEffect, useState} from "react";
 import useFetching from "../../../../shared/hooks/useFetching.ts";
 
 interface ResultStepProps extends StepProps{
-  fileId: string | null
+  fileId: string | null,
 }
 
-export const ResultStep: FC<ResultStepProps> = ({fileId,processingResult}) => {
+export const ResultStep: FC<ResultStepProps> = ({
+  fileId,
+  processingResult,
+  selectedFile,
+  }) => {
 
   const [timestamps, setTimestamps] = useState<GetTranscriptionResult | null>(null);
   //const [script, setScript] = useState<GetTranscriptionResult | null>(null);
@@ -25,22 +29,31 @@ export const ResultStep: FC<ResultStepProps> = ({fileId,processingResult}) => {
     },
   });
 
+  const result = selectedFile?.text
+      ? { scripts: selectedFile.text }
+      : processingResult;
   useEffect(() => {
     if (fileId) {
       fetchTranscription(fileId);
     }
   }, [fileId, fetchTranscription]);
 
-  if (!processingResult) {
-    return <h1>Нет данных для отображения</h1>;
+
+  if (!result) {
+    return <div>Нет данных для отображения</div>;
   }
 
   if(transcriptionError){
     return <h1>Возникла непредвиденная ошибка</h1>
   }
-
   return (
       <div className="results-step">
+        {selectedFile && (
+            <div className="file-info">
+              <h4>Файл: {selectedFile.title}</h4>
+              <p>Загружен: {selectedFile.timeOfUpload}</p>
+            </div>
+        )}
         <div className="results-step__timestamps">
           <h3>Таймкоды:</h3>
           {timestamps?.scripts.map((timestamp, index) => (
@@ -55,7 +68,7 @@ export const ResultStep: FC<ResultStepProps> = ({fileId,processingResult}) => {
 
         <div className="results-step__summary">
           <h3>Краткое содержание:</h3>
-          <p>{processingResult.summary}</p>
+          <p>{selectedFile?.text}</p>
         </div>
       </div>
   );

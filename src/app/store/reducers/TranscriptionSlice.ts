@@ -1,18 +1,17 @@
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 import type {FileData} from "../../../api/types/api-types.ts";
+import type {TranscriptionSteps} from "../../../shared/types/types.ts";
 
 interface TranscriptionState {
-  files: FileData[];
-  currentFileId: string | null;
-  processingFiles: string[];
-  selectedFileId: string | null;
+  files: FileData[],
+  selectedFile: FileData | null,
+  currentStep: TranscriptionSteps,
 }
 
 const initialState: TranscriptionState = {
   files: [],
-  currentFileId: null,
-  processingFiles: [],
-  selectedFileId: null
+  currentStep:'upload',
+  selectedFile: null
 };
 
 export const transcriptionSlice = createSlice({
@@ -27,22 +26,23 @@ export const transcriptionSlice = createSlice({
       state.files.push(action.payload);
     },
 
-    setSelectedFile: (state, action: PayloadAction<string | null>) => {
-      state.selectedFileId = action.payload;
-    },
+    setSelectedFile: (state, action: PayloadAction<FileData>) => {
+      state.selectedFile = action.payload;
 
-    setCurrentFile: (state, action: PayloadAction<string | null>) => {
-      state.currentFileId = action.payload;
-    },
-
-    addProcessingFile: (state, action: PayloadAction<string>) => {
-      if (!state.processingFiles.includes(action.payload)) {
-        state.processingFiles.push(action.payload);
+      if (action.payload.text) {
+        state.currentStep = 'result';
+      } else {
+        state.currentStep = 'processing';
       }
     },
 
-    removeProcessingFile: (state, action: PayloadAction<string>) => {
-      state.processingFiles = state.processingFiles.filter(id => id !== action.payload);
+    setCurrentStep:(state,action:PayloadAction<TranscriptionSteps>) => {
+      state.currentStep = action.payload;
+    },
+
+    clearSelectedFile: (state) => {
+      state.selectedFile = null;
+      state.currentStep = 'upload'
     },
   }
 });

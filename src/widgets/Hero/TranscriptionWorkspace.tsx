@@ -1,41 +1,17 @@
 import './TranscriptionWorkspace.scss'
 import {useState} from "react";
-import type {TranscriptionSteps, UploadResponse} from "../../shared/types/types.ts";
+import type {UploadResponse} from "../../shared/types/types.ts";
 import StepNavigation from "../../shared/components/StepNavigation";
 import type {TranscriptionResult} from "../../shared/types/transcriptions.ts";
 import {stepConfig} from "../../shared/config/stepConfig.ts";
 import {uploadFile} from "../../features/FileUpload.ts";
 import useFetching from "../../shared/hooks/useFetching.ts";
 import {getStepNumber} from "../../utils/getStepNumber.ts";
-
-export const TranscriptionWorkspace = () => {
-  const [currentStep, setCurrentStep] = useState<TranscriptionSteps>('upload');
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [processingResult, setProcessingResult] = useState<TranscriptionResult | null>(null);
-  const [fileId, setFileId] = useState<string | null>(null);
-  const { isLoading: isUploading, error: uploadError, fetching: uploadFileFetching }
-      = useFetching<UploadResponse, [File]>(uploadFile, {
-    onSuccess: (data) => {
-      console.log('Файл загружен, ID:', data.id);
-      setFileId(data.id);
-    },
-    onError: (error) => {
-      console.error('Ошибка загрузки:', error);
-    },
-  });
-
-  const handleFileUpload = async (file: File) => {
-    try {
-      console.log('Загрузка файлов');
-      setUploadedFile(file);
-      await uploadFileFetching(file);
-    }
-    catch (e){
-      console.log(e)
-    }
-  };
-
-  /*
+import {useAppDispatch, useAppSelector} from "../../shared/hooks/redux.ts";
+import {transcriptionSlice} from "../../app/store/reducers/TranscriptionSlice.ts";
+import ResultStep from "./Steps/Result";
+import ProcessingStep from "./Steps/Processing";
+/*
   const simulateProcessing = async () => {
     try {
       setTimeout(() => {
@@ -72,24 +48,66 @@ export const TranscriptionWorkspace = () => {
     }
   };
   */
+export const TranscriptionWorkspace = () => {
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [processingResult, setProcessingResult] = useState<TranscriptionResult | null>(null);
+  const [fileId, setFileId] = useState<string | null>(null);
+  const {selectedFile, currentStep} = useAppSelector(state => state.transcriptionReducer);
+  const {setCurrentStep, clearSelectedFile} = transcriptionSlice.actions
+  const dispatch = useAppDispatch();
+
+  const {isLoading: isUploading, error: uploadError, fetching: uploadFileFetching}
+      = useFetching<UploadResponse, [File]>(uploadFile, {
+    onSuccess: (data) => {
+      console.log('Файл загружен, ID:', data.id);
+      setFileId(data.id);
+    },
+    onError: (error) => {
+      console.error('Ошибка загрузки:', error);
+    },
+  });
+
+  const handleFileUpload = async (file: File) => {
+    try {
+      console.log('Загрузка файлов');
+      setUploadedFile(file);
+      await uploadFileFetching(file);
+    } catch (e) {
+      console.log(e)
+    }
+  };
+
 
   const handleNext = () => {
     if (currentStep === 'upload' && uploadedFile) {
-      setCurrentStep('processing');
+      dispatch(setCurrentStep('processing'));
     }
   };
 
   const handleBack = () => {
     if (currentStep === 'result') {
-      setCurrentStep('upload');
+      dispatch(setCurrentStep('upload'));
+      dispatch(clearSelectedFile());
       setUploadedFile(null);
       setProcessingResult(null);
     } else if (currentStep === 'processing') {
-      setCurrentStep('upload');
+      dispatch(setCurrentStep('upload'));
     }
   };
 
-  const { component: StepComponent, title, showNavigation } = stepConfig[currentStep];
+  const getStepComponent = () => {
+    if (selectedFile) {
+      if (selectedFile.text) {
+        return ResultStep;
+      } else {
+        return ProcessingStep;
+      }
+    }
+
+    return stepConfig[currentStep].component;
+  };
+  const StepComponent = getStepComponent();
+  const {title, showNavigation} = stepConfig[currentStep];
 
   const isNextDisabled =
       (currentStep === 'upload' && (!uploadedFile || isUploading || !!uploadError)) ||
@@ -103,11 +121,11 @@ export const TranscriptionWorkspace = () => {
           {isUploading && <div>Загрузка файла...</div>}
 
           {uploadError && (
-                  <div className="error-message">
-                    {uploadError}
-                    <button>Перезагрузить страницу</button>
-                  </div>
-              )
+              <div className="error-message">
+                {uploadError}
+                <button>Перезагрузить страницу</button>
+              </div>
+          )
           }
           <StepComponent
               onFileUpload={handleFileUpload}
@@ -116,6 +134,7 @@ export const TranscriptionWorkspace = () => {
               error={uploadError}
               isLoading={isUploading}
               fileId={fileId}
+              selectedFile={selectedFile}
           />
 
           {showNavigation && (
