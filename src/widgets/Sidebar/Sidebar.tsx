@@ -15,27 +15,42 @@ const Sidebar = () => {
 
   const { fetching: uploadFileFetching } = useFetching<SideBarTranscriptionList, [number, number]>(getAllTranscriptions, {
     onSuccess: (response) => {
-      const transformedFiles: FileData[] = response.data.map(file => ({
-        ...file,
-        id: String(file.id)
-      }));
+      console.log('📦 ПОЛНЫЙ RESPONSE:', response);
+      console.log('🔍 Структура response:', {
+        data: response.data,
+        total: response.total,
+      });
 
-      console.log('🔄 Преобразованные файлы:', transformedFiles);
+      if (response.data && Array.isArray(response.data)) {
+        console.log('✅ Data является массивом, длина:', response.data.length);
 
-      setFiles(transformedFiles);
+        const transformedFiles: FileData[] = response.data.map((file, index) => {
+          console.log(`📄 Файл ${index}:`, file);
+          return {
+            ...file,
+            id: String(file.id)
+          };
+        });
+
+        console.log('🔄 Преобразованные файлы:', transformedFiles);
+        setFiles(transformedFiles);
+      } else {
+        console.error('❌ Data не массив или отсутствует:', response.data);
+      }
     },
     onError: (error) => {
-      console.error('Ошибка загрузки:', error);
+      console.error('💥 Ошибка загрузки:', error);
     },
   });
 
   const getNewFiles = async (page = 1, pageSize = 30) => {
     await uploadFileFetching(page, pageSize);
+    console.log('Запрос получил данные');
   };
 
   useEffect(() => {
     getNewFiles();
-  }, [files, getNewFiles]);
+  }, [files]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -52,7 +67,7 @@ const Sidebar = () => {
       >
         <div className="sidebar__header">
           <div className="sidebar__header-left">
-            {isOpen && files.length === 0 && (
+            {isOpen && !getNewFiles && (
                 <Button className="button button--add-material">
                   <span>Новый материал</span>
                   <PlusOutlined style={{ marginLeft: 7 }} />
