@@ -50,8 +50,8 @@ export const ResultStep: FC<ResultStepProps> = ({
       <div className="results-step">
         {selectedFile && (
             <div className="file-info">
-              <h4>Файл: {selectedFile.title}</h4>
-              <p>Загружен: {selectedFile.timeOfUpload}</p>
+              <h4>Файл: {selectedFile.fileName}</h4>
+              <p>Загружен: {selectedFile.uploadTime}</p>
             </div>
         )}
         <div className="results-step__timestamps">
@@ -64,6 +64,7 @@ export const ResultStep: FC<ResultStepProps> = ({
                 <p className="timestamp-text">{timestamp.text}</p>
               </div>
           ))}
+
         </div>
 
         <div className="results-step__summary">

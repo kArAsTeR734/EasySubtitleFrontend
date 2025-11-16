@@ -27,8 +27,8 @@ const MenuItem = ({file}:MenuItemProps) => {
           })}
       >
         <div className="menu-item__header">
-          <span className="menu-item__name">{file.title}</span>
-          <span className="menu-item__time">{file.timeOfUpload}</span>
+          <span className="menu-item__name">{file.fileName}</span>
+          <span className="menu-item__time">{file.uploadTime}</span>
         </div>
         <div className="menu-item__status">
           {file.text ? '✅ Готово' : '🔄 В обработке'}

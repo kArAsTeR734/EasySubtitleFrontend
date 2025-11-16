@@ -27,9 +27,9 @@ interface TranscriptionIdInterface {
 
 export interface FileData {
   id: string;
-  title: string;
+  fileName: string;
   path: string;
-  timeOfUpload: string;
+  uploadTime: string;
   text: string | null;
 }
 
