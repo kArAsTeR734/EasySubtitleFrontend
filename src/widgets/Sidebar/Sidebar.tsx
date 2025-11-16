@@ -19,10 +19,16 @@ const Sidebar = () => {
   const {files} = useAppSelector(state => state.transcriptionReducer)
 
   const { fetching: uploadFileFetching } = useFetching<SideBarTranscriptionList, [number, number]>(getAllTranscriptions, {
-    onSuccess: (files) => {
-      console.log('Данные загружены:', files.data);
-      setFiles(files.data);
-      dispatch(setUploadedFiles(files.data));
+    onSuccess: (response) => {
+      const transformedFiles: FileData[] = response.data.map(file => ({
+        ...file,
+        id: String(file.id)
+      }));
+
+      console.log('🔄 Преобразованные файлы:', transformedFiles);
+
+      setFiles(transformedFiles);
+      dispatch(setUploadedFiles(transformedFiles));
     },
     onError: (error) => {
       console.error('Ошибка загрузки:', error);
