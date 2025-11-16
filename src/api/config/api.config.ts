@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {AuthorizationService} from "../AuthorizationService.ts";
 
 export const TranscriptionInstance = axios.create({
   baseURL: 'http://localhost:8080',
@@ -7,7 +6,7 @@ export const TranscriptionInstance = axios.create({
     'Accept': 'application/json',
   }
 });
-
+/*
 TranscriptionInstance.interceptors.request.use(
     async (config) => {
       const token = localStorage.getItem('access_token');
@@ -47,6 +46,7 @@ TranscriptionInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 );
+*/
 
 export const AuthorizationInstance = axios.create({
   baseURL: 'http://localhost:8080',
