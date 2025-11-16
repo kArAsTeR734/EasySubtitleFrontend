@@ -19,6 +19,8 @@ const MenuItem = ({file}:MenuItemProps) => {
     dispatch(setSelectedFile(file));
   }
 
+  console.log(file.fileName);
+
   return (
       <li
           onClick={handleClickItem}
