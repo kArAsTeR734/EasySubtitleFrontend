@@ -1,8 +1,21 @@
-import type {Timestamp} from "../shared/types/transcriptions.ts";
+import type {Timestamp} from "../api/types/api-types.ts";
 
-export function formatTime(timestamp: Timestamp): string {
-  const hours = timestamp.hours;
-  const minutes = timestamp.minutes;
-  const secs = timestamp.seconds;
-  return `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${secs.toString().padStart(2, '0')}`;
-}
+export const parseTimestamps = (text: string): Timestamp[] => {
+  if (!text) return [];
+
+  const lines = text.split('\n').filter(line => line.trim());
+  const parsed = lines.map(line => {
+    // Регулярное выражение для извлечения временных меток и текста
+    const match = line.match(/(\d+:\d+:\d+)-(\d+:\d+:\d+):\s*(.+)/);
+    if (match) {
+      return {
+        start: match[1], // 0:00:00
+        end: match[2],   // 0:00:01
+        text: match[3]   // текст после таймкодов
+      };
+    }
+    return null;
+  }).filter((timestamp): timestamp is Timestamp => timestamp !== null);
+
+  return parsed;
+};

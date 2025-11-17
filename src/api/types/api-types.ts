@@ -25,6 +25,12 @@ interface TranscriptionIdInterface {
   id: string
 }
 
+export interface Timestamp {
+  start: string;
+  end: string;
+  text: string;
+}
+
 export interface FileData {
   id: string;
   filename: string;

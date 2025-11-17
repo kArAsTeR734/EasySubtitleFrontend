@@ -1,5 +1,5 @@
 import type {GetTranscriptionResult, StepProps} from "../../../../shared/types/types.ts";
-import {formatTime} from "../../../../utils/formatTime.ts";
+import {formatTime, parseTimestamps} from "../../../../utils/formatTime.ts";
 import {getTranscription} from "../../../../features/GetTranscription.ts";
 import {type FC, useEffect, useState} from "react";
 import useFetching from "../../../../shared/hooks/useFetching.ts";
@@ -57,19 +57,27 @@ export const ResultStep: FC<ResultStepProps> = ({
 
         <div className="results-step__timestamps">
           <h3>Таймкоды:</h3>
-          {timestamps?.scripts?.map((timestamp, index) => (
-              <div key={`${timestamp.start}-${index}`} className="timestamp-item">
-                  <span className="timestamp-time">
-                    {formatTime(timestamp.start)} - {formatTime(timestamp.end)}
-                  </span>
-                <p className="timestamp-text">{timestamp.text + "\n"}</p>
-                <br/>
-              </div>
-          ))}
+          {parseTimestamps(selectedFile?.text || '')
+              .map((timestamp, index) => {
+                if (!timestamp || !timestamp.start || !timestamp.end) {
+                  return null;
+                }
+                return (
+                    <div key={`${timestamp.start}-${index}`} className="timestamp-item">
+                      <span className="timestamp-time">
+                        {formatTime(timestamp.start)} - {formatTime(timestamp.end)}
+                      </span>
+                      <p className="timestamp-text">{timestamp.text}</p>
+                    </div>
+                );
+              })
+              .filter(Boolean)
+          }
         </div>
 
         <div className="results-step__summary">
           <h3>Краткое содержание:</h3>
+          <p>{selectedFile?.text}</p>
         </div>
       </div>
   );
