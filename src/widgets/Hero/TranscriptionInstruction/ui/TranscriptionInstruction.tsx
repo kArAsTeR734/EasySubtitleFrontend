@@ -15,7 +15,7 @@ export const TranscriptionInstruction = () => {
     },
     {
       id: 3,
-      title: '',
+      title: 'Загрузите свой перевод',
       description: 'Вы можете загрузить перевод на своё устройство в .docx, .pdf, или .txt формате. Нажмите на кнопку “Скачать”'
     }
   ]

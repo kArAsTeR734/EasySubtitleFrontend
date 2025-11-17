@@ -44,6 +44,7 @@ export const ResultStep: FC<ResultStepProps> = ({
   if(transcriptionError){
     return <h1>Возникла непредвиденная ошибка</h1>
   }
+
   return (
       <div className="results-step">
         {selectedFile && (

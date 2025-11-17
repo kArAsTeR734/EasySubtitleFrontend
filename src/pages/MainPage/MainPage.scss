@@ -13,6 +13,20 @@
 }
 
 .main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
   padding: 20px;
   overflow-y: auto;
+}
+
+.transcription-workspace {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.transcription-instruction {
+  width: 100%;
+  max-width: 1200px;
 }
