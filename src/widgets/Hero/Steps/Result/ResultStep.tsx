@@ -1,7 +1,7 @@
 import type {GetTranscriptionResult, StepProps} from "../../../../shared/types/types.ts";
 import {formatTime, parseTimestamps} from "../../../../utils/formatTime.ts";
 import {getTranscription} from "../../../../features/GetTranscription.ts";
-import {type FC, useEffect, useState} from "react";
+import {type FC, useEffect} from "react";
 import useFetching from "../../../../shared/hooks/useFetching.ts";
 
 interface ResultStepProps extends StepProps{
@@ -14,7 +14,6 @@ export const ResultStep: FC<ResultStepProps> = ({
   selectedFile,
   }) => {
 
-  const [timestamps, setTimestamps] = useState<GetTranscriptionResult | null>(null);
   //const [script, setScript] = useState<GetTranscriptionResult | null>(null);
   const {
     error: transcriptionError,
@@ -22,7 +21,6 @@ export const ResultStep: FC<ResultStepProps> = ({
   } = useFetching<GetTranscriptionResult, [string]>(getTranscription, {
     onSuccess: (data) => {
       console.log('Транскрипция получена:', data.scripts);
-      setTimestamps(data);
     },
     onError: (error) => {
       console.error('Ошибка получения транскрипции:', error);

@@ -1,12 +1,10 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import transcriptionReducer from "./reducers/TranscriptionSlice"
 import modalReducer from "./reducers/ModalSlice"
-import userReducer from "./reducers/UserSlice"
 
 const rootReducer = combineReducers({
   transcriptionReducer,
   modalReducer,
-  userReducer
 })
 
 export const setupStore = () =>{

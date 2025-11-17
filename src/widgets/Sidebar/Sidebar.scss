@@ -55,6 +55,7 @@
   &__content {
     padding: 20px;
     overflow-y: auto;
+    max-width: 300px;
     transition: all 0.3s ease-in-out;
 
     &::-webkit-scrollbar {

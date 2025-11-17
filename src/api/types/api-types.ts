@@ -34,7 +34,6 @@ export interface Timestamp {
 export interface FileData {
   id: string;
   filename: string;
-  path: string;
   uploadTime: string;
   text: string | null;
 }
