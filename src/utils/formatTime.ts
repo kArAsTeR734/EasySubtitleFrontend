@@ -19,3 +19,19 @@ export const parseTimestamps = (text: string): Timestamp[] => {
 
   return parsed;
 };
+
+export const formatTime = (timeString: string | null | undefined): string => {
+  if (!timeString) return '00:00';
+
+  // Если время в формате "0:00:00"
+  const parts = timeString.split(':');
+
+  if (parts.length === 3) {
+    const [hours, minutes, seconds] = parts;
+    // Убираем лишние нули в часах
+    const formattedHours = parseInt(hours) > 0 ? `${hours}:` : '';
+    return `${formattedHours}${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')}`;
+  }
+
+  return timeString;
+};

@@ -77,7 +77,6 @@ export const ResultStep: FC<ResultStepProps> = ({
 
         <div className="results-step__summary">
           <h3>Краткое содержание:</h3>
-          <p>{selectedFile?.text}</p>
         </div>
       </div>
   );
