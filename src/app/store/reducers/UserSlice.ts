@@ -16,8 +16,8 @@ export const userSlice = createSlice({
   name: 'transcription',
   initialState,
   reducers: {
-    setIsAuthenticated: (state, action: PayloadAction<boolean>) => {
-      state.isAuthenticated = action.payload;
+    isAuthenticated: (state) => {
+      state.isAuthenticated = !!localStorage.getItem('access_token');
     },
     authenticate: (state, action: PayloadAction<Omit<UserState, 'isAuthenticated'>>) => {
       state.id = action.payload.id;

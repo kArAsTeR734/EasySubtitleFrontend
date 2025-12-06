@@ -40,6 +40,7 @@ export const LoginForm:FC<AuthForm> = ({
     try{
       loginFetch(loginData);
       dispatch(setIsAuthenticated(true))
+      onClose();
     }
     finally {
       reset();

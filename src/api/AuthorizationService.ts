@@ -19,18 +19,11 @@ export class AuthorizationService {
   }
 
   public static async refresh(): Promise<LoginReturnData> {
-    const refreshToken = localStorage.getItem('refresh_token');
-
-    if (!refreshToken) {
-      throw new Error('No refresh token available');
-    }
 
     const response = await AuthorizationInstance.post('/api/v1/auth/refresh', {
-      refreshToken
     });
 
     localStorage.setItem('access_token', response.data.accessToken);
-    localStorage.setItem('refresh_token', response.data.refreshToken);
 
     return response.data;
   }
