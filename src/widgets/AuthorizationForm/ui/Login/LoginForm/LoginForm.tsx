@@ -22,7 +22,7 @@ export const LoginForm:FC<AuthForm> = ({
   const {setAuth}= userSlice.actions;
   const dispatch = useAppDispatch();
 
-  const { mutate: loginFetch, error, reset: clearError } = useLogin();
+  const { mutateAsync: loginFetch, error, reset: clearError } = useLogin();
 
   const {
     register,
@@ -39,9 +39,13 @@ export const LoginForm:FC<AuthForm> = ({
     };
 
     try {
-      loginFetch(loginData);
-      dispatch(setAuth(true));
-      onClose();
+      const data = await loginFetch(loginData);
+      if(data){
+        localStorage.setItem('access_token',data.accessToken);
+        dispatch(setAuth(true));
+        onClose();
+      }
+
     } catch (err) {
       console.error("Ошибка логина", err);
     } finally {
