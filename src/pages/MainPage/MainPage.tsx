@@ -4,16 +4,8 @@ import Sidebar from "../../widgets/Sidebar";
 import './MainPage.scss'
 import TranscriptionInstruction from "../../widgets/Hero/TranscriptionInstruction";
 import Footer from "../../widgets/Footer/ui/Footer";
-import {useEffect} from "react";
-import {AuthorizationService} from "../../api/AuthorizationService.ts";
 
 const MainPage = () => {
-
-  useEffect(() => {
-    if(localStorage.getItem('access_token')){
-      AuthorizationService.refresh();
-    }
-  },[])
   return (
       <>
         <Header/>

@@ -18,7 +18,7 @@ export class AuthorizationService {
   }
 
   public static async refresh(): Promise<{ accessToken: string }> {
-    const response = await AuthorizationInstance.get('/api/v1/auth/refresh', {
+    const response = await AuthorizationInstance.post('/api/v1/auth/refresh', {
       withCredentials: true,
     });
 

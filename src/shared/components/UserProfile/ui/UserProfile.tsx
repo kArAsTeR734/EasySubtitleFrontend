@@ -1,27 +1,15 @@
 import './UserProfile.scss'
-import {useEffect, useRef} from "react";
+import {useRef} from "react";
 import {useHover} from "../../../hooks/useHover.ts";
 import clsx from "clsx";
-import {useUser} from "../../../../features/User/useUser.ts";
-import {userSlice} from "../../../../app/store/reducers/UserSlice.ts";
-import {useAppDispatch} from "../../../hooks/redux.ts";
+import {useAppSelector} from "../../../hooks/redux.ts";
 
 const UserProfile = () => {
 
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const isHovering = useHover(anchorRef);
-  const {setUser} = userSlice.actions;
-  const dispatch = useAppDispatch();
-  const { data: user, isLoading, isError } = useUser();
+  const { user } = useAppSelector((state) => state.userReducer);
 
-  useEffect(() => {
-    if (user) {
-      dispatch(setUser(user));
-    }
-  }, [user]);
-
-  if (isLoading) return <h1>Загрузка...</h1>;
-  if (isError) return <p>Не авторизован</p>;
   if (!user) return null;
   return (
       <>
