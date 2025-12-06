@@ -23,7 +23,7 @@ export const useInitializeUser = () => {
     if (isError) {
       dispatch(logout());
     }
-  }, [user]);
+  }, [user,isSuccess,isError]);
 
   return { user };
 };
