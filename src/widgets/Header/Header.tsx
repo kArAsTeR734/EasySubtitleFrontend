@@ -15,7 +15,8 @@ const Header = () => {
   const {onClose} = modalSlice.actions
   const {logout} = userSlice.actions
   const dispatch = useAppDispatch();
-
+  console.log(isAuthenticated);
+  console.log(!!localStorage.getItem('access_token'))
   const menuItems = [
     {
       label: 'Главная',
