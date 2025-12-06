@@ -50,6 +50,5 @@ export const AuthorizationInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials:true
 });
 AuthorizationInstance.defaults.headers.common['X-Requested-With'] = null;

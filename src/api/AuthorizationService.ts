@@ -7,7 +7,7 @@ import type {
 
 export class AuthorizationService {
   public static async login(loginData: LoginRequestData): Promise<LoginReturnData> {
-    const response = await AuthorizationInstance.post('/api/v1/auth/login', loginData)
+    const response = await AuthorizationInstance.post('/api/v1/auth/login', loginData,{withCredentials:true})
     return response.data;
   }
 
@@ -28,7 +28,10 @@ export class AuthorizationService {
     return response.data; // { accessToken: string }
   }
 
-  public static logout(): void {
+  public static async logout(): Promise<void> {
+    const response = await AuthorizationInstance.post('/api/v1/auth/logout',{},{withCredentials:true});
     localStorage.removeItem('access_token');
+
+    return response.data;
   }
 }
