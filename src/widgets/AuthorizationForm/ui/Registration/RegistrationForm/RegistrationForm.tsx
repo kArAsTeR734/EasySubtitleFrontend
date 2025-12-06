@@ -5,24 +5,17 @@ import {type SubmitHandler} from "react-hook-form";
 import type {AuthForm, RegistrationFormInput} from "../../types.ts";
 import {confirmPasswordValidation, loginValidation, passwordValidation} from "../../../config/validationConfig.ts";
 import useFetching from "../../../../../shared/hooks/useFetching.ts";
-import type {
-  RegistrationRequestData,
-} from "../../../../../api/types/api-types.ts";
+import type {RegistrationRequestData,} from "../../../../../api/types/api-types.ts";
 import {AuthorizationService} from "../../../../../api/AuthorizationService.ts";
 import {useFormValidationContext} from "../../../../../shared/hooks/useFormValidationContext.ts";
-import {useAppDispatch} from "../../../../../shared/hooks/redux.ts";
-import {userSlice} from "../../../../../app/store/reducers/UserSlice.ts";
 
 export const  RegistrationForm: FC<AuthForm> = ({
     onClose
    }) => {
 
-  const {setIsAuthenticated} = userSlice.actions;
-  const dispatch = useAppDispatch();
   const {error:registerError,fetching:registerFetch,clearError}
       = useFetching<number,[RegistrationRequestData]>(AuthorizationService.register,{
     onSuccess: () => {
-      dispatch(() => dispatch(setIsAuthenticated(true)))
       if (onClose) {
         onClose();
       }

@@ -15,7 +15,7 @@ export class AuthorizationService {
   }
 
   public static async register(): Promise<number> {
-    const response = await AuthorizationInstance.post('/api/v1/auth/sign-up');
+    const response = await AuthorizationInstance.post('/api/v1/auth/register');
 
     return response.status;
   }

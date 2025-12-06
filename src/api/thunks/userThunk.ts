@@ -40,7 +40,7 @@ export const loginUser = createAsyncThunk<
     'user/login',
     async (loginData, { rejectWithValue }) => {
       try {
-        const response = await AuthorizationService.authorizationLogin(loginData);
+        const response = await AuthorizationService.login(loginData);
 
         return {
           tokens: response,
@@ -60,7 +60,7 @@ export const registerUser = createAsyncThunk<
     'user/register',
     async (registerData, { rejectWithValue }) => {
       try {
-        await AuthorizationService.authorizationRegister(registerData);
+        await AuthorizationService.register(registerData);
         return;
       } catch (error) {
         return rejectWithValue(handleApiError(error));
@@ -85,7 +85,7 @@ export const refreshToken = createAsyncThunk<
     'user/refreshToken',
     async (_, { rejectWithValue }) => {
       try {
-        return await AuthorizationService.refreshToken();
+        return await AuthorizationService.refresh();
       } catch (error) {
         AuthorizationService.logout();
         return rejectWithValue(handleApiError(error));
