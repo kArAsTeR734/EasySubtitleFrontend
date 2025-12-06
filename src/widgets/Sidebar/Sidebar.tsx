@@ -81,7 +81,7 @@ const Sidebar = () => {
         </div>
         {isAuthorizated
         ? <MenuList data={files} />
-        : <h2>Войдите чтобы чиать файлы</h2>}
+        : <h2>Войдите чтобы читать файлы</h2>}
         <div className={clsx('sidebar__content', {
           'sidebar__content--visible': isOpen,
           'sidebar__content--hidden': !isOpen

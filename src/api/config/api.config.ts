@@ -10,6 +10,7 @@ export const TranscriptionInstance = axios.create({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
     },
+  withCredentials:true
   });
 TranscriptionInstance.interceptors.request.use(
     async (config) => {
@@ -35,6 +36,9 @@ TranscriptionInstance.interceptors.response.use(
 
           return TranscriptionInstance(originalRequest);
         } catch (refreshError) {
+          console.log('Не удалось обновить токен, разлогиниваем');
+          AuthorizationService.logout();
+          store.dispatch(setAuth(false));
           return Promise.reject(refreshError);
         }
       }
@@ -47,5 +51,6 @@ export const AuthorizationInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials:true
 });
 AuthorizationInstance.defaults.headers.common['X-Requested-With'] = null;

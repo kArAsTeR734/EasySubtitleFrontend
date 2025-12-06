@@ -6,9 +6,9 @@ import {userSlice} from "../../app/store/reducers/UserSlice.ts";
 
 export const useInitializeUser = () => {
   const dispatch = useAppDispatch();
-  const {setUser,setAuth} = userSlice.actions
+  const {setUser,setAuth,logout} = userSlice.actions
 
-  const { data: user, isSuccess } = useQuery({
+  const { data: user, isSuccess, isError } = useQuery({
     queryKey: ["me"],
     queryFn: () => UserService.getUserInfo(),
     enabled: !!localStorage.getItem("access_token"),
@@ -20,7 +20,10 @@ export const useInitializeUser = () => {
       dispatch(setUser(user));
       dispatch(setAuth(true));
     }
-  }, [user]);
+    if (isError) {
+      dispatch(logout());
+    }
+  }, [isSuccess, isError, user, dispatch]);
 
   return { user };
 };
