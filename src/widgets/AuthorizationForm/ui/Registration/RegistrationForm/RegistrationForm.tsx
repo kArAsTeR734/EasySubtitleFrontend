@@ -9,7 +9,8 @@ import {useFormValidationContext} from "../../../../../shared/hooks/useFormValid
 import {useRegistration} from "../../../../../features/Registratiton/useRegister.ts";
 
 export const RegistrationForm: FC<AuthForm> = ({
-    onClose
+    onClose,
+    switchAuthMode
    }) => {
 
   const {mutate:registration,reset:clearError,error} = useRegistration();
@@ -32,6 +33,9 @@ export const RegistrationForm: FC<AuthForm> = ({
     }
     try{
       registration(registerData);
+      if (switchAuthMode) {
+        switchAuthMode();
+      }
     }
     finally {
       reset();

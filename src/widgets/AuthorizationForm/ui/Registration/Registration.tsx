@@ -38,7 +38,7 @@ export const Registration:FC<AuthForm> = ({
         </Button>
         <h1 className="auth__title h3">{title}</h1>
         <FormProvider {...formMethods}>
-          <RegistrationForm onClose={onClose}/>
+          <RegistrationForm onClose={onClose} switchAuthMode={switchAuthMode}/>
         </FormProvider>
         <AuthorizationHints onClose={onClose}
                             title={title}
