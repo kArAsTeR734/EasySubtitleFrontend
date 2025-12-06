@@ -7,7 +7,9 @@ import type {
 
 export class AuthorizationService {
   public static async login(loginData: LoginRequestData): Promise<LoginReturnData> {
-    const response = await authInstance.post('/api/v1/auth/login', loginData);
+    const response = await authInstance.post('/api/v1/auth/login',
+        loginData,
+        {withCredentials:true});
 
     return response.data;
   }
