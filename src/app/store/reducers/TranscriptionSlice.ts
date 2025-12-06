@@ -18,14 +18,6 @@ export const transcriptionSlice = createSlice({
   name: 'transcription',
   initialState,
   reducers: {
-    setUploadedFiles: (state, action: PayloadAction<FileData[]>) => {
-      state.files = action.payload;
-    },
-
-    addFile: (state, action: PayloadAction<FileData>) => {
-      state.files.push(action.payload);
-    },
-
     setSelectedFile: (state, action: PayloadAction<FileData>) => {
       state.selectedFile = action.payload;
 

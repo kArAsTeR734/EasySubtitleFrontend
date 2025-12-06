@@ -1,18 +1,16 @@
 import axios from 'axios'
+import {AuthorizationService} from "../AuthorizationService.ts";
 
 export const TranscriptionInstance = axios.create({
   baseURL: 'http://localhost:8080',
   headers: {
     'Accept': 'application/json',
-  }
+  },
 });
-/*
+
 TranscriptionInstance.interceptors.request.use(
     async (config) => {
-      const token = localStorage.getItem('access_token');
-      if (token) {
-        config.headers.Authorization = token;
-      }
+      config.headers.Authorization = localStorage.getItem('access_token');
       return config;
     }
 );
@@ -46,11 +44,11 @@ TranscriptionInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 );
-*/
 
 export const AuthorizationInstance = axios.create({
   baseURL: 'http://localhost:8080',
   headers: {
     'Accept': 'application/json',
-  }
+  },
+  withCredentials:true
 });

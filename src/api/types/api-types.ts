@@ -11,18 +11,9 @@ interface RegistrationRequestDataInterface {
   confirmPassword: string
 }
 
-interface RegistrationReturnDataInterface{
-  id:string,
-  login:string
-}
-
 interface LoginReturnDataInterface {
   accessToken: string,
   refreshToken: string
-}
-
-interface TranscriptionIdInterface {
-  id: string
 }
 
 export interface Timestamp {
@@ -43,9 +34,12 @@ export interface GetAllTranscriptionsInterface {
   total: number;
 }
 
-export type TranscriptionResult = TranscriptionResultInterface;
+export interface UserInfo {
+  id: string;
+  login: string;
+}
 
-export type TranscriptionId = TranscriptionIdInterface;
+export type TranscriptionResult = TranscriptionResultInterface;
 
 export type GetAllTranscriptionsResult = GetAllTranscriptionsInterface;
 
@@ -54,10 +48,3 @@ export type LoginRequestData = Omit<RegistrationRequestData, 'confirmPassword'>
 export type LoginReturnData = LoginReturnDataInterface;
 
 export type RegistrationRequestData = RegistrationRequestDataInterface;
-
-export type RegistrationReturnData = RegistrationReturnDataInterface;
-
-export type UserData = RegistrationReturnDataInterface;
-
-export type TranscriptionData = GetAllTranscriptionsInterface;
-

@@ -7,7 +7,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  isAuthenticated:true,
+  isAuthenticated:false,
   id:'',
   login:''
 };
@@ -22,6 +22,9 @@ export const userSlice = createSlice({
     authenticate: (state, action: PayloadAction<Omit<UserState, 'isAuthenticated'>>) => {
       state.id = action.payload.id;
       state.login = action.payload.login;
+    },
+    logout:(state)=>{
+      state.isAuthenticated = false;
     }
   }
 });

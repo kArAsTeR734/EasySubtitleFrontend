@@ -2,8 +2,6 @@ import {AuthorizationInstance} from "./config/api.config.ts";
 import type {
   LoginRequestData,
   LoginReturnData,
-  RegistrationRequestData,
-  RegistrationReturnData
 } from "./types/api-types.ts";
 
 export class AuthorizationService {
@@ -16,9 +14,10 @@ export class AuthorizationService {
     return response.data;
   }
 
-  public static async authorizationRegister(registerData: RegistrationRequestData): Promise<RegistrationReturnData> {
-    const response = await AuthorizationInstance.post('/api/v1/auth/sign-up', registerData);
-    return response.data;
+  public static async authorizationRegister(): Promise<number> {
+    const response = await AuthorizationInstance.post('/api/v1/auth/sign-up');
+
+    return response.status;
   }
 
   public static async refreshToken(): Promise<LoginReturnData> {
@@ -36,24 +35,6 @@ export class AuthorizationService {
     localStorage.setItem('refresh_token', response.data.refreshToken);
 
     return response.data;
-  }
-
-  public static isTokenExpired(): boolean {
-    const token = localStorage.getItem('access_token');
-    if (!token) return true;
-
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.exp * 1000 < Date.now();
-    } catch {
-      return true;
-    }
-  }
-
-  public static isLoggedIn(): boolean {
-    const accessToken = localStorage.getItem('access_token');
-    const refreshToken = localStorage.getItem('refresh_token');
-    return !!accessToken && !!refreshToken && !this.isTokenExpired();
   }
 
   public static logout(): void {

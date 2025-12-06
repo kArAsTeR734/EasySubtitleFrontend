@@ -15,15 +15,6 @@ const Sidebar = () => {
 
   const { fetching: uploadFileFetching } = useFetching<SideBarTranscriptionList, [number, number]>(getAllTranscriptions, {
     onSuccess: (response) => {
-      console.log('📦 ПОЛНЫЙ RESPONSE:', response);
-      console.log('🔍 Структура response:', {
-        data: response.data,
-        total: response.total,
-      });
-
-      if (response.data && Array.isArray(response.data)) {
-        console.log('✅ Data является массивом, длина:', response.data.length);
-
         const transformedFiles: FileData[] = response.data.map((file, index) => {
           console.log(`📄 Файл ${index}:`, file);
           return {
@@ -34,9 +25,6 @@ const Sidebar = () => {
 
         console.log('🔄 Преобразованные файлы:', transformedFiles);
         setFiles(transformedFiles);
-      } else {
-        console.error('❌ Data не массив или отсутствует:', response.data);
-      }
     },
     onError: (error) => {
       console.error('💥 Ошибка загрузки:', error);
