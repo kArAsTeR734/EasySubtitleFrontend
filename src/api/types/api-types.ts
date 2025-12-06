@@ -13,7 +13,6 @@ interface RegistrationRequestDataInterface {
 
 interface LoginReturnDataInterface {
   accessToken: string,
-  refreshToken: string
 }
 
 export interface Timestamp {
@@ -43,7 +42,7 @@ export type TranscriptionResult = TranscriptionResultInterface;
 
 export type GetAllTranscriptionsResult = GetAllTranscriptionsInterface;
 
-export type LoginRequestData = Omit<RegistrationRequestData, 'confirmPassword'>
+export type LoginRequestData = Omit<RegistrationRequestData, 'passwordConfirmed'>
 
 export type LoginReturnData = LoginReturnDataInterface;
 

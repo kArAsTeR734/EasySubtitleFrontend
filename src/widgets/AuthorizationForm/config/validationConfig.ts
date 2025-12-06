@@ -1,9 +1,9 @@
-import type {RegistrationFormInput} from "../ui/RegistrationForm.tsx";
+import type {RegistrationFormInput} from "../ui/types.ts";
 
 export const loginValidation = {
   required: "Поле обязательно к заполнению",
   minLength: {
-    value: 7,
+    value: 5,
     message: "Минимальная длина 7 символов"
   }
 }
@@ -11,7 +11,7 @@ export const loginValidation = {
 export const passwordValidation = {
   required: "Поле обязательно к заполнению" as const,
   minLength: {
-    value: 6,
+    value: 5,
     message: "Минимальная длина 6 символов" as const
   }
 };

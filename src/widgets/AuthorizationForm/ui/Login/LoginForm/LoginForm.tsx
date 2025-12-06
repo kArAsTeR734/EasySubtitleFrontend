@@ -1,15 +1,14 @@
 import {Button, TextField} from "@mui/material";
 import './LoginForm.scss'
 import type {AuthForm} from "../../types.ts";
-import type {LoginRequestData, LoginReturnData} from "../../../../../api/types/api-types.ts";
+import type {LoginRequestData} from "../../../../../api/types/api-types.ts";
 import type {SubmitHandler} from "react-hook-form";
 import {type FC} from "react";
-import useFetching from "../../../../../shared/hooks/useFetching.ts";
-import {AuthorizationService} from "../../../../../api/AuthorizationService.ts";
 import {loginValidation, passwordValidation} from "../../../config/validationConfig.ts";
 import {useFormValidationContext} from "../../../../../shared/hooks/useFormValidationContext.ts";
 import {userSlice} from "../../../../../app/store/reducers/UserSlice.ts";
 import {useAppDispatch} from "../../../../../shared/hooks/redux.ts";
+import {useLogin} from "../../../../../features/Login/UserLogin.ts";
 
 export interface LoginFormInput {
   login: string,
@@ -23,18 +22,7 @@ export const LoginForm:FC<AuthForm> = ({
   const {setIsAuthenticated}= userSlice.actions;
   const dispatch = useAppDispatch();
 
-  const {error:loginError,fetching:loginFetch,clearError} = useFetching<LoginReturnData,[LoginRequestData]>(AuthorizationService.login,{
-    onSuccess: (data) => {
-      console.log('Токены получены:', data);
-      localStorage.setItem('access_token', data.accessToken);
-      localStorage.setItem('refresh_token', data.refreshToken);
-      dispatch(setIsAuthenticated(true));
-      onClose();
-    },
-    onError: (error) => {
-      console.error('Ошибка авторизации:', error);
-    },
-  })
+  const {mutate:loginFetch, error, reset:clearError} = useLogin();
 
   const {
     register,
@@ -50,7 +38,8 @@ export const LoginForm:FC<AuthForm> = ({
       password:formData.password
     }
     try{
-      await loginFetch(loginData);
+      loginFetch(loginData);
+      dispatch(setIsAuthenticated(true))
     }
     finally {
       reset();
@@ -62,12 +51,12 @@ export const LoginForm:FC<AuthForm> = ({
     clearError();
     onClose();
   }
-  if(loginError){
+  if(error){
     return (
         <>
           <div className="error">
             <p>Возникла непредвиденная ошибка при обработке данных</p>
-            <p className="error__message">{loginError}</p>
+            <p className="error__message">{error.message}</p>
             <Button
                 onClick={() => closeErrorWindowHandler()}
                 className="button button--close">

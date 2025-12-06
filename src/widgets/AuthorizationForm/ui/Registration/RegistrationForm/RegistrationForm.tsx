@@ -4,26 +4,15 @@ import './RegistrationForm.scss'
 import {type SubmitHandler} from "react-hook-form";
 import type {AuthForm, RegistrationFormInput} from "../../types.ts";
 import {confirmPasswordValidation, loginValidation, passwordValidation} from "../../../config/validationConfig.ts";
-import useFetching from "../../../../../shared/hooks/useFetching.ts";
 import type {RegistrationRequestData,} from "../../../../../api/types/api-types.ts";
-import {AuthorizationService} from "../../../../../api/AuthorizationService.ts";
 import {useFormValidationContext} from "../../../../../shared/hooks/useFormValidationContext.ts";
+import {useRegistration} from "../../../../../features/Registratiton/useRegister.ts";
 
-export const  RegistrationForm: FC<AuthForm> = ({
+export const RegistrationForm: FC<AuthForm> = ({
     onClose
    }) => {
 
-  const {error:registerError,fetching:registerFetch,clearError}
-      = useFetching<void,[RegistrationRequestData]>(AuthorizationService.register,{
-    onSuccess: () => {
-      if (onClose) {
-        onClose();
-      }
-    },
-    onError: (error) => {
-      console.error('Ошибка авторизации:', error);
-    },
-  })
+  const {mutate:registration,reset:clearError,error} = useRegistration();
 
   const {
     register,
@@ -34,7 +23,7 @@ export const  RegistrationForm: FC<AuthForm> = ({
 
   } = useFormValidationContext<RegistrationFormInput>();
 
-  const onSubmit: SubmitHandler<RegistrationFormInput> = async (formData) => {
+  const onSubmit: SubmitHandler<RegistrationFormInput> = (formData) => {
     console.log('Данные с формы отправленны');
     const registerData:RegistrationRequestData = {
       login:formData.login,
@@ -42,7 +31,7 @@ export const  RegistrationForm: FC<AuthForm> = ({
       passwordConfirmed:formData.confirmPassword
     }
     try{
-      await registerFetch(registerData);
+      registration(registerData);
     }
     finally {
       reset();
@@ -59,12 +48,12 @@ export const  RegistrationForm: FC<AuthForm> = ({
     clearError();
   },[])
 
-  if(registerError){
+  if(error){
     return (
         <>
           <div className="error">
             <p>Возникла непредвиденная ошибка при обработке данных</p>
-            <p className="error__message">{registerError}</p>
+            <p className="error__message">{error.message}</p>
             <Button
                 onClick={() => closeModalHandler()}
                 className="button button--close">
