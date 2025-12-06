@@ -5,7 +5,7 @@ import {AuthorizationService} from "../AuthorizationService.ts";
 export const TranscriptionInstance = axios.create({
     baseURL: 'http://localhost:8080',
     headers: {
-      'Accept': 'application/json',
+      'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
     },
   });
@@ -49,6 +49,8 @@ TranscriptionInstance.interceptors.response.use(
 export const AuthorizationInstance = axios.create({
   baseURL: 'http://localhost:8080',
   headers: {
-    'Accept': 'application/json',
+    'Content-Type': 'application/json',
   },
 });
+
+AuthorizationInstance.defaults.headers.common['X-Requested-With'] = null;
