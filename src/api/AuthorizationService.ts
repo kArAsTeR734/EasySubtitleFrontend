@@ -4,7 +4,6 @@ import type {
   LoginReturnData,
   RegistrationRequestData,
 } from "./types/api-types.ts";
-import axios from "axios";
 
 export class AuthorizationService {
   public static async login(loginData: LoginRequestData): Promise<LoginReturnData> {
@@ -21,7 +20,7 @@ export class AuthorizationService {
 
   public static async refresh(): Promise<LoginReturnData> {
 
-    const response = await axios.get('/api/v1/auth/refresh', {withCredentials:true});
+    const response = await AuthorizationInstance.get('/api/v1/auth/refresh', {withCredentials:true});
     localStorage.setItem('access_token', response.data.accessToken);
     return response.data;
   }

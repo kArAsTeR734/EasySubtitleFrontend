@@ -15,10 +15,10 @@ const UserProfile = () => {
   const { data: user, isLoading, isError } = useUser();
 
   useEffect(() => {
-    if(user){
-      dispatch(setUser(user))
+    if (user) {
+      dispatch(setUser(user));
     }
-  }, []);
+  }, [user]);
 
   if (isLoading) return <h1>Загрузка...</h1>;
   if (isError || !user) return <p>Не авторизован</p>;

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {AuthorizationService} from "../AuthorizationService.ts";
 import {userSlice} from "../../app/store/reducers/UserSlice.ts";
+import {useAppDispatch} from "../../shared/hooks/redux.ts";
 
 export const TranscriptionInstance = axios.create({
   baseURL: 'http://localhost:8080',
@@ -23,6 +24,7 @@ TranscriptionInstance.interceptors.response.use(
     async (error) => {
       const originalRequest = error.config;
       const {setAuth} = userSlice.actions;
+      const dispatch = useAppDispatch();
       const refreshToken = localStorage.getItem('refresh_token');
 
       if (error.response?.status === 401 && !originalRequest._retry && refreshToken) {
@@ -30,7 +32,7 @@ TranscriptionInstance.interceptors.response.use(
 
         try {
           await AuthorizationService.refresh();
-          setAuth(true);
+          dispatch(setAuth(true));
           console.log('Токен обновлен');
 
           originalRequest.headers.Authorization = localStorage.getItem('access_token');

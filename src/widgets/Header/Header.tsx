@@ -16,7 +16,6 @@ const Header = () => {
   const {logout} = userSlice.actions
   const dispatch = useAppDispatch();
 
-
   const menuItems = [
     {
       label: 'Главная',
