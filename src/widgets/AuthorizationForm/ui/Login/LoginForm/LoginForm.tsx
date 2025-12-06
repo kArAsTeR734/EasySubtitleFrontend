@@ -19,7 +19,7 @@ export const LoginForm:FC<AuthForm> = ({
     onClose,
    }) => {
 
-  const {isAuthenticated}= userSlice.actions;
+  const {setAuth}= userSlice.actions;
   const dispatch = useAppDispatch();
 
   const {mutate:loginFetch, error, reset:clearError} = useLogin();
@@ -39,7 +39,7 @@ export const LoginForm:FC<AuthForm> = ({
     }
     try{
       loginFetch(loginData);
-      dispatch(isAuthenticated())
+      dispatch(setAuth(true))
       onClose();
     }
     finally {

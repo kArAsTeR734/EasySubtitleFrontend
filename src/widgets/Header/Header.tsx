@@ -11,12 +11,12 @@ import {userSlice} from "../../app/store/reducers/UserSlice.ts";
 const Header = () => {
 
   const {isOpen} = useAppSelector(state => state.modalReducer);
-  const {isAuthenticated} = useAppSelector(state => state.userReducer);
+  const {isAuth} = useAppSelector(state => state.userReducer);
   const {onClose} = modalSlice.actions
   const {logout} = userSlice.actions
   const dispatch = useAppDispatch();
-  console.log(isAuthenticated);
-  console.log(!!localStorage.getItem('access_token'))
+
+
   const menuItems = [
     {
       label: 'Главная',
@@ -29,6 +29,7 @@ const Header = () => {
       active: false
     },
   ]
+  console.log(isAuth);
 
   return (
     <header className="header" data-js-overlay-menu="">
@@ -52,7 +53,7 @@ const Header = () => {
             </ul>
           </nav>
           <div className="header__actions">
-            {isAuthenticated ? (
+            {isAuth ? (
                 <>
                   <UserProfile/>
                   <Button onClick={() => dispatch(logout())}>Выйти</Button>

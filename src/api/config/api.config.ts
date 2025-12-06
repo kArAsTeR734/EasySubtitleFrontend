@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {AuthorizationService} from "../AuthorizationService.ts";
+import {userSlice} from "../../app/store/reducers/UserSlice.ts";
 
 export const TranscriptionInstance = axios.create({
   baseURL: 'http://localhost:8080',
@@ -8,6 +9,7 @@ export const TranscriptionInstance = axios.create({
     'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
   },
 });
+
 
 TranscriptionInstance.interceptors.request.use(
     async (config) => {
@@ -20,7 +22,7 @@ TranscriptionInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
       const originalRequest = error.config;
-
+      const {setAuth} = userSlice.actions;
       const refreshToken = localStorage.getItem('refresh_token');
 
       if (error.response?.status === 401 && !originalRequest._retry && refreshToken) {
@@ -28,6 +30,7 @@ TranscriptionInstance.interceptors.response.use(
 
         try {
           await AuthorizationService.refresh();
+          setAuth(true);
           console.log('Токен обновлен');
 
           originalRequest.headers.Authorization = localStorage.getItem('access_token');
