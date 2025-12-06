@@ -36,6 +36,9 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
+    if(!isAuth){
+      return;
+    }
     getNewFiles();
   }, [isAuth]);
 

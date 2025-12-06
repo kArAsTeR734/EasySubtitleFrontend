@@ -4,6 +4,7 @@ import {store} from '../../main.tsx'
 
 import {AuthorizationService} from "../AuthorizationService.ts";
 
+let isRefreshing = false;
 export const TranscriptionInstance = axios.create({
     baseURL: 'http://localhost:8080',
     headers: {
@@ -24,7 +25,8 @@ TranscriptionInstance.interceptors.response.use(
       const originalRequest = error.config;
       const {setAuth} = userSlice.actions;
 
-      if (error.response?.status === 401 && !originalRequest._retry) {
+      if (error.response?.status === 401 && !originalRequest._retry && !isRefreshing) {
+        isRefreshing = true;
         originalRequest._retry = true;
 
         try {
@@ -35,9 +37,6 @@ TranscriptionInstance.interceptors.response.use(
 
           return TranscriptionInstance(originalRequest);
         } catch (refreshError) {
-          console.log('Не удалось обновить токен, разлогиниваем');
-          AuthorizationService.logout();
-          store.dispatch(setAuth(false));
           return Promise.reject(refreshError);
         }
       }
