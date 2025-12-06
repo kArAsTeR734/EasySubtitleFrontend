@@ -37,7 +37,6 @@ TranscriptionInstance.interceptors.response.use(
         } catch (refreshError) {
           console.log('Не удалось обновить токен, разлогиниваем');
           AuthorizationService.logout();
-          window.location.href = '/login';
           return Promise.reject(refreshError);
         }
       }

@@ -43,6 +43,8 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
   };
 
+  const isAuthorizated= !!isAuth;
+
   console.log('Длина массива с данными',files.length);
   return (
       <section
@@ -77,12 +79,14 @@ const Sidebar = () => {
             </Button>
           </div>
         </div>
-
+        {isAuthorizated
+        ? <MenuList data={files} />
+        : <h2>Войдите чтобы чиать файлы</h2>}
         <div className={clsx('sidebar__content', {
           'sidebar__content--visible': isOpen,
           'sidebar__content--hidden': !isOpen
         })}>
-            <MenuList data={files} />
+
         </div>
       </section>
   );
