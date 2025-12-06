@@ -1,5 +1,7 @@
 import axios from "axios";
 import {userSlice} from "../../app/store/reducers/UserSlice.ts";
+import {store} from '../../main.tsx'
+
 import {AuthorizationService} from "../AuthorizationService.ts";
 
 export const TranscriptionInstance = axios.create({
@@ -27,15 +29,15 @@ TranscriptionInstance.interceptors.response.use(
 
         try {
           await AuthorizationService.refresh();
-          setAuth(true);
+          store.dispatch(setAuth(true));
           console.log('Токен обновлен');
-
-          originalRequest.headers.Authorization = localStorage.getItem('access_token');
+          originalRequest.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
 
           return TranscriptionInstance(originalRequest);
         } catch (refreshError) {
           console.log('Не удалось обновить токен, разлогиниваем');
           AuthorizationService.logout();
+          store.dispatch(setAuth(false));
           return Promise.reject(refreshError);
         }
       }
