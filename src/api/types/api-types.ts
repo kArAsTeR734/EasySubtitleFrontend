@@ -8,7 +8,7 @@ interface TranscriptionResultInterface {
 interface RegistrationRequestDataInterface {
   login: string,
   password: string,
-  confirmPassword: string
+  passwordConfirmed: string
 }
 
 interface LoginReturnDataInterface {

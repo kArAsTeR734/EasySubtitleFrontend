@@ -39,7 +39,7 @@ export const  RegistrationForm: FC<AuthForm> = ({
     const registerData:RegistrationRequestData = {
       login:formData.login,
       password:formData.password,
-      confirmPassword:formData.confirmPassword
+      passwordConfirmed:formData.confirmPassword
     }
     try{
       await registerFetch(registerData);

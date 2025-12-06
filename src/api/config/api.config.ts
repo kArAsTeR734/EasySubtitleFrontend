@@ -21,7 +21,6 @@ TranscriptionInstance.interceptors.response.use(
     async (error) => {
       const originalRequest = error.config;
 
-      // Проверяем что есть refreshToken перед попыткой обновления
       const refreshToken = localStorage.getItem('refresh_token');
 
       if (error.response?.status === 401 && !originalRequest._retry && refreshToken) {
