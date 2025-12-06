@@ -1,4 +1,4 @@
-import {AuthorizationInstance} from "./config/api.config.ts";
+import {authInstance} from "./config/api.config.ts";
 import type {
   LoginRequestData,
   LoginReturnData,
@@ -7,22 +7,27 @@ import type {
 
 export class AuthorizationService {
   public static async login(loginData: LoginRequestData): Promise<LoginReturnData> {
-    const response = await AuthorizationInstance.post('/api/v1/auth/login', loginData);
+    const response = await authInstance.post('/api/v1/auth/login', loginData);
 
     return response.data;
   }
 
   public static async register(registerData: RegistrationRequestData): Promise<void> {
-    const response = await AuthorizationInstance.post('/api/v1/auth/register', registerData);
+    const response = await authInstance.post('/api/v1/auth/register', registerData);
 
     return response.data;
   }
 
-  public static async refresh(): Promise<LoginReturnData> {
+  public static async refresh(): Promise<{ accessToken: string }> {
+    const response = await authInstance.get('/api/v1/auth/refresh', {
+      withCredentials: true,
+    });
 
-    const response = await AuthorizationInstance.get('/api/v1/auth/refresh', {withCredentials:true});
-    localStorage.setItem('access_token', response.data.accessToken);
-    return response.data;
+    if (response.data.accessToken) {
+      localStorage.setItem('access_token', response.data.accessToken);
+    }
+
+    return response.data; // { accessToken: string }
   }
 
   public static logout(): void {

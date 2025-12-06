@@ -21,7 +21,8 @@ const UserProfile = () => {
   }, [user]);
 
   if (isLoading) return <h1>Загрузка...</h1>;
-  if (isError || !user) return <p>Не авторизован</p>;
+  if (isError) return <p>Не авторизован</p>;
+  if (!user) return null;
   return (
       <>
         <div className="user-profile">

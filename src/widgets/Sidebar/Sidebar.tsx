@@ -8,22 +8,22 @@ import clsx from "clsx";
 import useFetching from "../../shared/hooks/useFetching.ts";
 import {getAllTranscriptions} from "../../features/GetAllTranscriptions.ts";
 import type {FileData} from "../../api/types/api-types.ts";
+import {useAppSelector} from "../../shared/hooks/redux.ts";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [files,setFiles] = useState<FileData[]>([]);
+  const {isAuth} = useAppSelector(state => state.userReducer)
 
   const { fetching: uploadFileFetching } = useFetching<SideBarTranscriptionList, [number, number]>(getAllTranscriptions, {
     onSuccess: (response) => {
-        const transformedFiles: FileData[] = response.data.map((file, index) => {
-          console.log(`📄 Файл ${index}:`, file);
+        const transformedFiles: FileData[] = response.data.map((file) => {
           return {
             ...file,
             id: String(file.id)
           };
         });
 
-        console.log('🔄 Преобразованные файлы:', transformedFiles);
         setFiles(transformedFiles);
     },
     onError: (error) => {
@@ -33,12 +33,11 @@ const Sidebar = () => {
 
   const getNewFiles = async (page = 1, pageSize = 30) => {
     await uploadFileFetching(page, pageSize);
-    console.log('Запрос получил данные');
   };
 
   useEffect(() => {
     getNewFiles();
-  }, []);
+  }, [isAuth]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
