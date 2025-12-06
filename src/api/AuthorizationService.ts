@@ -7,7 +7,7 @@ import type {
 
 export class AuthorizationService {
   public static async login(loginData: LoginRequestData): Promise<LoginReturnData> {
-    const response = await AuthorizationInstance.post('/api/v1/auth/login', loginData, {withCredentials:true})
+    const response = await AuthorizationInstance.post('/api/v1/auth/login', loginData)
     return response.data;
   }
 
@@ -18,9 +18,7 @@ export class AuthorizationService {
   }
 
   public static async refresh(): Promise<{ accessToken: string }> {
-    const response = await AuthorizationInstance.post('/api/v1/auth/refresh', {
-      withCredentials: true,
-    });
+    const response = await AuthorizationInstance.post('/api/v1/auth/refresh');
 
     if (response.data.accessToken) {
       localStorage.setItem('access_token', response.data.accessToken);
