@@ -7,7 +7,6 @@ import {confirmPasswordValidation, loginValidation, passwordValidation} from "..
 import useFetching from "../../../../../shared/hooks/useFetching.ts";
 import type {
   RegistrationRequestData,
-  RegistrationReturnData
 } from "../../../../../api/types/api-types.ts";
 import {AuthorizationService} from "../../../../../api/AuthorizationService.ts";
 import {useFormValidationContext} from "../../../../../shared/hooks/useFormValidationContext.ts";
@@ -18,18 +17,12 @@ export const  RegistrationForm: FC<AuthForm> = ({
     onClose
    }) => {
 
-  const {setIsAuthenticated,authenticate} = userSlice.actions;
+  const {setIsAuthenticated} = userSlice.actions;
   const dispatch = useAppDispatch();
   const {error:registerError,fetching:registerFetch,clearError}
-      = useFetching<RegistrationReturnData,[RegistrationRequestData]>(AuthorizationService.authorizationRegister,{
-    onSuccess: (data) => {
-
-      const userData = {
-        id:data.id,
-        login:data.login
-      }
+      = useFetching<number,[RegistrationRequestData]>(AuthorizationService.register,{
+    onSuccess: () => {
       dispatch(() => dispatch(setIsAuthenticated(true)))
-      dispatch(() => dispatch(authenticate(userData)))
       if (onClose) {
         onClose();
       }

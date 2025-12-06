@@ -5,12 +5,14 @@ export const TranscriptionInstance = axios.create({
   baseURL: 'http://localhost:8080',
   headers: {
     'Accept': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
   },
+  withCredentials:true
 });
 
 TranscriptionInstance.interceptors.request.use(
     async (config) => {
-      config.headers.Authorization = localStorage.getItem('access_token');
+      config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
       return config;
     }
 );
@@ -27,7 +29,7 @@ TranscriptionInstance.interceptors.response.use(
         originalRequest._retry = true;
 
         try {
-          await AuthorizationService.refreshToken();
+          await AuthorizationService.refresh();
           console.log('Токен обновлен');
 
           originalRequest.headers.Authorization = localStorage.getItem('access_token');

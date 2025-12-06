@@ -18,7 +18,7 @@ export const LoginForm:FC<AuthForm> = ({
     onClose,
    }) => {
 
-  const {error:loginError,fetching:loginFetch,clearError} = useFetching<LoginReturnData,[LoginRequestData]>(AuthorizationService.authorizationLogin,{
+  const {error:loginError,fetching:loginFetch,clearError} = useFetching<LoginReturnData,[LoginRequestData]>(AuthorizationService.login,{
     onSuccess: (data) => {
       console.log('Токены получены:', data);
       localStorage.setItem('access_token', data.accessToken);

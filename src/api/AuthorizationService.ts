@@ -5,7 +5,7 @@ import type {
 } from "./types/api-types.ts";
 
 export class AuthorizationService {
-  public static async authorizationLogin(loginData: LoginRequestData): Promise<LoginReturnData> {
+  public static async login(loginData: LoginRequestData): Promise<LoginReturnData> {
     const response = await AuthorizationInstance.post('/api/v1/auth/login', loginData);
 
     localStorage.setItem('access_token', response.data.accessToken);
@@ -14,13 +14,13 @@ export class AuthorizationService {
     return response.data;
   }
 
-  public static async authorizationRegister(): Promise<number> {
+  public static async register(): Promise<number> {
     const response = await AuthorizationInstance.post('/api/v1/auth/sign-up');
 
     return response.status;
   }
 
-  public static async refreshToken(): Promise<LoginReturnData> {
+  public static async refresh(): Promise<LoginReturnData> {
     const refreshToken = localStorage.getItem('refresh_token');
 
     if (!refreshToken) {
