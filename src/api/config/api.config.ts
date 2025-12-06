@@ -1,50 +1,43 @@
-import {AuthorizationService} from "../AuthorizationService.ts";
 import axios from "axios";
 import {userSlice} from "../../app/store/reducers/UserSlice.ts";
-import {store} from '../../main.tsx';
+import {AuthorizationService} from "../AuthorizationService.ts";
 
-const { setAuth } = userSlice.actions;
-export const authInstance = axios.create({
-  baseURL: 'http://localhost:8080',
-  withCredentials: true,
-  headers: {
-    Accept: 'application/json',
-  },
-});
+export const TranscriptionInstance = axios.create({
+    baseURL: 'http://localhost:8080',
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+    },
+  });
+TranscriptionInstance.interceptors.request.use(
+    async (config) => {
+      config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
+      return config;
+    }
+);
 
-export const apiInstance = axios.create({
-  baseURL: 'http://localhost:8080',
-  headers: {
-    Accept: 'application/json',
-  },
-});
-
-apiInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem('access_token');
-  if (token) {
-    config.headers = config.headers ?? {};
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-apiInstance.interceptors.response.use(
+TranscriptionInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
       const originalRequest = error.config;
+      const {setAuth} = userSlice.actions;
+      const refreshToken = localStorage.getItem('refresh_token');
 
-      if (!originalRequest) return Promise.reject(error);
-
-      if (error.response?.status === 401 && !originalRequest._retry) {
+      if (error.response?.status === 401 && !originalRequest._retry && refreshToken) {
         originalRequest._retry = true;
 
         try {
-          const data = await AuthorizationService.refresh(); // cookie передастся автоматически
-          originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
-          return apiInstance(originalRequest);
+          await AuthorizationService.refresh();
+          setAuth(true);
+          console.log('Токен обновлен');
+
+          originalRequest.headers.Authorization = localStorage.getItem('access_token');
+
+          return TranscriptionInstance(originalRequest);
         } catch (refreshError) {
+          console.log('Не удалось обновить токен, разлогиниваем');
           AuthorizationService.logout();
-          store.dispatch(setAuth(false));
+          window.location.href = '/login';
           return Promise.reject(refreshError);
         }
       }
@@ -52,3 +45,10 @@ apiInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 );
+
+export const AuthorizationInstance = axios.create({
+  baseURL: 'http://localhost:8080',
+  headers: {
+    'Accept': 'application/json',
+  },
+});

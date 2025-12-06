@@ -8,7 +8,7 @@ export const ProcessingStep:FC<StepProps> = ({
       selectedFile
    }) => {
 
-  const fileName = selectedFile ? selectedFile.title : uploadedFile?.name
+  const fileName = selectedFile ? selectedFile.filename : uploadedFile?.name
   return (
       <div className="processing-step">
         <div className="spinner"></div>

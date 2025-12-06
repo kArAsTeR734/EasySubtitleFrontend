@@ -1,4 +1,4 @@
-import {authInstance} from "./config/api.config.ts";
+import {AuthorizationInstance} from "./config/api.config.ts";
 import type {
   LoginRequestData,
   LoginReturnData,
@@ -7,7 +7,7 @@ import type {
 
 export class AuthorizationService {
   public static async login(loginData: LoginRequestData): Promise<LoginReturnData> {
-    const response = await authInstance.post('/api/v1/auth/login',
+    const response = await AuthorizationInstance.post('/api/v1/auth/login',
         loginData,
         {withCredentials:true});
 
@@ -15,13 +15,13 @@ export class AuthorizationService {
   }
 
   public static async register(registerData: RegistrationRequestData): Promise<void> {
-    const response = await authInstance.post('/api/v1/auth/register', registerData);
+    const response = await AuthorizationInstance.post('/api/v1/auth/register', registerData);
 
     return response.data;
   }
 
   public static async refresh(): Promise<{ accessToken: string }> {
-    const response = await authInstance.get('/api/v1/auth/refresh', {
+    const response = await AuthorizationInstance.get('/api/v1/auth/refresh', {
       withCredentials: true,
     });
 
