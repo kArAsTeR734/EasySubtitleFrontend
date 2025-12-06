@@ -25,7 +25,7 @@ export class AuthorizationService {
       localStorage.setItem('access_token', response.data.accessToken);
     }
 
-    return response.data; // { accessToken: string }
+    return response.data;
   }
 
   public static async logout(): Promise<void> {

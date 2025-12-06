@@ -28,7 +28,6 @@ const Header = () => {
       active: false
     },
   ]
-  console.log(isAuth);
 
   return (
     <header className="header" data-js-overlay-menu="">
