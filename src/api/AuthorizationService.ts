@@ -2,6 +2,7 @@ import {AuthorizationInstance} from "./config/api.config.ts";
 import type {
   LoginRequestData,
   LoginReturnData,
+  RegistrationRequestData,
 } from "./types/api-types.ts";
 
 export class AuthorizationService {
@@ -14,13 +15,13 @@ export class AuthorizationService {
     return response.data;
   }
 
-  public static async register(): Promise<number> {
-    const response = await AuthorizationInstance.post('/api/v1/auth/register');
+  public static async register(registerData: RegistrationRequestData): Promise<void> {
+    const response = await AuthorizationInstance.post('/api/v1/auth/register', registerData);
 
-    return response.status;
+    return response.data;
   }
 
-  public static async refresh(): Promise<LoginReturnData> {
+  public static async refreshToken(): Promise<LoginReturnData> {
     const refreshToken = localStorage.getItem('refresh_token');
 
     if (!refreshToken) {

@@ -14,7 +14,7 @@ export const  RegistrationForm: FC<AuthForm> = ({
    }) => {
 
   const {error:registerError,fetching:registerFetch,clearError}
-      = useFetching<number,[RegistrationRequestData]>(AuthorizationService.register,{
+      = useFetching<void,[RegistrationRequestData]>(AuthorizationService.register,{
     onSuccess: () => {
       if (onClose) {
         onClose();
