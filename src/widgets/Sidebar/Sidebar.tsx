@@ -89,7 +89,6 @@ const Sidebar = () => {
           'sidebar__content--visible': isOpen,
           'sidebar__content--hidden': !isOpen
         })}>
-
         </div>
       </section>
   );
