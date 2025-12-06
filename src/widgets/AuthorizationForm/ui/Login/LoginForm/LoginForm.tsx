@@ -42,6 +42,7 @@ export const LoginForm:FC<AuthForm> = ({
       const data = await loginFetch(loginData);
       if(data){
         localStorage.setItem('access_token',data.accessToken);
+        window.location.reload();
         dispatch(setAuth(true));
         onClose();
       }
