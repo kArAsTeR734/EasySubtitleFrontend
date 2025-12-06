@@ -1,4 +1,5 @@
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
+import {AuthorizationService} from "../../../api/AuthorizationService.ts";
 
 interface UserState {
   isAuthenticated:boolean,
@@ -25,6 +26,7 @@ export const userSlice = createSlice({
     },
     logout:(state)=>{
       state.isAuthenticated = false;
+      AuthorizationService.logout();
     }
   }
 });
