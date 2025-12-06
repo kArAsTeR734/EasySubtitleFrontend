@@ -11,7 +11,7 @@ export const useInitializeUser = () => {
   const { data: user, isSuccess, isError } = useQuery({
     queryKey: ["me"],
     queryFn: () => UserService.getUserInfo(),
-    enabled: !!localStorage.getItem("access_token"), // запускаем только если токен есть
+    enabled: !!localStorage.getItem("access_token"),
     retry: false,
   });
 

@@ -21,9 +21,8 @@ TranscriptionInstance.interceptors.response.use(
     async (error) => {
       const originalRequest = error.config;
       const {setAuth} = userSlice.actions;
-      const refreshToken = localStorage.getItem('refresh_token');
 
-      if (error.response?.status === 401 && !originalRequest._retry && refreshToken) {
+      if (error.response?.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
 
         try {
@@ -40,7 +39,6 @@ TranscriptionInstance.interceptors.response.use(
           return Promise.reject(refreshError);
         }
       }
-
       return Promise.reject(error);
     }
 );

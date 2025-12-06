@@ -22,7 +22,7 @@ export const LoginForm:FC<AuthForm> = ({
   const {setAuth}= userSlice.actions;
   const dispatch = useAppDispatch();
 
-  const { mutate: loginFetch, error, reset: clearError,isSuccess } = useLogin();
+  const { mutate: loginFetch, error, reset: clearError } = useLogin();
 
   const {
     register,
@@ -40,10 +40,8 @@ export const LoginForm:FC<AuthForm> = ({
 
     try {
       loginFetch(loginData);
-      if(isSuccess){
-        dispatch(setAuth(true));
-        onClose();
-      }
+      dispatch(setAuth(true));
+      onClose();
     } catch (err) {
       console.error("Ошибка логина", err);
     } finally {
