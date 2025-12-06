@@ -1,12 +1,9 @@
 import {AuthorizationService} from "../AuthorizationService.ts";
-import {userSlice} from "../../app/store/reducers/UserSlice.ts";
-import {useAppDispatch} from "../../shared/hooks/redux.ts";
 import axios from "axios";
+import {userSlice} from "../../app/store/reducers/UserSlice.ts";
+import {store} from '../../main.tsx';
 
 const { setAuth } = userSlice.actions;
-// eslint-disable-next-line react-hooks/rules-of-hooks
-const dispatch = useAppDispatch()
-
 export const authInstance = axios.create({
   baseURL: 'http://localhost:8080',
   withCredentials: true,
@@ -47,7 +44,7 @@ apiInstance.interceptors.response.use(
           return apiInstance(originalRequest);
         } catch (refreshError) {
           AuthorizationService.logout();
-          dispatch(setAuth(false));
+          store.dispatch(setAuth(false));
           return Promise.reject(refreshError);
         }
       }
