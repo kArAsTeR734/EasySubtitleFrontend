@@ -36,7 +36,7 @@ TranscriptionInstance.interceptors.response.use(
           return TranscriptionInstance(originalRequest);
         } catch (refreshError) {
           console.log('Не удалось обновить токен, разлогиниваем');
-          AuthorizationService.logout();
+          await AuthorizationService.logout();
           store.dispatch(setAuth(false));
           return Promise.reject(refreshError);
         }
