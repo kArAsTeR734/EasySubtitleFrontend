@@ -8,6 +8,8 @@ import useFetching from "../../../../../shared/hooks/useFetching.ts";
 import {AuthorizationService} from "../../../../../api/AuthorizationService.ts";
 import {loginValidation, passwordValidation} from "../../../config/validationConfig.ts";
 import {useFormValidationContext} from "../../../../../shared/hooks/useFormValidationContext.ts";
+import {userSlice} from "../../../../../app/store/reducers/UserSlice.ts";
+import {useAppDispatch} from "../../../../../shared/hooks/redux.ts";
 
 export interface LoginFormInput {
   login: string,
@@ -18,11 +20,15 @@ export const LoginForm:FC<AuthForm> = ({
     onClose,
    }) => {
 
+  const {setIsAuthenticated}= userSlice.actions;
+  const dispatch = useAppDispatch();
+
   const {error:loginError,fetching:loginFetch,clearError} = useFetching<LoginReturnData,[LoginRequestData]>(AuthorizationService.login,{
     onSuccess: (data) => {
       console.log('Токены получены:', data);
       localStorage.setItem('access_token', data.accessToken);
       localStorage.setItem('refresh_token', data.refreshToken);
+      dispatch(setIsAuthenticated(true));
       onClose();
     },
     onError: (error) => {

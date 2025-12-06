@@ -9,9 +9,6 @@ export class AuthorizationService {
   public static async login(loginData: LoginRequestData): Promise<LoginReturnData> {
     const response = await AuthorizationInstance.post('/api/v1/auth/login', loginData);
 
-    localStorage.setItem('access_token', response.data.accessToken);
-    localStorage.setItem('refresh_token', response.data.refreshToken);
-
     return response.data;
   }
 
@@ -21,7 +18,7 @@ export class AuthorizationService {
     return response.data;
   }
 
-  public static async refreshToken(): Promise<LoginReturnData> {
+  public static async refresh(): Promise<LoginReturnData> {
     const refreshToken = localStorage.getItem('refresh_token');
 
     if (!refreshToken) {

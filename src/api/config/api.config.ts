@@ -7,7 +7,6 @@ export const TranscriptionInstance = axios.create({
     'Accept': 'application/json',
     'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
   },
-  withCredentials:true
 });
 
 TranscriptionInstance.interceptors.request.use(
@@ -52,5 +51,4 @@ export const AuthorizationInstance = axios.create({
   headers: {
     'Accept': 'application/json',
   },
-  withCredentials:true
 });
