@@ -11,7 +11,7 @@ interface RegistrationRequestDataInterface {
   passwordConfirmed: string;
 }
 
-interface LoginReturnDataInterface {
+export interface LoginReturnDataInterface {
   accessToken: string;
 }
 

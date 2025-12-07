@@ -15,8 +15,6 @@ export class AuthorizationService {
 
   public static async refresh(): Promise<{ accessToken: string }> {
     const response = await AuthorizationInstance.post('/api/v1/auth/refresh');
-    console.log('Current cookies:', document.cookie);
-    console.log('Sending refresh request...');
     localStorage.setItem('access_token', response.data.accessToken);
     window.location.reload();
 

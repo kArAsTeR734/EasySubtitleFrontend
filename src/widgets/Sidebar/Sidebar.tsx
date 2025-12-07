@@ -25,8 +25,12 @@ const Sidebar = () => {
             id: String(file.id),
           };
         });
-
-        setFiles(transformedFiles);
+        if(isAuth){
+          setFiles(transformedFiles);
+        }
+        else{
+          setFiles([]);
+        }
       },
       onError: (error) => {
         console.error('💥 Ошибка загрузки:', error);
@@ -38,19 +42,19 @@ const Sidebar = () => {
     await uploadFileFetching(page, pageSize);
     console.log('Запрос получил данные');
   };
+  const isAuthorizated = !!isAuth;
 
   useEffect(() => {
-    if (!isAuth) {
+    if (!isAuthorizated) {
       return;
     }
     getNewFiles();
-  }, [isAuth]);
+  }, [isAuthorizated]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  const isAuthorizated = !!isAuth;
 
   console.log('Длина массива с данными', files.length);
   return (

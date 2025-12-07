@@ -21,8 +21,13 @@ export const LoginForm: FC<AuthForm> = ({ onClose }) => {
 
   const { mutateAsync: loginFetch, error, reset: clearError } = useLogin();
 
-  const { register, handleSubmit, reset, shouldShowError, getErrorMessage } =
-    useFormValidationContext<LoginFormInput>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    shouldShowError,
+    getErrorMessage
+  } = useFormValidationContext<LoginFormInput>();
 
   const onSubmit: SubmitHandler<LoginFormInput> = async (formData) => {
     const loginData: LoginRequestData = {

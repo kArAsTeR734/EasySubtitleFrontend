@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { UserService } from '@/api/UserService.ts';
+import { UserService } from '@/api/services/UserService.ts';
 import { useEffect } from 'react';
 import { useAppDispatch } from '@hooks/redux.ts';
 import { userSlice } from '@app/store/reducers/UserSlice.ts';

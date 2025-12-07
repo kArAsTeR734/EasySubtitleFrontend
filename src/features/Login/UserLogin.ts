@@ -7,8 +7,5 @@ export const useLogin = () => {
     onSuccess: (data) => {
       localStorage.setItem('access_token', data.accessToken);
     },
-    onError: (error) => {
-      console.error('Login error:', error);
-    },
   });
 };
