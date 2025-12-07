@@ -13,8 +13,8 @@ const Footer = () => {
             <div className="footer__block">
               <div className="footer__header">О EazySubtitle</div>
               {aboutLinks.map(({ label, href }) => (
-                <div key={crypto.randomUUID()} className="footer__item">
-                  <a href={href} key={Date.now()} className="footer__link">
+                <div className="footer__item">
+                  <a href={href} className="footer__link">
                     {label}
                   </a>
                 </div>
@@ -23,8 +23,8 @@ const Footer = () => {
             <div className="footer__block">
               <div className="footer__header">Перевод</div>
               {translationLinks.map(({ label, href }) => (
-                <div key={crypto.randomUUID()} className="footer__item">
-                  <a href={href} key={Date.now()} className="footer__link">
+                <div  className="footer__item">
+                  <a href={href} className="footer__link">
                     {label}
                   </a>
                 </div>

@@ -3,7 +3,9 @@ import react from '@vitejs/plugin-react'
 import path from 'path';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react()
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
@@ -16,8 +18,6 @@ export default defineConfig({
       '@utils': path.resolve(__dirname, 'src/utils'),
       '@assets': path.resolve(__dirname, 'src/assets'),
       '@hooks': path.resolve(__dirname, 'src/shared/hooks'),
-      '@ui': path.resolve(__dirname, 'src/shared/ui'),
-      '@lib': path.resolve(__dirname, 'src/shared/lib'),
       '@types': path.resolve(__dirname, 'src/shared/types'),
       '@api': path.resolve(__dirname, 'src/shared/api'),
     }
