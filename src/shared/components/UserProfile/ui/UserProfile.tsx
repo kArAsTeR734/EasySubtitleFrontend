@@ -26,7 +26,6 @@ const UserProfile = () => {
               'user-profile__data--hidden': !isHovering,
             })}
           >
-            <p className="user-profile__id">id: {user?.id}</p>
             <p className="user-profile__login">{user?.login}</p>
           </div>
         </div>
