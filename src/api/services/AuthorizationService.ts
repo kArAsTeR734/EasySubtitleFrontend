@@ -1,5 +1,5 @@
 import { AuthorizationInstance } from '../config/api.config.ts';
-import type { LoginRequestData, LoginReturnData, RegistrationRequestData } from './types/api-types.ts';
+import { type LoginRequestData, type LoginReturnData, type RegistrationRequestData } from '@/api/types/api-types.ts';
 
 export class AuthorizationService {
   public static async login(loginData: LoginRequestData): Promise<LoginReturnData> {

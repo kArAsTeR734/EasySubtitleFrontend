@@ -23,7 +23,7 @@ const Footer = () => {
             <div className="footer__block">
               <div className="footer__header">Перевод</div>
               {translationLinks.map(({ label, href }) => (
-                <div  className="footer__item">
+                <div className="footer__item">
                   <a href={href} className="footer__link">
                     {label}
                   </a>
