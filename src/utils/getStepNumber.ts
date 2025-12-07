@@ -1,4 +1,4 @@
-import type {TranscriptionSteps} from "../shared/types/types.ts";
+import type { TranscriptionSteps } from '../shared/types/types.ts';
 
 export const getStepNumber = (step: TranscriptionSteps): number => {
   switch (step) {

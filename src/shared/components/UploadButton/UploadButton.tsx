@@ -1,25 +1,24 @@
-import {useRef, type FC} from 'react';
-import Button from "../Button";
-import clsx from "clsx";
+import { useRef, type FC } from 'react';
+import Button from '../Button';
+import clsx from 'clsx';
 
 interface UploadButtonProps {
-  onFileUpload: (file: File) => void,
-  acceptedFileTypes?: string,
-  className?: string,
-  fileName: string,
-  setFileName: (fileName: string) => void,
-  maxFileSize?: number
+  onFileUpload: (file: File) => void;
+  acceptedFileTypes?: string;
+  className?: string;
+  fileName: string;
+  setFileName: (fileName: string) => void;
+  maxFileSize?: number;
 }
 
 export const UploadButton: FC<UploadButtonProps> = ({
   onFileUpload,
-  acceptedFileTypes = ".wav",
+  acceptedFileTypes = '.wav',
   maxFileSize = 1024 * 1024 * 1024 * 5,
   fileName,
   setFileName,
-  className = ''
-  }) => {
-
+  className = '',
+}) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleButtonClick = () => {
@@ -41,22 +40,22 @@ export const UploadButton: FC<UploadButtonProps> = ({
   };
 
   return (
-      <div className={clsx('file-upload', className)}>
-        <Button
-            type="button"
-            className={clsx('button button--upload-file h6', {'has-file': fileName})}
-            onClick={handleButtonClick}
-        >
-          {fileName ? `Файл: ${fileName}` : 'Загрузить файл'}
-        </Button>
+    <div className={clsx('file-upload', className)}>
+      <Button
+        type="button"
+        className={clsx('button button--upload-file h6', { 'has-file': fileName })}
+        onClick={handleButtonClick}
+      >
+        {fileName ? `Файл: ${fileName}` : 'Загрузить файл'}
+      </Button>
 
-        <input
-            ref={fileInputRef}
-            type="file"
-            onChange={(e) => handleFileSelect(e.target.files)}
-            className="visually-hidden"
-            accept={acceptedFileTypes}
-        />
-      </div>
+      <input
+        ref={fileInputRef}
+        type="file"
+        onChange={(e) => handleFileSelect(e.target.files)}
+        className="visually-hidden"
+        accept={acceptedFileTypes}
+      />
+    </div>
   );
 };

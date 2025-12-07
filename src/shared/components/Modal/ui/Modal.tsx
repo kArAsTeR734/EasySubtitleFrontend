@@ -1,6 +1,6 @@
-import clsx from "clsx";
-import React, {type FC, type ReactNode, useCallback, useEffect, useState} from "react";
-import './Modal.scss'
+import clsx from 'clsx';
+import React, { type FC, type ReactNode, useCallback, useEffect, useState } from 'react';
+import './Modal.scss';
 
 interface ModalProps {
   className?: string;
@@ -9,12 +9,7 @@ interface ModalProps {
   onClose?: () => void;
 }
 
-export const Modal: FC<ModalProps> = ({
-    className,
-    children,
-    isOpen,
-    onClose
-  }) => {
+export const Modal: FC<ModalProps> = ({ className, children, isOpen, onClose }) => {
   const [isMounted, setIsMounted] = useState(false);
 
   const mods: Record<string, boolean | undefined> = {
@@ -23,15 +18,15 @@ export const Modal: FC<ModalProps> = ({
 
   const closeHandler = useCallback(() => {
     onClose?.();
-  },[isMounted]);
+  }, [isMounted]);
 
   const onKeyDown = useCallback(
-      (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-          closeHandler();
-        }
-      },
-      [closeHandler]
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeHandler();
+      }
+    },
+    [closeHandler],
   );
 
   const onContentClick = (e: React.MouseEvent) => {
@@ -53,32 +48,31 @@ export const Modal: FC<ModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      setIsMounted(true)
+      setIsMounted(true);
     }
-  }, [isOpen])
+  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen) {
-      window.addEventListener('keydown', onKeyDown)
+      window.addEventListener('keydown', onKeyDown);
     }
 
     return () => {
-      window.removeEventListener('keydown', onKeyDown)
-    }
-  }, [isOpen, onKeyDown])
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [isOpen, onKeyDown]);
 
-  if (!isMounted) return null
+  if (!isMounted) return null;
 
   return (
-      <>
-        <div className={clsx('modal-overlay', {'opened': isOpen})} onClick={closeHandler}>
-          <div className={clsx('modal', mods, [className])}>
-            <div className='modal__content' onClick={onContentClick}>
-              {children}
-            </div>
+    <>
+      <div className={clsx('modal-overlay', { opened: isOpen })} onClick={closeHandler}>
+        <div className={clsx('modal', mods, [className])}>
+          <div className="modal__content" onClick={onContentClick}>
+            {children}
           </div>
         </div>
-      </>
-
+      </div>
+    </>
   );
 };

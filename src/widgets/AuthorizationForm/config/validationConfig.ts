@@ -1,23 +1,23 @@
-import type {RegistrationFormInput} from "../ui/types.ts";
+import type { RegistrationFormInput } from '../ui/types.ts';
 
 export const loginValidation = {
-  required: "Поле обязательно к заполнению",
+  required: 'Поле обязательно к заполнению',
   minLength: {
     value: 5,
-    message: "Минимальная длина 7 символов"
-  }
-}
+    message: 'Минимальная длина 7 символов',
+  },
+};
 
 export const passwordValidation = {
-  required: "Поле обязательно к заполнению" as const,
+  required: 'Поле обязательно к заполнению' as const,
   minLength: {
     value: 5,
-    message: "Минимальная длина 6 символов" as const
-  }
+    message: 'Минимальная длина 6 символов' as const,
+  },
 };
 
 export const confirmPasswordValidation = {
-  required: "Подтвердите пароль" as const,
+  required: 'Подтвердите пароль' as const,
   validate: (value: string, formValues: RegistrationFormInput) =>
-      value === formValues.password || "Пароли не совпадают"
+    value === formValues.password || 'Пароли не совпадают',
 };

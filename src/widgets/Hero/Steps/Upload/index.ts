@@ -1,3 +1,3 @@
-import {UploadStep} from "./UploadStep.tsx";
+import { UploadStep } from './UploadStep.tsx';
 
 export default UploadStep;

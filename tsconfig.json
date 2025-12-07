@@ -1,19 +1,41 @@
 {
-  "files": [],
   "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@shared/*": ["src/shared/*"],
+      "@app/*": ["src/app/*"],
       "@components/*": ["src/shared/components/*"],
       "@widgets/*": ["src/widgets/*"],
+      "@shared/*": ["src/shared/*"],
       "@pages/*": ["src/pages/*"],
       "@styles/*": ["src/styles/*"],
       "@utils/*": ["src/utils/*"],
       "@assets/*": ["src/assets/*"],
-      "@utils/getStepNumber": ["src/utils/getStepNumber.ts"] // ← добавить конкретный файл
+      "@hooks/*": ["src/shared/hooks/*"],
+      "@api/*": ["src/shared/api/*"]
     }
   },
+  "include": [
+    "src",
+    "vite.config.ts"
+  ],
+  "exclude": ["node_modules"],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }

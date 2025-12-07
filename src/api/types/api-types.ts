@@ -1,18 +1,18 @@
-import type {TranscriptionTimestamp} from "../../shared/types/transcriptions.ts";
+import type { TranscriptionTimestamp } from '@shared/types/transcriptions.ts';
 
 interface TranscriptionResultInterface {
-  scripts: TranscriptionTimestamp[],
-  count: number
+  scripts: TranscriptionTimestamp[];
+  count: number;
 }
 
 interface RegistrationRequestDataInterface {
-  login: string,
-  password: string,
-  passwordConfirmed: string
+  login: string;
+  password: string;
+  passwordConfirmed: string;
 }
 
 interface LoginReturnDataInterface {
-  accessToken: string,
+  accessToken: string;
 }
 
 export interface Timestamp {
@@ -42,7 +42,7 @@ export type TranscriptionResult = TranscriptionResultInterface;
 
 export type GetAllTranscriptionsResult = GetAllTranscriptionsInterface;
 
-export type LoginRequestData = Omit<RegistrationRequestData, 'passwordConfirmed'>
+export type LoginRequestData = Omit<RegistrationRequestData, 'passwordConfirmed'>;
 
 export type LoginReturnData = LoginReturnDataInterface;
 

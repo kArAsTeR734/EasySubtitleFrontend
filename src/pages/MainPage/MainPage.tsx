@@ -1,25 +1,25 @@
-import TranscriptionWorkspace from "../../widgets/Hero";
-import Header from "../../widgets/Header";
-import Sidebar from "../../widgets/Sidebar";
-import './MainPage.scss'
-import TranscriptionInstruction from "../../widgets/Hero/TranscriptionInstruction";
-import Footer from "../../widgets/Footer/ui/Footer";
+import TranscriptionWorkspace from '../../widgets/Hero';
+import Header from '../../widgets/Header';
+import Sidebar from '../../widgets/Sidebar';
+import './MainPage.scss';
+import TranscriptionInstruction from '../../widgets/Hero/TranscriptionInstruction';
+import Footer from '../../widgets/Footer/ui/Footer';
 
 const MainPage = () => {
   return (
-      <>
-        <Header/>
-        <div className="page-wrapper">
-          <div className="page-content">
-            <Sidebar/>
-            <main className="main-content">
-              <TranscriptionWorkspace/>
-              <TranscriptionInstruction/>
-            </main>
-          </div>
+    <>
+      <Header />
+      <div className="page-wrapper">
+        <div className="page-content">
+          <Sidebar />
+          <main className="main-content">
+            <TranscriptionWorkspace />
+            <TranscriptionInstruction />
+          </main>
         </div>
-        <Footer/>
-      </>
+      </div>
+      <Footer />
+    </>
   );
 };
 

@@ -1,3 +1,3 @@
-import {AdvantagesButtons} from "./AdvantagesButtons";
+import { AdvantagesButtons } from './AdvantagesButtons';
 
 export default AdvantagesButtons;

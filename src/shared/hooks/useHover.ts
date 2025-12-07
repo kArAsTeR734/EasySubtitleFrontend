@@ -1,8 +1,6 @@
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useState, type RefObject } from 'react';
 
-export const useHover = <T extends HTMLElement = HTMLElement>(
-    ref: RefObject<T | null>
-): boolean => {
+export const useHover = <T extends HTMLElement = HTMLElement>(ref: RefObject<T | null>): boolean => {
   const [isHovering, setIsHovering] = useState<boolean>(false);
 
   const on = () => setIsHovering(true);
@@ -26,4 +24,3 @@ export const useHover = <T extends HTMLElement = HTMLElement>(
 
   return isHovering;
 };
-

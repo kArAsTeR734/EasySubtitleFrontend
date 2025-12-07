@@ -1,3 +1,3 @@
-import {Input} from './ui/Input'
+import { Input } from './ui/Input';
 
 export default Input;

@@ -1,7 +1,7 @@
 interface TimestampInterface {
-  hours: number,
-  minutes: number,
-  seconds: number,
+  hours: number;
+  minutes: number;
+  seconds: number;
 }
 
 export type Timestamp = TimestampInterface;
@@ -21,4 +21,3 @@ interface TranscriptionResultInterface {
 }
 
 export type TranscriptionResult = TranscriptionResultInterface;
-

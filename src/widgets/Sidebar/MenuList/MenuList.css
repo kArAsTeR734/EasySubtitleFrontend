@@ -16,7 +16,8 @@
   cursor: pointer;
   transition: 0.2s all;
 }
-.menu__list-item:active, .menu__list-item:hover {
+.menu__list-item:active,
+.menu__list-item:hover {
   color: #fff;
   background: chartreuse;
 }

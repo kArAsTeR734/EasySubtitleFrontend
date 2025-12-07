@@ -1,6 +1,6 @@
-import type {FileData} from "../api/types/api-types.ts";
+import type { FileData } from '../api/types/api-types.ts';
 
-function getFilesCount(files:FileData[]){
+function getFilesCount(files: FileData[]) {
   return files.length == 0;
 }
 

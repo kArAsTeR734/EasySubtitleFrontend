@@ -1,3 +1,3 @@
-import {TranscriptionWorkspace} from "./TranscriptionWorkspace";
+import { TranscriptionWorkspace } from './TranscriptionWorkspace';
 
 export default TranscriptionWorkspace;

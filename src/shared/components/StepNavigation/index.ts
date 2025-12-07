@@ -1,3 +1,3 @@
-import {StepNavigation} from "./StepNavigation";
+import { StepNavigation } from './StepNavigation';
 
 export default StepNavigation;

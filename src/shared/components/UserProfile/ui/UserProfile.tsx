@@ -1,42 +1,37 @@
-import './UserProfile.scss'
-import {useRef} from "react";
-import {useHover} from "../../../hooks/useHover.ts";
-import clsx from "clsx";
-import {useAppSelector} from "../../../hooks/redux.ts";
+import './UserProfile.scss';
+import { useRef } from 'react';
+import { useHover } from '@hooks/useHover.ts';
+import clsx from 'clsx';
+import { useAppSelector } from '@hooks/redux.ts';
 
 const UserProfile = () => {
-
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const isHovering = useHover(anchorRef);
   const { user } = useAppSelector((state) => state.userReducer);
 
   if (!user) return null;
   return (
-      <>
-        <div className="user-profile">
-          <p className="user-profile__name">
-            <span>{user?.login}</span>
-          </p>
-          <div className="user-profile__about">
-            <a ref={anchorRef}
-               href="#"
-               className="user-profile__image">
-              <img src="/src/assets/profile-icon.svg"
-                   alt="profile"
-                   width="64"
-                   height="64"
-                   loading="lazy"/>
-            </a>
-            <div className={clsx("user-profile__data",{
-              "user-profile__data--visible":isHovering,
-              "user-profile__data--hidden":!isHovering
-            })}>
-              <p className="user-profile__id">id: {user?.id}</p>
-              <p className="user-profile__login">{user?.login}</p>
-            </div>
+    <>
+      <div className="user-profile">
+        <p className="user-profile__name">
+          <span>{user?.login}</span>
+        </p>
+        <div className="user-profile__about">
+          <a ref={anchorRef} href="#" className="user-profile__image">
+            <img src="/src/assets/profile-icon.svg" alt="profile" width="64" height="64" loading="lazy" />
+          </a>
+          <div
+            className={clsx('user-profile__data', {
+              'user-profile__data--visible': isHovering,
+              'user-profile__data--hidden': !isHovering,
+            })}
+          >
+            <p className="user-profile__id">id: {user?.id}</p>
+            <p className="user-profile__login">{user?.login}</p>
           </div>
         </div>
-      </>
+      </div>
+    </>
   );
 };
 
