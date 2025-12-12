@@ -5,7 +5,7 @@ import { AuthorizationService } from '@/api/services/AuthorizationService.ts';
 
 let isRefreshing = false;
 export const TranscriptionInstance = axios.create({
-  baseURL: 'http://0.0.0.0:8080',
+  baseURL: 'http://localhost:8080',
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${localStorage.getItem('access_token')}`,
@@ -43,7 +43,7 @@ TranscriptionInstance.interceptors.response.use(
 );
 
 export const AuthorizationInstance = axios.create({
-  baseURL: 'http://0.0.0.0:8080',
+  baseURL: 'http://localhost:8080',
   headers: {
     'Content-Type': 'application/json',
   },

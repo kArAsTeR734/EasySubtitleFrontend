@@ -4,7 +4,7 @@ import { getTranscription } from '@/features/GetTranscription.ts';
 import { type FC, useEffect } from 'react';
 import useFetching from '../../../../shared/hooks/useFetching.ts';
 
-interface ResultStepProps extends StepProps {
+export interface ResultStepProps extends StepProps {
   fileId: string | null;
 }
 

@@ -9,7 +9,7 @@ const TranscriptionSteps = {
 
 export type TranscriptionSteps = (typeof TranscriptionSteps)[keyof typeof TranscriptionSteps];
 
-interface StepInterface {
+export interface StepInterface {
   onFileUpload: (file: File) => void;
   uploadedFile?: File | null;
   processingResult?: TranscriptionResult | null;

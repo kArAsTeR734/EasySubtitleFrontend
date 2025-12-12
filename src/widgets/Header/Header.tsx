@@ -5,7 +5,7 @@ import Logo from '../../shared/components/Logo';
 import AuthorizationForm from '../AuthorizationForm';
 import { useAppDispatch, useAppSelector } from '@hooks/redux.ts';
 import { modalSlice } from '@app/store/reducers/ModalSlice.ts';
-import UserProfile from '../../shared/components/UserProfile/ui/UserProfile.tsx';
+import UserProfile from '@/features/User/UserProfile/ui/UserProfile.tsx';
 import { userSlice } from '@app/store/reducers/UserSlice.ts';
 
 const Header = () => {

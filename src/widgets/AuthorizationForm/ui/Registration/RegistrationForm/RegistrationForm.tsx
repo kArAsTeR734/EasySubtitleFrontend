@@ -8,7 +8,10 @@ import type { RegistrationRequestData } from '@/api/types/api-types.ts';
 import { useFormValidationContext } from '@hooks/useFormValidationContext.ts';
 import { useRegistration } from '@/features/Registratiton/useRegister.ts';
 
-export const RegistrationForm: FC<AuthForm> = ({ onClose, switchAuthMode }) => {
+export const RegistrationForm: FC<AuthForm> = ({
+  onClose,
+  switchAuthMode
+  }) => {
   const { mutate: registration, reset: clearError, error } = useRegistration();
 
   const { register, handleSubmit, shouldShowError, getErrorMessage, reset } =
@@ -23,9 +26,7 @@ export const RegistrationForm: FC<AuthForm> = ({ onClose, switchAuthMode }) => {
     };
     try {
       registration(registerData);
-      if (switchAuthMode) {
-        switchAuthMode();
-      }
+      switchAuthMode?.();
     } finally {
       reset();
       console.log('Поля формы очищены');
