@@ -5,7 +5,7 @@ import {store} from '../../main.tsx'
 import {AuthorizationService} from "../AuthorizationService.ts";
 
 let isRefreshing = false;
-export const TranscriptionInstance = axios.create({
+export const api = axios.create({
     baseURL: 'http://localhost:8080',
     headers: {
       'Content-Type': 'application/json',
@@ -13,14 +13,14 @@ export const TranscriptionInstance = axios.create({
     },
   });
 
-TranscriptionInstance.interceptors.request.use(
+api.interceptors.request.use(
     async (config) => {
       config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
       return config;
     }
 );
 
-TranscriptionInstance.interceptors.response.use(
+api.interceptors.response.use(
     (response) => response,
     async (error) => {
       const originalRequest = error.config;
@@ -33,9 +33,8 @@ TranscriptionInstance.interceptors.response.use(
         try {
           await AuthorizationService.refresh();
           store.dispatch(setAuth(true));
-          console.log('Токен обновлен');
           originalRequest.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
-          return TranscriptionInstance(originalRequest);
+          return api(originalRequest);
         } catch (refreshError) {
           return Promise.reject(refreshError);
         }
@@ -44,11 +43,12 @@ TranscriptionInstance.interceptors.response.use(
     }
 );
 
-export const AuthorizationInstance = axios.create({
+export const authApi = axios.create({
   baseURL: 'http://localhost:8080',
   headers: {
     'Content-Type': 'application/json',
   },
   withCredentials:true
 });
-AuthorizationInstance.defaults.headers.common['X-Requested-With'] = null;
+
+authApi.defaults.headers.common['X-Requested-With'] = null;

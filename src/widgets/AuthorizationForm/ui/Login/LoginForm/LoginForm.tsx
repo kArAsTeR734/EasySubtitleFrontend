@@ -38,25 +38,18 @@ export const LoginForm:FC<AuthForm> = ({
       password: formData.password,
     };
 
-    try {
-      const data = await loginFetch(loginData);
-      if(data){
-        localStorage.setItem('access_token',data.accessToken);
-        window.location.reload();
-        dispatch(setAuth(true));
-        onClose();
-      }
-
-    } catch (err) {
-      console.error("Ошибка логина", err);
-    } finally {
-      reset();
-    }
+    const data = await loginFetch(loginData);
+    localStorage.setItem('access_token',data.accessToken ?? '');
+    window.location.reload();
+    dispatch(setAuth(true));
+    onClose();
+    reset();
   };
 
   const closeErrorWindowHandler = () => {
     clearError();
     onClose();
+    reset();
   }
   if(error){
     return (

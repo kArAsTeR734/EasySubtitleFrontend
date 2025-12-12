@@ -25,7 +25,6 @@ export const RegistrationForm: FC<AuthForm> = ({
   } = useFormValidationContext<RegistrationFormInput>();
 
   const onSubmit: SubmitHandler<RegistrationFormInput> = (formData) => {
-    console.log('Данные с формы отправленны');
     const registerData:RegistrationRequestData = {
       login:formData.login,
       password:formData.password,
@@ -33,13 +32,10 @@ export const RegistrationForm: FC<AuthForm> = ({
     }
     try{
       registration(registerData);
-      if (switchAuthMode) {
-        switchAuthMode();
-      }
+      switchAuthMode?.();
     }
     finally {
       reset();
-      console.log('Поля формы очищены');
     }
   }
 

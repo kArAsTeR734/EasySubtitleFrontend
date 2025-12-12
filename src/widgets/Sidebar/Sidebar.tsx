@@ -6,7 +6,7 @@ import MenuList from "./MenuList";
 import Button from "../../shared/components/Button";
 import clsx from "clsx";
 import useFetching from "../../shared/hooks/useFetching.ts";
-import {getAllTranscriptions} from "../../features/GetAllTranscriptions.ts";
+import {getAllTranscriptions} from "../../features/Transcriptions/GetAllTranscriptions.ts";
 import type {FileData} from "../../api/types/api-types.ts";
 import {useAppSelector} from "../../shared/hooks/redux.ts";
 

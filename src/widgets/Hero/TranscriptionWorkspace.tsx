@@ -11,43 +11,7 @@ import {useAppDispatch, useAppSelector} from "../../shared/hooks/redux.ts";
 import {transcriptionSlice} from "../../app/store/reducers/TranscriptionSlice.ts";
 import ResultStep from "./Steps/Result";
 import ProcessingStep from "./Steps/Processing";
-/*
-  const simulateProcessing = async () => {
-    try {
-      setTimeout(() => {
-        const mockResult = {
-          timestamps: [
-            { start: {
-                hours:0,
-                minutes:0,
-                seconds:0
-              }, end: {
-                hours:0,
-                minutes:0,
-                seconds:30
-              },
-              text: "Первая часть текста" },
-            { start: {
-                hours:0,
-                minutes: 0,
-                seconds: 30
-              }, end:{
-                hours:0,
-                minutes: 1,
-                seconds: 0
-              },
-              text: "Вторая часть текста" }
-          ],
-          summary: "Краткое содержание текста..."
-        };
-        setProcessingResult(mockResult);
-        setCurrentStep('result');
-      }, 5000);
-    } catch (error) {
-      console.error('Ошибка обработки:', error);
-    }
-  };
-  */
+
 export const TranscriptionWorkspace = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [processingResult, setProcessingResult] = useState<TranscriptionResult | null>(null);
