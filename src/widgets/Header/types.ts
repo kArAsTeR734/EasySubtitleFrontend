@@ -1,3 +1,3 @@
 export type THeaderProps = {
-  url?: string
-}
+  url?: string;
+};

@@ -1,3 +1,1 @@
-export const useStepNavigation = () => {
-
-}
+export const useStepNavigation = () => {};

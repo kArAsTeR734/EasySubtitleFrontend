@@ -1,3 +1,3 @@
-import {ResultStep} from "./ResultStep.tsx";
+import { ResultStep } from './ResultStep.tsx';
 
 export default ResultStep;

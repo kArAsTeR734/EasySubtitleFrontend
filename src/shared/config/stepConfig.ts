@@ -1,6 +1,6 @@
-import UploadStep from "../../widgets/Hero/Steps/Upload";
-import ProcessingStep from "../../widgets/Hero/Steps/Processing";
-import ResultStep from "../../widgets/Hero/Steps/Result";
+import UploadStep from '../../widgets/Hero/Steps/Upload';
+import ProcessingStep from '../../widgets/Hero/Steps/Processing';
+import ResultStep from '../../widgets/Hero/Steps/Result';
 
 export const stepConfig = {
   upload: {
@@ -17,5 +17,5 @@ export const stepConfig = {
     component: ResultStep,
     title: 'Результат перевода',
     showNavigation: true,
-  }
-}
+  },
+};

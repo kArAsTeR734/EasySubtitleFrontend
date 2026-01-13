@@ -1,17 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
-import { UserService } from "../../api/UserService";
-import { useEffect } from "react";
-import {useAppDispatch} from "../../shared/hooks/redux.ts";
-import {userSlice} from "../../app/store/reducers/UserSlice.ts";
+import { useQuery } from '@tanstack/react-query';
+import { UserService } from '@/api/services/UserService.ts';
+import { useEffect } from 'react';
+import { useAppDispatch } from '@shared/hooks/redux.ts';
+import { userSlice } from '@app/store/reducers/UserSlice.ts';
 
 export const useInitializeUser = () => {
   const dispatch = useAppDispatch();
-  const {setUser,setAuth,logout} = userSlice.actions
+  const { setUser, setAuth, logout } = userSlice.actions;
 
-  const { data: user, isSuccess, isError } = useQuery({
-    queryKey: ["me"],
+  const {
+    data: user,
+    isSuccess,
+    isError,
+  } = useQuery({
+    queryKey: ['me'],
     queryFn: () => UserService.getUserInfo(),
-    enabled: !!localStorage.getItem("access_token"),
+    enabled: !!localStorage.getItem('access_token'),
     retry: false,
   });
 
@@ -23,7 +27,7 @@ export const useInitializeUser = () => {
     if (isError) {
       dispatch(logout());
     }
-  }, [user,isSuccess]);
+  }, [user, isSuccess]);
 
   return { user };
 };

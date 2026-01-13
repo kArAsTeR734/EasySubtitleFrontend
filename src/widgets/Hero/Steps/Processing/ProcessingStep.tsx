@@ -1,20 +1,22 @@
-import type {StepProps} from "../../../../shared/types/types.ts";
-import type {FC} from "react";
-import './ProcessingStep.scss'
+import type { StepProps } from '@shared/types/types.ts';
+import type { FC } from 'react';
+import './ProcessingStep.scss';
 
-export const ProcessingStep:FC<StepProps> = ({
-     uploadedFile,
-     isLoading = true,
-      selectedFile
-   }) => {
-
-  const fileName = selectedFile ? selectedFile.filename : uploadedFile?.name
+export const ProcessingStep: FC<StepProps> = ({
+  uploadedFile,
+  isLoading = true,
+  selectedFile,
+}) => {
+  const fileName = selectedFile ? selectedFile.filename : uploadedFile?.name;
   return (
-      <div className="processing-step">
-        <div className="spinner"></div>
-        <p>Обрабатываем {fileName}...</p>
-        {isLoading && <p className="processing-step__hint">Это может занять несколько минут</p>}
-      </div>
+    <div className="processing-step">
+      <div className="spinner"></div>
+      <p>Обрабатываем {fileName}...</p>
+      {isLoading && (
+        <p className="processing-step__hint">
+          Это может занять несколько минут
+        </p>
+      )}
+    </div>
   );
 };
-

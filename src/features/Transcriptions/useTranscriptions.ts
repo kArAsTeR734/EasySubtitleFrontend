@@ -1,11 +1,11 @@
-import {useQuery} from "@tanstack/react-query";
-import {TranscriptionService} from "../../api/TranscriptionService.ts";
+import { useQuery } from '@tanstack/react-query';
+import { TranscriptionService } from '@/api/services/TranscriptionService.ts';
 
-export const useTranscriptions = (id:number) => {
+export const useTranscriptions = (id: string | null) => {
   return useQuery({
-    queryKey:['userMe',id],
-    queryFn:TranscriptionService.getTranscriptionResult(id),
-    enabled: !!localStorage.getItem('access_token'),
+    queryKey: ['transcription', id],
+    queryFn: async () => TranscriptionService.getTranscriptionResult(id ?? ''),
+    enabled: !!id,
     retry: false,
-  })
-}
+  });
+};

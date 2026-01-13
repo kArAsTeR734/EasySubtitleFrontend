@@ -1,46 +1,28 @@
-import './TranscriptionWorkspace.scss'
-import {useState} from "react";
-import type {UploadResponse} from "../../shared/types/types.ts";
-import StepNavigation from "../../shared/components/StepNavigation";
-import type {TranscriptionResult} from "../../shared/types/transcriptions.ts";
-import {stepConfig} from "../../shared/config/stepConfig.ts";
-import {uploadFile} from "../../features/FileUpload.ts";
-import useFetching from "../../shared/hooks/useFetching.ts";
-import {getStepNumber} from "../../utils/getStepNumber.ts";
-import {useAppDispatch, useAppSelector} from "../../shared/hooks/redux.ts";
-import {transcriptionSlice} from "../../app/store/reducers/TranscriptionSlice.ts";
-import ResultStep from "./Steps/Result";
-import ProcessingStep from "./Steps/Processing";
+import './TranscriptionWorkspace.scss';
+import StepNavigation from '../../shared/components/StepNavigation';
+import { stepConfig } from '@shared/config/stepConfig.ts';
+import { getStepNumber } from '@utils/getStepNumber.ts';
+import { useAppDispatch, useAppSelector } from '@shared/hooks/redux.ts';
+import { transcriptionSlice } from '@app/store/reducers/TranscriptionSlice.ts';
+import { useFileUpload } from '@/features/Transcriptions/useFileUpload.ts';
+import { getStepComponent } from '@utils/getPageSteps.ts';
+import { useMemo } from 'react';
 
 export const TranscriptionWorkspace = () => {
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [processingResult, setProcessingResult] = useState<TranscriptionResult | null>(null);
-  const [fileId, setFileId] = useState<string | null>(null);
-  const {selectedFile, currentStep} = useAppSelector(state => state.transcriptionReducer);
-  const {setCurrentStep, clearSelectedFile} = transcriptionSlice.actions
+  const { selectedFile, currentStep } = useAppSelector(
+    (state) => state.transcriptionReducer,
+  );
+  const { setCurrentStep, clearSelectedFile } = transcriptionSlice.actions;
   const dispatch = useAppDispatch();
 
-  const {isLoading: isUploading, error: uploadError, fetching: uploadFileFetching}
-      = useFetching<UploadResponse, [File]>(uploadFile, {
-    onSuccess: (data) => {
-      console.log('Файл загружен, ID:', data.id);
-      setFileId(data.id);
-    },
-    onError: (error) => {
-      console.error('Ошибка загрузки:', error);
-    },
-  });
-
-  const handleFileUpload = async (file: File) => {
-    try {
-      console.log('Загрузка файлов');
-      setUploadedFile(file);
-      await uploadFileFetching(file);
-    } catch (e) {
-      console.log(e)
-    }
-  };
-
+  const {
+    uploadedFile,
+    setUploadedFile,
+    uploadFile,
+    isUploading,
+    fileId,
+    error
+  } = useFileUpload();
 
   const handleNext = () => {
     if (currentStep === 'upload' && uploadedFile) {
@@ -53,66 +35,62 @@ export const TranscriptionWorkspace = () => {
       dispatch(setCurrentStep('upload'));
       dispatch(clearSelectedFile());
       setUploadedFile(null);
-      setProcessingResult(null);
     } else if (currentStep === 'processing') {
       dispatch(setCurrentStep('upload'));
     }
   };
 
-  const getStepComponent = () => {
-    if (selectedFile) {
-      if (selectedFile.text) {
-        return ResultStep;
-      } else {
-        return ProcessingStep;
-      }
-    }
+  const StepComponent = useMemo(
+    () => getStepComponent(selectedFile, currentStep),
+    [selectedFile, currentStep]
+  );
 
-    return stepConfig[currentStep].component;
-  };
-  const StepComponent = getStepComponent();
-  const {title, showNavigation} = stepConfig[currentStep];
+  const stepInfo = useMemo(
+    () => stepConfig[currentStep] || { title: '', showNavigation: false },
+    [currentStep]
+  );
+
+  const { title, showNavigation } = stepInfo;
 
   const isNextDisabled =
-      (currentStep === 'upload' && (!uploadedFile || isUploading || !!uploadError)) ||
-      (currentStep === 'processing' && isUploading);
+    (currentStep === 'upload' &&
+      (!uploadedFile || isUploading || !!error)) ||
+    (currentStep === 'processing' && isUploading);
 
   return (
-      <section className="hero">
-        <div className="hero--inner container">
-          <h2 className="hero__title h3">{title}</h2>
+    <section className="hero">
+      <div className="hero--inner container">
+        <h2 className="hero__title h3">{title}</h2>
 
-          {isUploading && <div>Загрузка файла...</div>}
+        {isUploading && <div>Загрузка файла...</div>}
 
-          {uploadError && (
-              <div className="error-message">
-                {uploadError}
-                <button>Перезагрузить страницу</button>
-              </div>
-          )
-          }
-          <StepComponent
-              onFileUpload={handleFileUpload}
-              uploadedFile={uploadedFile}
-              processingResult={processingResult}
-              error={uploadError}
-              isLoading={isUploading}
-              fileId={fileId}
-              selectedFile={selectedFile}
+        {error && (
+          <div className="error-message">
+            {error.message}
+            <button>Перезагрузить страницу</button>
+          </div>
+        )}
+        <StepComponent
+          onFileUpload={uploadFile}
+          uploadedFile={uploadedFile}
+          error={error?.message}
+          isLoading={isUploading}
+          fileId={fileId}
+          selectedFile={selectedFile}
+        />
+
+        {showNavigation && (
+          <StepNavigation
+            currentStep={getStepNumber(currentStep)}
+            totalSteps={3}
+            onNext={handleNext}
+            onBack={handleBack}
+            nextDisabled={isNextDisabled}
+            backDisabled={isUploading}
+            className="transcription-workspace__navigation"
           />
-
-          {showNavigation && (
-              <StepNavigation
-                  currentStep={getStepNumber(currentStep)}
-                  totalSteps={3}
-                  onNext={handleNext}
-                  onBack={handleBack}
-                  nextDisabled={isNextDisabled}
-                  backDisabled={isUploading}
-                  className="transcription-workspace__navigation"
-              />
-          )}
-        </div>
-      </section>
+        )}
+      </div>
+    </section>
   );
 };

@@ -1,3 +1,3 @@
-import {DropboxMenu} from "./DropboxMenu";
+import { DropboxMenu } from './DropboxMenu';
 
 export default DropboxMenu;

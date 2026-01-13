@@ -1,17 +1,17 @@
-import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
-import type {FileData} from "../../../api/types/api-types.ts";
-import type {TranscriptionSteps} from "../../../shared/types/types.ts";
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { FileData } from '@/api/types/api-types.ts';
+import type { TranscriptionSteps } from '@shared/types/types.ts';
 
-interface TranscriptionState {
-  files: FileData[],
-  selectedFile: FileData | null,
-  currentStep: TranscriptionSteps,
+export interface TranscriptionState {
+  files: FileData[];
+  currentStep: TranscriptionSteps;
+  selectedFile: FileData | null;
 }
 
 const initialState: TranscriptionState = {
   files: [],
-  currentStep:'upload',
-  selectedFile: null
+  currentStep: 'upload',
+  selectedFile: null,
 };
 
 export const transcriptionSlice = createSlice({
@@ -28,15 +28,15 @@ export const transcriptionSlice = createSlice({
       }
     },
 
-    setCurrentStep:(state,action:PayloadAction<TranscriptionSteps>) => {
+    setCurrentStep: (state, action: PayloadAction<TranscriptionSteps>) => {
       state.currentStep = action.payload;
     },
 
     clearSelectedFile: (state) => {
       state.selectedFile = null;
-      state.currentStep = 'upload'
+      state.currentStep = 'upload';
     },
-  }
+  },
 });
 
 export default transcriptionSlice.reducer;

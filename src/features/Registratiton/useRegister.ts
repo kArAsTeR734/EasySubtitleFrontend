@@ -1,8 +1,8 @@
-import {useMutation} from "@tanstack/react-query";
-import {AuthorizationService} from "../../api/AuthorizationService.ts";
+import { useMutation } from '@tanstack/react-query';
+import { AuthorizationService } from '@/api/services/AuthorizationService.ts';
 
 export const useRegistration = () => {
   return useMutation({
-    mutationFn:AuthorizationService.register
-  })
-}
+    mutationFn: AuthorizationService.register,
+  });
+};
