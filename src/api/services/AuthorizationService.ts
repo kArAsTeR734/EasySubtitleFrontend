@@ -31,16 +31,7 @@ export class AuthorizationService {
   }
 
   public static async logout(): Promise<void> {
-    const response = await authApi.post(
-      '/api/v1/auth/logout',
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      },
-    );
-    localStorage.removeItem('access_token');
+    const response = await authApi.post('/api/v1/auth/logout',);
 
     return response.data;
   }

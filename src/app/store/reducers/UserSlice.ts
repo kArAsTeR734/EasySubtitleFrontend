@@ -26,6 +26,7 @@ export const userSlice = createSlice({
       state.isAuth = false;
       AuthorizationService.logout();
       state.user = null;
+      localStorage.removeItem('access_token');
     },
   },
 });

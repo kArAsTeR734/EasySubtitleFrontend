@@ -1,16 +1,20 @@
 import axios from 'axios';
-import { userSlice } from '@app/store/reducers/UserSlice.ts';
-import { store } from '../../main.tsx';
-
 import { AuthorizationService } from '../services/AuthorizationService.ts';
 
-let isRefreshing = false;
 export const api = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${localStorage.getItem('access_token')}`,
   },
+});
+
+export const authApi = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
 });
 
 api.interceptors.request.use(async (config) => {
@@ -20,37 +24,29 @@ api.interceptors.request.use(async (config) => {
 
 api.interceptors.response.use(
   (response) => response,
+
   async (error) => {
     const originalRequest = error.config;
-    const { setAuth } = userSlice.actions;
 
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      !isRefreshing
+      !originalRequest.url?.includes('/api/v1/auth/refresh')
     ) {
-      isRefreshing = true;
       originalRequest._retry = true;
-
       try {
-        await AuthorizationService.refresh();
-        store.dispatch(setAuth(true));
-        originalRequest.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
+        const response = await AuthorizationService.refresh();
+
+        localStorage.setItem('access_token', response.accessToken);
+
+        originalRequest.headers.Authorization = `Bearer ${response.accessToken}`;
+
         return api(originalRequest);
       } catch (refreshError) {
+        localStorage.removeItem('access_token');
         return Promise.reject(refreshError);
       }
     }
     return Promise.reject(error);
   },
 );
-
-export const authApi = axios.create({
-  baseURL: 'http://localhost:8080',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true,
-});
-
-authApi.defaults.headers.common['X-Requested-With'] = null;
