@@ -1,57 +1,24 @@
 import { useEffect, useState } from 'react';
 import './Sidebar.scss';
-import { LeftOutlined, PlusOutlined, RightOutlined } from '@ant-design/icons';
-import type { SideBarTranscriptionList } from './types.ts';
-import MenuList from './MenuList';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import Button from '../../shared/components/Button';
 import clsx from 'clsx';
-import useFetching from '../../shared/hooks/useFetching.ts';
-import { getAllTranscriptions } from '@/features/Transcriptions/GetAllTranscriptions.ts';
-import type { FileData } from '@/api/types/api-types.ts';
 import { useAppSelector } from '@shared/hooks/redux.ts';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [files, setFiles] = useState<FileData[]>([]);
   const { isAuth } = useAppSelector((state) => state.userReducer);
-
-  const { fetching: uploadFileFetching } = useFetching<
-    SideBarTranscriptionList,
-    [number, number]
-  >(getAllTranscriptions, {
-    onSuccess: (response) => {
-      const transformedFiles: FileData[] = response.data.map((file) => {
-        return {
-          ...file,
-          id: String(file.id),
-        };
-      });
-
-      setFiles(transformedFiles);
-    },
-    onError: (error) => {
-      console.error('💥 Ошибка загрузки:', error);
-    },
-  });
-
-  const getNewFiles = async (page = 1, pageSize = 30) => {
-    await uploadFileFetching(page, pageSize);
-  };
 
   useEffect(() => {
     if (!isAuth) {
       return;
     }
-    getNewFiles();
   }, [isAuth]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  const isAuthorizated = !!isAuth;
-
-  console.log('Длина массива с данными', files.length);
   return (
     <section
       className={clsx('sidebar', {
@@ -61,14 +28,7 @@ const Sidebar = () => {
       aria-label="sidebar"
     >
       <div className="sidebar__header">
-        <div className="sidebar__header-left">
-          {isOpen && !getNewFiles && (
-            <Button className="button button--add-material">
-              <span>Новый материал</span>
-              <PlusOutlined style={{ marginLeft: 7 }} />
-            </Button>
-          )}
-        </div>
+        <div className="sidebar__header-left"></div>
 
         <div className="sidebar__header-right">
           <Button
@@ -86,11 +46,6 @@ const Sidebar = () => {
           </Button>
         </div>
       </div>
-      {isAuthorizated ? (
-        <MenuList data={files} />
-      ) : (
-        <h2>Войдите чтобы читать файлы</h2>
-      )}
       <div
         className={clsx('sidebar__content', {
           'sidebar__content--visible': isOpen,

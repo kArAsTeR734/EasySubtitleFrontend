@@ -1,7 +1,6 @@
 import { Button, TextField } from '@mui/material';
 import './LoginForm.scss';
 import type { AuthForm } from '../../types.ts';
-import type { LoginRequestData } from '@/api/types/api-types.ts';
 import type { SubmitHandler } from 'react-hook-form';
 import { type FC } from 'react';
 import {
@@ -12,6 +11,7 @@ import { useFormValidationContext } from '@shared/hooks/useFormValidationContext
 import { userSlice } from '@app/store/reducers/UserSlice.ts';
 import { useAppDispatch } from '@shared/hooks/redux.ts';
 import { useLogin } from '@/features/Login/useLogin.ts';
+import type { LoginRequestData } from '@/entities/User/models/types.ts';
 
 export interface LoginFormInput {
   login: string;

@@ -1,7 +1,7 @@
 import classNames from 'clsx';
 
 import './Button.scss';
-import type { ClassNameInterface } from '../../../types/ClassNameInterface.ts';
+import type { ClassNameInterface } from '../../types/ClassNameInterface.ts';
 import type { ButtonHTMLAttributes, FC } from 'react';
 
 export interface ButtonProps

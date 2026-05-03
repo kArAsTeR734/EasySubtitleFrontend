@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { UserInfo } from '@/api/types/api-types.ts';
 import { AuthorizationService } from '@/api/services/AuthorizationService.ts';
+import type { UserInfo } from '@/entities/User/models/types.ts';
 
 export interface UserState {
   isAuth: boolean;

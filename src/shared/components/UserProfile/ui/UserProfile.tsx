@@ -14,7 +14,7 @@ const UserProfile = () => {
     <>
       <div className="user-profile">
         <p className="user-profile__name">
-          <span>{user?.login}</span>
+          <span>{user?.username}</span>
         </p>
         <div className="user-profile__about">
           <a ref={anchorRef} href="#" className="user-profile__image">
@@ -33,7 +33,7 @@ const UserProfile = () => {
             })}
           >
             <p className="user-profile__id">id: {user?.id}</p>
-            <p className="user-profile__login">{user?.login}</p>
+            <p className="user-profile__login">{user?.username}</p>
           </div>
         </div>
       </div>

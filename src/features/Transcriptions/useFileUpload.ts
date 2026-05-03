@@ -1,6 +1,6 @@
-import { useMutation} from '@tanstack/react-query';
-import { TranscriptionService } from '@/api/services/TranscriptionService.ts';
+import { useMutation } from '@tanstack/react-query';
 import { useCallback, useState } from 'react';
+import { TranscriptionService } from '@/api/services/TranscriptionService.ts';
 
 export const useFileUpload = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>();
@@ -14,18 +14,21 @@ export const useFileUpload = () => {
     },
     onError: (error) => {
       setFileId(null);
-      console.log(error)
+      console.log(error);
     },
   });
 
-  const uploadFile = useCallback(async (file: File): Promise<void> => {
-    setUploadedFile(file);
-    try {
-      await uploadMutation.mutateAsync(file);
-    } catch (error) {
-      throw error;
-    }
-  }, [uploadMutation]);
+  const uploadFile = useCallback(
+    async (file: File): Promise<void> => {
+      setUploadedFile(file);
+      try {
+        await uploadMutation.mutateAsync(file);
+      } catch (error) {
+        throw error;
+      }
+    },
+    [uploadMutation],
+  );
 
   const clear = () => {
     setUploadedFile(null);
@@ -44,4 +47,4 @@ export const useFileUpload = () => {
     clear,
     setUploadedFile,
   };
-}
+};

@@ -8,9 +8,9 @@ import {
   loginValidation,
   passwordValidation,
 } from '../../../config/validationConfig.ts';
-import type { RegistrationRequestData } from '@/api/types/api-types.ts';
 import { useFormValidationContext } from '@shared/hooks/useFormValidationContext.ts';
 import { useRegistration } from '@/features/Registratiton/useRegister.ts';
+import type { RegistrationRequestData } from '@/entities/User/models/types.ts';
 
 export const RegistrationForm: FC<AuthForm> = ({ onClose, switchAuthMode }) => {
   const { mutate: registration, reset: clearError, error } = useRegistration();
