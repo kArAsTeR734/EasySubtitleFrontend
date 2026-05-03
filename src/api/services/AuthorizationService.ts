@@ -4,7 +4,7 @@ import type {
   LoginReturnData,
   RefreshData,
   RegistrationRequestData
-} from '../types/api-types.ts';
+} from '@/entities/User/models/types.ts';
 
 export class AuthorizationService {
   public static async login(loginData: LoginRequestData): Promise<LoginReturnData> {

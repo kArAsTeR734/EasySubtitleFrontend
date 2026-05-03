@@ -1,7 +1,7 @@
 import './StepNavigation.scss';
 import type { FC } from 'react';
 import clsx from 'clsx';
-import Button from '../Button';
+import Button from '../../Button';
 
 interface StepNavigationProps {
   currentStep: number;

@@ -13,7 +13,7 @@ export const useInitializeUser = () => {
     isSuccess,
     isError,
   } = useQuery({
-    queryKey: ['me'],
+    queryKey: ['user', 'me'],
     queryFn: () => UserService.getUserInfo(),
     enabled: !!localStorage.getItem('access_token'),
     retry: false,

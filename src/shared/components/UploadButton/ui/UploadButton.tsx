@@ -1,5 +1,5 @@
 import { useRef, type FC } from 'react';
-import Button from '../Button';
+import Button from '../../Button';
 import clsx from 'clsx';
 
 interface UploadButtonProps {

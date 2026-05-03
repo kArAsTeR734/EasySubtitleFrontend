@@ -1,3 +1,3 @@
-import { UploadButton } from './UploadButton';
+import { UploadButton } from './ui/UploadButton';
 
 export default UploadButton;

@@ -1,5 +1,5 @@
 import { api } from '../config/api.config.ts';
-import type { UserInfo } from '../types/api-types.ts';
+import type { UserInfo } from '@/entities/User/models/types.ts';
 
 export class UserService {
   public static async getUserInfo(): Promise<UserInfo> {

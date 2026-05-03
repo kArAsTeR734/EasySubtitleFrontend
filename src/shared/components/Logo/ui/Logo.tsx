@@ -1,7 +1,7 @@
 import type { FC } from 'react';
-import type { LogoProps } from './types.ts';
+import type { LogoProps } from '../types.ts';
 import { clsx } from 'clsx';
-import logoSrc from '@assets/Logo.svg'; // ← импортируем изображение
+import logoSrc from 'src/assets/Logo.svg'; // ← импортируем изображение
 
 export const Logo: FC<LogoProps> = ({ loading = 'lazy', className }) => {
   const title = 'Home';
@@ -10,7 +10,7 @@ export const Logo: FC<LogoProps> = ({ loading = 'lazy', className }) => {
     <>
       <a
         className={clsx('logo', className)}
-        href="/"
+        href="/public"
         title={title}
         aria-label={title}
       >
