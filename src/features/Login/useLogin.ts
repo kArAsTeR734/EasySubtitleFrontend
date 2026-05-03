@@ -5,7 +5,7 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: AuthorizationService.login,
     onSuccess: (data) => {
-      localStorage.setItem('access_token', data.accessToken);
+      localStorage.setItem('access_token', data.access_token);
     },
     onError: (error) => {
       console.error('Login error:', error);

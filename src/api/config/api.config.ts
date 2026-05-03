@@ -2,15 +2,23 @@ import axios from 'axios';
 import { AuthorizationService } from '../services/AuthorizationService.ts';
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: '/api/v1/',
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${localStorage.getItem('access_token')}`,
   },
 });
 
+export const apiFiles = axios.create({
+  baseURL: import.meta.env.VITE_GATEWAY_ADDR,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+  },
+});
+
 export const authApi = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_GATEWAY_ADDR,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -31,15 +39,15 @@ api.interceptors.response.use(
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url?.includes('/api/v1/auth/refresh')
+      !originalRequest.url?.includes('auth/refresh')
     ) {
       originalRequest._retry = true;
       try {
         const response = await AuthorizationService.refresh();
 
-        localStorage.setItem('access_token', response.accessToken);
+        localStorage.setItem('access_token', response.access_token);
 
-        originalRequest.headers.Authorization = `Bearer ${response.accessToken}`;
+        originalRequest.headers.Authorization = `Bearer ${response.access_token}`;
 
         return api(originalRequest);
       } catch (refreshError) {

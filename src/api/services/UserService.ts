@@ -3,7 +3,7 @@ import type { UserInfo } from '@/entities/User/models/types.ts';
 
 export class UserService {
   public static async getUserInfo(): Promise<UserInfo> {
-    const response = await api.get('/api/v1/auth/me');
+    const response = await api.get('auth/me');
     return response.data;
   }
 }

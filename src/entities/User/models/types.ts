@@ -1,27 +1,27 @@
 // User Types
 export interface UserInfo {
   id: string;
-  username: string;
+  login: string;
 }
 
 //Auth Types
 export interface RegistrationRequestInterface {
   login: string;
   password: string;
-  passwordConfirmed: string;
+  password_confirmed: string;
 }
 
 export interface LoginReturnDataInterface {
-  accessToken: string;
+  access_token: string;
 }
 
 export interface RefreshResult {
-  accessToken: string;
+  access_token: string;
 }
 
 export type LoginRequestData = Omit<
   RegistrationRequestData,
-  'passwordConfirmed'
+  'password_confirmed'
 >;
 
 export type LoginReturnData = LoginReturnDataInterface;

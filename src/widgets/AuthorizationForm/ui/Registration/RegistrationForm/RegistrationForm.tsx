@@ -22,7 +22,7 @@ export const RegistrationForm: FC<AuthForm> = ({ onClose, switchAuthMode }) => {
     const registerData: RegistrationRequestData = {
       login: formData.login,
       password: formData.password,
-      passwordConfirmed: formData.confirmPassword,
+      password_confirmed: formData.confirmPassword,
     };
     try {
       registration(registerData);
