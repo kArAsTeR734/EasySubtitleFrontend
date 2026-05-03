@@ -38,6 +38,10 @@ export interface UserInfo {
   login: string;
 }
 
+export interface RefreshResult{
+  accessToken: string;
+}
+
 export type TranscriptionResult = TranscriptionResultInterface;
 
 export type GetAllTranscriptionsResult = GetAllTranscriptionsInterface;
@@ -50,3 +54,5 @@ export type LoginRequestData = Omit<
 export type LoginReturnData = LoginReturnDataInterface;
 
 export type RegistrationRequestData = RegistrationRequestDataInterface;
+
+export type RefreshData = RefreshResult;
