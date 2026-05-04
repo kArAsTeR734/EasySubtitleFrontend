@@ -68,7 +68,7 @@ export const RegistrationForm: FC<AuthForm> = ({ onClose, switchAuthMode }) => {
         <TextField
           {...register('login', loginValidation)}
           size="small"
-          placeholder="example123"
+          placeholder="Иван Иванов"
           label="Логин"
           error={shouldShowError('login')}
           helperText={shouldShowError('login') ? getErrorMessage('login') : ''}
