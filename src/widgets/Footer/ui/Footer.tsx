@@ -11,7 +11,7 @@ const Footer = () => {
           </a>
           <div className="footer__wrapper">
             <div className="footer__block">
-              <div className="footer__header">О EazySubtitle</div>
+              <div className="footer__header">О PINN Authomizer</div>
               {aboutLinks.map(({ label, href }) => (
                 <div key={crypto.randomUUID()} className="footer__item">
                   <a href={href} key={Date.now()} className="footer__link">

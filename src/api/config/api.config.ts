@@ -5,29 +5,33 @@ export const api = axios.create({
   baseURL: import.meta.env.VITE_GATEWAY_ADDR,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-  },
+    Authorization: `Bearer ${localStorage.getItem('access_token')}`
+  }
 });
 
 export const apiFiles = axios.create({
   baseURL: import.meta.env.VITE_GATEWAY_ADDR,
   headers: {
     'Content-Type': 'multipart/form-data',
-    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-  },
+    Authorization: `Bearer ${localStorage.getItem('access_token')}`
+  }
 });
 
 export const authApi = axios.create({
   baseURL: import.meta.env.VITE_GATEWAY_ADDR,
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   },
-  withCredentials: true,
+  withCredentials: true
 });
 
 export const logoutApi = axios.create({
   baseURL: import.meta.env.VITE_GATEWAY_ADDR,
-})
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('access_token')}`
+  },
+  withCredentials: true
+});
 
 api.interceptors.request.use(async (config) => {
   config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
@@ -60,5 +64,5 @@ api.interceptors.response.use(
       }
     }
     return Promise.reject(error);
-  },
+  }
 );
