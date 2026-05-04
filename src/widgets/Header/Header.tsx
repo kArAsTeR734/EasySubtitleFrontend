@@ -34,6 +34,7 @@ const Header = () => {
   };
 
   const logout = () => {
+    console.log('logout');
     logoutMutate.mutate();
   };
 
