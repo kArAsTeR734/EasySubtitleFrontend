@@ -5,6 +5,7 @@ import {
   Box,
   Chip,
   CircularProgress,
+  IconButton,
   Pagination,
   Paper,
   Table,
@@ -14,27 +15,30 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
+  Tooltip,
   Typography
 } from '@mui/material';
+import { Delete, Download, Image, PlayArrow } from '@mui/icons-material';
 import { TasksService } from '@/api/services/TasksService.ts';
 import { type TaskResponse } from '@/api/types/api-types.ts';
 
 // ============================================================
 // Константы
 // ============================================================
-const ROWS_PER_PAGE = 30; // limit
+const ROWS_PER_PAGE = 30;
 
 // Описание колонок
 interface Column {
-  id: 'name' | 'status' | 'created_at';
+  id: string;
   label: string;
-  sortable: boolean; // можно ли сортировать
+  sortable: boolean;
 }
 
 const COLUMNS: Column[] = [
   { id: 'name', label: 'Название', sortable: true },
   { id: 'status', label: 'Статус', sortable: true },
-  { id: 'created_at', label: 'Создана', sortable: true }
+  { id: 'created_at', label: 'Создана', sortable: true },
+  { id: 'actions', label: 'Действия', sortable: false }
 ];
 
 // Цвета чипсов для статусов
@@ -49,7 +53,6 @@ const STATUS_COLORS: Record<string, 'default' | 'primary' | 'success' | 'warning
 // Помощники
 // ============================================================
 
-/** Форматирование даты */
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleString('ru-RU', {
     day: '2-digit',
@@ -60,22 +63,38 @@ function formatDate(iso: string): string {
   });
 }
 
+/** Скачать файл по URL, созданному из Blob */
+function downloadBlob(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+/** Открыть PDF в новой вкладке */
+function openPdf(blob: Blob) {
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+  URL.revokeObjectURL(url);
+}
+
 // ============================================================
 // Компонент
 // ============================================================
 
 export default function TasksTable() {
-  // ---------- Данные ----------
   const [tasks, setTasks] = useState<TaskResponse[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // ---------- Пагинация ----------
-  const [page, setPage] = useState(1); // пользователь видит страницы (1-based)
-
-  // ---------- Сортировка ----------
+  const [page, setPage] = useState(1);
   const [sort, setSort] = useState<'name' | 'status' | 'created_at'>('created_at');
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
+
+  // ID задачи, которая сейчас запускается (для спиннера на кнопке)
+  const [runningTaskId, setRunningTaskId] = useState<string | null>(null);
 
   // ============================================================
   // Загрузка данных
@@ -83,16 +102,8 @@ export default function TasksTable() {
   const fetchTasks = useCallback(async () => {
     setLoading(true);
     try {
-      // page=1 → offset=0, page=2 → offset=30, ...
       const offset = (page - 1) * ROWS_PER_PAGE;
-
-      const response = await TasksService.getAllTasks(
-        ROWS_PER_PAGE,
-        offset,
-        sort,
-        order
-      );
-
+      const response = await TasksService.getAllTasks(ROWS_PER_PAGE, offset, sort, order);
       setTasks(Array.isArray(response?.tasks) ? response.tasks : []);
       setTotal(response?.total || 0);
     } catch (err) {
@@ -107,25 +118,68 @@ export default function TasksTable() {
   }, [fetchTasks]);
 
   // ============================================================
-  // Обработчики
+  // Обработчики действий
   // ============================================================
 
-  /** Смена страницы */
+  /** Запуск задачи */
+  const handleRun = async (taskId: string) => {
+    setRunningTaskId(taskId);
+    try {
+      await TasksService.runTask(taskId);
+      await fetchTasks(); // обновить статус
+    } catch (err) {
+      console.error('Failed to run task', err);
+    } finally {
+      setRunningTaskId(null);
+    }
+  };
+
+  /** Скачать data.zip или output.zip */
+  const handleDownload = async (taskId: string, type: 'data' | 'output') => {
+    try {
+      const blob = await TasksService.downloadResults(taskId, type);
+      downloadBlob(blob, `task_${taskId}_${type}.zip`);
+    } catch (err) {
+      console.error('Failed to download', err);
+    }
+  };
+
+  /** Открыть график */
+  const handlePlot = async (taskId: string) => {
+    try {
+      const blob = await TasksService.getPlot(taskId);
+      openPdf(blob);
+    } catch (err) {
+      console.error('Failed to load plot', err);
+    }
+  };
+
+  /** Удалить задачу */
+  const handleDelete = async (taskId: string) => {
+    if (!window.confirm('Удалить задачу?')) return;
+    try {
+      await TasksService.deleteTaskByID(taskId);
+      await fetchTasks(); // обновить список
+    } catch (err) {
+      console.error('Failed to delete task', err);
+    }
+  };
+
+  // ============================================================
+  // Сортировка и пагинация
+  // ============================================================
   const handlePageChange = (_: React.ChangeEvent<unknown>, newPage: number) => {
     setPage(newPage);
   };
 
-  /** Клик по заголовку колонки — сортировка */
-  const handleSort = (columnId: 'name' | 'status' | 'created_at') => {
+  const handleSort = (columnId: string) => {
     if (sort === columnId) {
-      // Меняем направление
       setOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
     } else {
-      // Новая колонка — сортируем по возрастанию
-      setSort(columnId);
+      setSort(columnId as 'name' | 'status' | 'created_at');
       setOrder('asc');
     }
-    setPage(1); // сброс на первую страницу
+    setPage(1);
   };
 
   // ============================================================
@@ -175,50 +229,121 @@ export default function TasksTable() {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  tasks.map((task) => (
-                    <TableRow
-                      key={task.id}
-                      hover
-                      sx={{ cursor: 'pointer' }}
-                    >
-                      {/* Название */}
-                      <TableCell>
-                        <Typography variant="body2" fontWeight={500}>
-                          {task.name}
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary">
-                          {task.description || '—'}
-                        </Typography>
-                      </TableCell>
+                  tasks.map((task) => {
+                    const canDownloadOutput = task.status === 'error' || task.status === 'done';
+                    const canRun = task.status === 'created';
 
-                      {/* Статус */}
-                      <TableCell>
-                        <Chip
-                          label={task.status}
-                          size="small"
-                          color={STATUS_COLORS[task.status] ?? 'default'}
-                        />
-                      </TableCell>
-
-                      {/* Дата создания */}
-                      <TableCell>
-                        <Typography variant="body2">
-                          {formatDate(task.created_at)}
-                        </Typography>
-                        {task.error && (
-                          <Typography variant="caption" color="error">
-                            {task.error}
+                    return (
+                      <TableRow key={task.id} hover>
+                        {/* Название */}
+                        <TableCell>
+                          <Typography variant="body2" fontWeight={500}>
+                            {task.name}
                           </Typography>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))
+                          <Typography variant="caption" color="text.secondary">
+                            {task.description || '—'}
+                          </Typography>
+                        </TableCell>
+
+                        {/* Статус */}
+                        <TableCell>
+                          <Chip
+                            label={task.status}
+                            size="small"
+                            color={STATUS_COLORS[task.status] ?? 'default'}
+                          />
+                        </TableCell>
+
+                        {/* Дата */}
+                        <TableCell>
+                          <Typography variant="body2">
+                            {formatDate(task.created_at)}
+                          </Typography>
+                          {task.error && (
+                            <Typography variant="caption" color="error">
+                              {task.error}
+                            </Typography>
+                          )}
+                        </TableCell>
+
+                        {/* Действия */}
+                        <TableCell>
+                          <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'nowrap' }}>
+                            {/* Запуск */}
+                            <Tooltip title="Запустить">
+                              <span>
+                                <IconButton
+                                  size="small"
+                                  color="primary"
+                                  disabled={!canRun}
+                                  onClick={() => handleRun(task.id)}
+                                >
+                                  {runningTaskId === task.id ? (
+                                    <CircularProgress size={18} />
+                                  ) : (
+                                    <PlayArrow />
+                                  )}
+                                </IconButton>
+                              </span>
+                            </Tooltip>
+
+                            {/* Скачать data */}
+                            <Tooltip title="Скачать исходные данные">
+                              <IconButton
+                                size="small"
+                                onClick={() => handleDownload(task.id, 'data')}
+                              >
+                                <Download />
+                              </IconButton>
+                            </Tooltip>
+
+                            {/* Скачать output */}
+                            <Tooltip title="Скачать результат">
+                              <span>
+                                <IconButton
+                                  size="small"
+                                  disabled={!canDownloadOutput}
+                                  onClick={() => handleDownload(task.id, 'output')}
+                                >
+                                  <Download />
+                                </IconButton>
+                              </span>
+                            </Tooltip>
+
+                            {/* График */}
+                            <Tooltip title="График">
+                              <span>
+                                <IconButton
+                                  size="small"
+                                  color="secondary"
+                                  disabled={!canDownloadOutput}
+                                  onClick={() => handlePlot(task.id)}
+                                >
+                                  <Image />
+                                </IconButton>
+                              </span>
+                            </Tooltip>
+
+                            {/* Удалить */}
+                            <Tooltip title="Удалить">
+                              <IconButton
+                                size="small"
+                                color="error"
+                                onClick={() => handleDelete(task.id)}
+                              >
+                                <Delete />
+                              </IconButton>
+                            </Tooltip>
+                          </Box>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
                 )}
               </TableBody>
             </Table>
           </TableContainer>
 
-          {/* Пагинация */}
           {totalPages > 1 && (
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
               <Pagination
