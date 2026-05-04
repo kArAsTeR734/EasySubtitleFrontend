@@ -1,13 +1,11 @@
 import MainPage from '../pages/MainPage/MainPage.tsx';
-import { useInitializeUser } from '../features/User/useInitUser.ts';
+import { AuthProvider } from '@app/context/UserContext.tsx';
 
 function App() {
-  useInitializeUser();
-
   return (
-    <>
+    <AuthProvider>
       <MainPage />
-    </>
+    </AuthProvider>
   );
 }
 
