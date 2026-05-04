@@ -4,10 +4,10 @@ import type { TaskCreateRequestData } from '@/entities/Task/models/types.ts';
 
 export class TasksService {
   public static async getAllTasks(
-    limit: number = 30,
-    offset: number = 0,
-    sort: 'name' | 'status' | 'created_at' = 'created_at',
-    order: string = 'DESC'
+    limit?: number,
+    offset?: number,
+    sort?: 'name' | 'status' | 'created_at',
+    order?: 'desc' | 'asc'
   ): Promise<GetAllTasksResponse> {
     const response = await api.get('tasks', {
       params: {
@@ -22,10 +22,10 @@ export class TasksService {
 
   public static async createTask(
     requestData: TaskCreateRequestData,
-    functionsFile: File | null,
-    configFile: File | null,
-    dataFile: File | null,
-    checkpointFile: File | null
+    functionsFile?: File,
+    configFile?: File,
+    dataFile?: File,
+    checkpointFile?: File
   ): Promise<TaskResponse> {
     const formData = new FormData();
 

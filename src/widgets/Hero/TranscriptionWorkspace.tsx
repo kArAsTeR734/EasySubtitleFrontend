@@ -1,4 +1,5 @@
 import './TranscriptionWorkspace.scss';
+// import CreateTaskModal from '@widgets/CreateTaskForm';
 // import { useAppDispatch, useAppSelector } from '@shared/hooks/redux.ts';
 // import { transcriptionSlice } from '@app/store/reducers/TranscriptionSlice.ts';
 // import { useFileUpload } from '@/features/Transcriptions/useFileUpload.ts';
@@ -23,6 +24,7 @@ export const TranscriptionWorkspace = () => {
     <section className="hero">
       <div className="hero--inner container">
         <h2 className="hero__title h3">{'Заголовок'}</h2>
+        {/*<CreateTaskModal isOpen={} onClose={}*/}
       </div>
     </section>
   );
