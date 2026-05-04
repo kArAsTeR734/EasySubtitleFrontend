@@ -48,7 +48,7 @@ const EXTENSION_TO_SLOT: Record<string, FileSlot> = {
   '.yml': 'config.yaml',
   '.mat': 'data.mat',
   '.ckpt': 'checkpoint.ckpt',
-  '.pt': 'checkpoint.ckpt',
+  '.pt': 'checkpoint.ckpt'
 };
 
 const FILE_REQUIREMENTS: Record<
@@ -57,20 +57,20 @@ const FILE_REQUIREMENTS: Record<
 > = {
   'functions.py': {
     label: 'Функции (.py)',
-    required: ['train', 'retrain', 'predict'],
+    required: ['train', 'retrain', 'predict']
   },
   'config.yaml': {
     label: 'Конфигурация (.yaml / .yml)',
-    required: ['train', 'retrain', 'predict'],
+    required: ['train', 'retrain', 'predict']
   },
   'data.mat': {
     label: 'Данные (.mat)',
-    required: ['train', 'retrain'],
+    required: ['train', 'retrain']
   },
   'checkpoint.ckpt': {
     label: 'Чекпоинт (.ckpt / .pt)',
-    required: ['retrain', 'predict'],
-  },
+    required: ['retrain', 'predict']
+  }
 };
 
 
@@ -83,7 +83,7 @@ const MODE_LABELS: Record<TaskMode, string> = {
 const MODE_HINTS: Record<TaskMode, string> = {
   train: 'Требуются: .py, .yaml, .mat',
   retrain: 'Требуются: .py, .yaml, .mat, .ckpt',
-  predict: 'Требуются: .py, .yaml, .ckpt',
+  predict: 'Требуются: .py, .yaml, .ckpt'
 };
 
 function getSlotByExtension(file: File): FileSlot | null {
@@ -101,8 +101,7 @@ export default function CreateTaskForm() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [mode, setMode] = useState<TaskMode>('train');
-  const [files, setFiles] = useState<AttachedFiles>({
-  });
+  const [files, setFiles] = useState<AttachedFiles>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -142,8 +141,8 @@ export default function CreateTaskForm() {
     try {
       const req: TaskCreateRequestData = {
         name: name.trim(),
-        description: description.trim() || undefined,
         mode,
+        description: description.trim() || undefined
       };
 
       await TasksService.createTask(
@@ -179,7 +178,7 @@ export default function CreateTaskForm() {
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,
     noClick: true,   // клик по зоне НЕ открывает выбор файлов
-    noKeyboard: true,
+    noKeyboard: true
   });
 
   // ============================================================
@@ -225,7 +224,7 @@ export default function CreateTaskForm() {
               textAlign: 'center',
               bgcolor: isDragActive ? 'action.hover' : 'transparent',
               cursor: 'pointer',
-              transition: 'all 0.2s',
+              transition: 'all 0.2s'
             }}
           >
             <CloudUpload sx={{ fontSize: 40, color: 'grey.400', mb: 1 }} />
@@ -294,7 +293,7 @@ export default function CreateTaskForm() {
                     border: 1,
                     borderColor: 'divider',
                     borderRadius: 1,
-                    mb: 1,
+                    mb: 1
                   }}
                   secondaryAction={
                     file ? (
@@ -341,7 +340,7 @@ export default function CreateTaskForm() {
                     }
                     secondary={file?.name ?? 'Не прикреплён'}
                     secondaryTypographyProps={{
-                      color: file ? 'success.main' : 'text.secondary',
+                      color: file ? 'success.main' : 'text.secondary'
                     }}
                   />
                 </ListItem>

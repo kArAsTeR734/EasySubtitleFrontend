@@ -31,4 +31,5 @@ export interface TaskResponse {
 
 export interface GetAllTasksResponse {
   tasks: TaskResponse[];
+  total: number;
 }

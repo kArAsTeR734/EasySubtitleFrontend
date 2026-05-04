@@ -36,9 +36,9 @@ export class TasksService {
     if (dataFile) formData.append('data.mat', dataFile);
     if (checkpointFile) formData.append('checkpoint.ckpt', checkpointFile);
 
-    const response = await apiFiles.post<TaskResponse>('tasks', {
+    const response = await apiFiles.post<TaskResponse>('tasks',
       formData
-    });
+    );
     return response.data;
   }
 
