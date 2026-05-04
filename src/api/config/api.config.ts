@@ -2,7 +2,7 @@ import axios from 'axios';
 import { AuthorizationService } from '../services/AuthorizationService.ts';
 
 export const api = axios.create({
-  baseURL: '/api/v1/',
+  baseURL: import.meta.env.VITE_GATEWAY_ADDR,
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${localStorage.getItem('access_token')}`,
@@ -24,6 +24,10 @@ export const authApi = axios.create({
   },
   withCredentials: true,
 });
+
+export const logoutApi = axios.create({
+  baseURL: import.meta.env.VITE_GATEWAY_ADDR,
+})
 
 api.interceptors.request.use(async (config) => {
   config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;

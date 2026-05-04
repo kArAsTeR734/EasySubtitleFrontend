@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { useRouter } from 'next/navigation';
 import {
   Alert,
   Box,
@@ -34,10 +33,10 @@ import type { TaskCreateRequestData } from '@/entities/Task/models/types.ts';
 type TaskMode = 'train' | 'retrain' | 'predict';
 
 interface AttachedFiles {
-  'functions.py': File | null;
-  'config.yaml': File | null;
-  'data.mat': File | null;
-  'checkpoint.ckpt': File | null;
+  'functions.py'?: File;
+  'config.yaml'?: File;
+  'data.mat'?: File;
+  'checkpoint.ckpt'?: File;
 }
 
 const FILE_REQUIREMENTS: Record<
@@ -46,33 +45,33 @@ const FILE_REQUIREMENTS: Record<
 > = {
   'functions.py': {
     label: 'Функции (functions.py)',
-    required: ['train', 'retrain', 'predict'],
+    required: ['train', 'retrain', 'predict']
   },
   'config.yaml': {
     label: 'Конфигурация (config.yaml)',
-    required: ['train', 'retrain', 'predict'],
+    required: ['train', 'retrain', 'predict']
   },
   'data.mat': {
     label: 'Данные (data.mat)',
-    required: ['train', 'retrain'],
+    required: ['train', 'retrain']
   },
   'checkpoint.ckpt': {
     label: 'Чекпоинт (checkpoint.ckpt)',
-    required: ['retrain', 'predict'],
-  },
+    required: ['retrain', 'predict']
+  }
 };
 
 const MODE_LABELS: Record<TaskMode, string> = {
   train: 'Обучить',
   retrain: 'Дообучить',
-  predict: 'Предугадать',
+  predict: 'Предугадать'
 };
 
 const MODE_HINTS: Record<TaskMode, string> = {
   train: 'Обучение с нуля. Требуются: functions.py, config.yaml, data.mat',
   retrain: 'Дообучение. Требуются: все 4 файла',
   predict:
-    'Предсказание. Требуются: functions.py, config.yaml, checkpoint.ckpt',
+    'Предсказание. Требуются: functions.py, config.yaml, checkpoint.ckpt'
 };
 
 // ============================================================
@@ -80,17 +79,10 @@ const MODE_HINTS: Record<TaskMode, string> = {
 // ============================================================
 
 export default function CreateTaskForm() {
-  const router = useRouter();
-
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [mode, setMode] = useState<TaskMode>('train');
-  const [files, setFiles] = useState<AttachedFiles>({
-    'functions.py': null,
-    'config.yaml': null,
-    'data.mat': null,
-    'checkpoint.ckpt': null,
-  });
+  const [files, setFiles] = useState<AttachedFiles>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -131,7 +123,7 @@ export default function CreateTaskForm() {
       const req: TaskCreateRequestData = {
         name: name.trim(),
         description: description.trim() || undefined,
-        mode,
+        mode
       };
 
       await TasksService.createTask(
@@ -141,8 +133,6 @@ export default function CreateTaskForm() {
         files['data.mat'],
         files['checkpoint.ckpt']
       );
-
-      router.push('/tasks');
     } catch (err: any) {
       setError(err?.response?.data?.message ?? 'Не удалось создать задачу');
     } finally {
@@ -167,7 +157,7 @@ export default function CreateTaskForm() {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    noClick: true,
+    noClick: true
   });
 
   // ============================================================
@@ -210,7 +200,7 @@ export default function CreateTaskForm() {
               mb: 3,
               textAlign: 'center',
               bgcolor: isDragActive ? 'primary.50' : 'transparent',
-              transition: 'all 0.2s',
+              transition: 'all 0.2s'
             }}
           >
             <CloudUpload sx={{ fontSize: 40, color: 'grey.400', mb: 1 }} />
@@ -281,7 +271,7 @@ export default function CreateTaskForm() {
                       border: 1,
                       borderColor: 'divider',
                       borderRadius: 1,
-                      mb: 1,
+                      mb: 1
                     }}
                     secondaryAction={
                       file ? (
@@ -328,7 +318,7 @@ export default function CreateTaskForm() {
                       }
                       secondary={file?.name ?? 'Не прикреплён'}
                       secondaryTypographyProps={{
-                        color: file ? 'success.main' : 'text.secondary',
+                        color: file ? 'success.main' : 'text.secondary'
                       }}
                     />
                   </ListItem>

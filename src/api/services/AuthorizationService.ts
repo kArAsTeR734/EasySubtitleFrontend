@@ -1,14 +1,14 @@
-import { authApi } from '../config/api.config.ts';
+import { authApi, logoutApi } from '../config/api.config.ts';
 import type {
   LoginRequestData,
   LoginReturnData,
   RefreshData,
-  RegistrationRequestData,
+  RegistrationRequestData
 } from '@/entities/User/models/types.ts';
 
 export class AuthorizationService {
   public static async login(
-    loginData: LoginRequestData,
+    loginData: LoginRequestData
   ): Promise<LoginReturnData> {
     const response = await authApi.post('auth/login', loginData);
 
@@ -16,11 +16,9 @@ export class AuthorizationService {
   }
 
   public static async register(
-    registerData: RegistrationRequestData,
+    registerData: RegistrationRequestData
   ): Promise<void> {
-    const response = await authApi.post<void>('auth/register', registerData);
-
-    return response.data;
+    return await authApi.post('auth/register', registerData);
   }
 
   public static async refresh(): Promise<RefreshData> {
@@ -30,8 +28,6 @@ export class AuthorizationService {
   }
 
   public static async logout(): Promise<void> {
-    const response = await authApi.post('auth/logout');
-
-    return response.data;
+    return await logoutApi.post('auth/logout');
   }
 }
