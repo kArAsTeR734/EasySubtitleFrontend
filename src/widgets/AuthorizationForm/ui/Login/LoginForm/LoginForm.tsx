@@ -8,8 +8,6 @@ import {
   passwordValidation,
 } from '../../../config/validationConfig.ts';
 import { useFormValidationContext } from '@shared/hooks/useFormValidationContext.ts';
-import { userSlice } from '@app/store/reducers/UserSlice.ts';
-import { useAppDispatch } from '@shared/hooks/redux.ts';
 import { useLogin } from '@/features/Login/useLogin.ts';
 import type { LoginRequestData } from '@/entities/User/models/types.ts';
 
@@ -19,9 +17,6 @@ export interface LoginFormInput {
 }
 
 export const LoginForm: FC<AuthForm> = ({ onClose }) => {
-  const { setAuth } = userSlice.actions;
-  const dispatch = useAppDispatch();
-
   const { mutateAsync: loginFetch, error, reset: clearError } = useLogin();
 
   const { register, handleSubmit, reset, shouldShowError, getErrorMessage } =
@@ -36,7 +31,6 @@ export const LoginForm: FC<AuthForm> = ({ onClose }) => {
     const data = await loginFetch(loginData);
     localStorage.setItem('access_token', data.access_token ?? '');
     window.location.reload();
-    dispatch(setAuth(true));
     onClose();
     reset();
   };
