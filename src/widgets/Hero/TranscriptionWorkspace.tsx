@@ -14,12 +14,10 @@ export const TranscriptionWorkspace = () => {
   // );
   // const { setCurrentStep, clearSelectedFile } = transcriptionSlice.actions;
   const dispatch = useAppDispatch();
-  const { isOpen } = useAppSelector((state) => state.modalReducer);
-  const { toggleModal } = modalSlice.actions;
+  const { activeModal } = useAppSelector((state) => state.modalReducer);
+  const { openModal,closeModal } = modalSlice.actions;
 
-  const switchModal = () => {
-    dispatch(toggleModal());
-  };
+  const isCreateOpen = activeModal === 'createTask';
 
   // const {
   //   uploadedFile,
@@ -33,8 +31,10 @@ export const TranscriptionWorkspace = () => {
   return (
     <section className="hero">
       <div className="hero--inner container">
-        <Button onClick={switchModal} className="hero__title h3">Создать задачу</Button>
-        <CreateTaskModal isOpen={isOpen} onClose={switchModal} />
+        <Button
+          onClick={() => dispatch(openModal('createTask'))}
+          className="hero__title h3">Создать задачу</Button>
+        <CreateTaskModal isOpen={isCreateOpen} onClose={() => dispatch(closeModal())} />
       </div>
     </section>
   );

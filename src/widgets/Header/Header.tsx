@@ -10,9 +10,9 @@ import { useAuth } from '@/features/User/useAuth.ts';
 import { useLogout } from '@/features/Logout/useLogout.ts';
 
 const Header = () => {
-  const { isOpen } = useAppSelector((state) => state.modalReducer);
+  const { activeModal } = useAppSelector((state) => state.modalReducer);
   const { user } = useAuth();
-  const { toggleModal } = modalSlice.actions;
+  const { openModal, closeModal } = modalSlice.actions;
   const dispatch = useAppDispatch();
   const logoutMutate = useLogout();
 
@@ -29,14 +29,12 @@ const Header = () => {
     }
   ];
 
-  const switchModal = () => {
-    dispatch(toggleModal());
-  };
-
   const logout = () => {
     console.log('logout');
     logoutMutate.mutate();
   };
+
+  const isAuthOpen = activeModal === 'auth';
 
   return (
     <header className="header" data-js-overlay-menu="">
@@ -66,12 +64,12 @@ const Header = () => {
               <Button onClick={logout}>Выйти</Button>
             </>
           ) : (
-            <Button onClick={switchModal}>Войти</Button>
+            <Button onClick={() => dispatch(openModal('auth'))}>Войти</Button>
           )}
         </div>
         <AuthorizationForm
-          isOpen={isOpen}
-          onClose={switchModal}
+          isOpen={isAuthOpen}
+          onClose={() => dispatch(closeModal())}
         />
       </div>
     </header>

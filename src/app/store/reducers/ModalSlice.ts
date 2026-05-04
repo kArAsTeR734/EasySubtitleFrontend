@@ -1,32 +1,32 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
+export type ModalType = 'auth' | 'createTask' | null;
+
 export interface ModalSliceState {
-  isOpen: boolean;
+  activeModal: ModalType;
   title: string;
 }
 
 const initialState: ModalSliceState = {
-  isOpen: false,
-  title: 'Вход',
+  activeModal: null,
+  title: '',
 };
 
 export const modalSlice = createSlice({
-  name: 'ModalSlice',
+  name: 'modal',
   initialState,
   reducers: {
+    openModal(state, action: PayloadAction<ModalType>) {
+      state.activeModal = action.payload;
+    },
+
+    closeModal(state) {
+      state.activeModal = null;
+    },
+
     switchAuthMode(state, action: PayloadAction<string>) {
       state.title = action.payload;
     },
-
-    toggleModal(state) {
-      state.isOpen = !state.isOpen;
-    },
-    // openModal(state) {
-    //   state.isOpen = true;
-    // },
-    // closeModal(state) {
-    //   state.isOpen = false;
-    // }
   },
 });
 
