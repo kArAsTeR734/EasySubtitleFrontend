@@ -7,13 +7,9 @@ const DocumentationPage = ()=> {
   return (
     <>
       <Header />
-      <div className="page-wrapper">
-        <div className="page-content">
-          <main className="main-content">
-            <TranscriptionInstruction />
-          </main>
-        </div>
-      </div>
+      <main className="page-wrapper">
+        <TranscriptionInstruction />
+      </main>
       <Footer />
     </>
   );
