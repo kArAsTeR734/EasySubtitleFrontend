@@ -8,12 +8,16 @@ export const useLogout = () => {
     mutationKey: ['logout'],
     mutationFn: () => AuthorizationService.logout(),
     onSuccess: () => {
+      console.log('Logged out successfully');
       queryClient.removeQueries({ queryKey: ['tasks'] });
       queryClient.removeQueries({ queryKey: ['me'] });
       localStorage.removeItem('access_token');
     },
     onError: (error) => {
       console.log("Произошла ошибка при выходе из аккаунта", error);
+    },
+    onSettled: () => {
+      console.log('Запрос отправился');
     }
   });
 };
