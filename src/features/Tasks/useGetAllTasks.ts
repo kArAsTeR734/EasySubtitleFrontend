@@ -2,7 +2,6 @@ import { TasksService } from '@/api/services/TasksService.ts';
 import { useQuery } from '@tanstack/react-query';
 
 // Хук для получения данных для таблицы
-
 export const useGetAllTasks = async (
   limit?: number,
   offset?: number,

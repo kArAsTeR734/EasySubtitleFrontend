@@ -27,6 +27,8 @@ export const authApi = axios.create({
 
 export const logoutApi = axios.create({
   baseURL: import.meta.env.VITE_GATEWAY_ADDR,
+
+  withCredentials: true,
 })
 
 api.interceptors.request.use(async (config) => {
