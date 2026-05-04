@@ -6,36 +6,35 @@ import AuthorizationForm from '../AuthorizationForm';
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux.ts';
 import { modalSlice } from '@app/store/reducers/ModalSlice.ts';
 import UserProfile from '../../shared/components/UserProfile/ui/UserProfile.tsx';
-import { useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/features/User/useAuth.ts';
+import { useLogout } from '@/features/Logout/useLogout.ts';
 
 const Header = () => {
   const { isOpen } = useAppSelector((state) => state.modalReducer);
   const { user } = useAuth();
   const { toggleModal } = modalSlice.actions;
-  const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
+  const logoutMutate = useLogout();
 
   const menuItems = [
     {
       label: 'Главная',
       href: '/',
-      active: true,
+      active: true
     },
     {
       label: 'Инструкция',
       href: '#instructions',
-      active: false,
-    },
+      active: false
+    }
   ];
 
   const switchModal = () => {
     dispatch(toggleModal());
-  }
+  };
 
   const logout = () => {
-    localStorage.removeItem('access_token');
-    queryClient.removeQueries({ queryKey: ['me'] });
+    logoutMutate.mutate();
   };
 
   return (
@@ -49,7 +48,7 @@ const Header = () => {
                 <a
                   className={clsx(
                     'header__menu-link',
-                    active ? 'is-active' : '',
+                    active ? 'is-active' : ''
                   )}
                   href={href}
                 >
