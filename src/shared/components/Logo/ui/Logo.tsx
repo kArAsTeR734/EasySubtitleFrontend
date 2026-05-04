@@ -1,7 +1,6 @@
 import type { FC } from 'react';
 import type { LogoProps } from '../types';
 import { clsx } from 'clsx';
-import Logotype from '../../../../assets/Logo.svg?react';
 
 export const Logo: FC<LogoProps> = ({ className }) => {
   const title = 'Home';
@@ -14,7 +13,6 @@ export const Logo: FC<LogoProps> = ({ className }) => {
         title={title}
         aria-label={title}
       >
-        <Logotype/>
       </a>
     </>
   );
