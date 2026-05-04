@@ -2,12 +2,12 @@ import './UserProfile.scss';
 import { useRef } from 'react';
 import { useHover } from '../../../hooks/useHover.ts';
 import clsx from 'clsx';
-import { useAppSelector } from '../../../hooks/redux.ts';
+import { useAuth } from '@/features/User/useAuth.ts';
 
 const UserProfile = () => {
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const isHovering = useHover(anchorRef);
-  const { user } = useAppSelector((state) => state.userReducer);
+  const { user } = useAuth()
 
   if (!user) return null;
   return (

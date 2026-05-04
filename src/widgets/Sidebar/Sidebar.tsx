@@ -3,17 +3,17 @@ import './Sidebar.scss';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import Button from '../../shared/components/Button';
 import clsx from 'clsx';
-import { useAppSelector } from '@shared/hooks/redux.ts';
+import { useAuth } from '@/features/User/useAuth.ts';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const { isAuth } = useAppSelector((state) => state.userReducer);
+  const { user } = useAuth();
 
   useEffect(() => {
-    if (!isAuth) {
+    if (!user) {
       return;
     }
-  }, [isAuth]);
+  }, [user]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -23,7 +23,7 @@ const Sidebar = () => {
     <section
       className={clsx('sidebar', {
         'sidebar--open': isOpen,
-        'sidebar--closed': !isOpen,
+        'sidebar--closed': !isOpen
       })}
       aria-label="sidebar"
     >
@@ -49,7 +49,7 @@ const Sidebar = () => {
       <div
         className={clsx('sidebar__content', {
           'sidebar__content--visible': isOpen,
-          'sidebar__content--hidden': !isOpen,
+          'sidebar__content--hidden': !isOpen
         })}
       ></div>
     </section>
