@@ -29,6 +29,9 @@ export class AuthorizationService {
 
   public static async logout(): Promise<void> {
     console.log('Вышли');
-    return await logoutApi.post('auth/logout');
+
+    const res = await logoutApi.post('auth/logout');
+
+    return res.data;
   }
 }

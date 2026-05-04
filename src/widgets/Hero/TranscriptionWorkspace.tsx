@@ -3,6 +3,7 @@ import CreateTaskModal from '@widgets/CreateTaskForm';
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux.ts';
 import { modalSlice } from '@app/store/reducers/ModalSlice.ts';
 import { Button } from '@/shared/components/Button/Button';
+import Button from '@components/Button';
 // import CreateTaskModal from '@widgets/CreateTaskForm';
 // import { useAppDispatch, useAppSelector } from '@shared/hooks/redux.ts';
 // import { transcriptionSlice } from '@app/store/reducers/TranscriptionSlice.ts';
