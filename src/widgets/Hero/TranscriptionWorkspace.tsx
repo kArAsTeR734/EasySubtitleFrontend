@@ -33,7 +33,7 @@ export const TranscriptionWorkspace = () => {
   return (
     <section className="hero">
       <div className="hero--inner container">
-        <Button onClick={switchModal} className="hero__title h3"></Button>
+        <Button onClick={switchModal} className="hero__title h3">Создать задачу</Button>
         <CreateTaskModal isOpen={isOpen} onClose={switchModal} />
       </div>
     </section>

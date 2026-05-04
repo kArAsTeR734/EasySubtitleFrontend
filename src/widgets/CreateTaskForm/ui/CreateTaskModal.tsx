@@ -1,6 +1,6 @@
 import Modal from '@shared/components/Modal';
 import { type FC } from 'react';
-import CreateTaskForm from '@widgets/CreateTaskForm';
+import CreateTaskForm from '@widgets/CreateTaskForm/ui/CreateTask/CreateTaskForm';
 
 interface CreateTaskModalProps {
   isOpen: boolean;
@@ -13,9 +13,13 @@ export const CreateTaskModal: FC<CreateTaskModalProps> = ({
                                                           }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <CreateTaskForm isOpen={false} onClose={function(): void {
-              throw new Error('Function not implemented.');
-          } } />
+      <div style={{
+        maxHeight: '80vh',
+        overflowY: 'auto',
+        padding: '8px'
+      }}>
+        <CreateTaskForm />
+      </div>
     </Modal>
   );
 };
