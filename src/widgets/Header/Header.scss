@@ -7,32 +7,13 @@
     justify-content: space-between;
     align-items: center;
     column-gap: 16px;
-
-    @include tablet {
-      display: flex;
-      justify-content: space-between;
-    }
   }
 
   &__menu {
-    @include tablet {
-      overflow-y: auto;
-      display: flex;
-      justify-content: center;
-      height: 100%;
-      border-radius: 0;
-    }
-
     &-list {
       display: flex;
       align-items: center;
       column-gap: 6px;
-
-      @include tablet {
-        flex-direction: column;
-        row-gap: 16px;
-        margin-block: auto;
-      }
     }
 
     &-link {
@@ -49,10 +30,6 @@
     display: flex;
     align-items: center;
     column-gap: 10px;
-
-    @include tablet-above {
-      justify-content: end;
-    }
   }
 
   &__burger-button {

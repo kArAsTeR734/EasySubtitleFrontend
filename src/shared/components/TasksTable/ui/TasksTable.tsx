@@ -93,8 +93,8 @@ export default function TasksTable() {
         order
       );
 
-      setTasks(response.tasks);
-      setTotal(response.total);
+      setTasks(Array.isArray(response?.tasks) ? response.tasks : []);
+      setTotal(response?.total || 0);
     } catch (err) {
       console.error('Failed to load tasks', err);
     } finally {

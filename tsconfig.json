@@ -31,8 +31,8 @@
       "@assets/*": ["src/assets/*"]
     }
   },
-  "include": ["src/**/*", "src/**/*.d.ts"],
-  "exclude": ["node_modules"],
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "src/**/*.d.ts"],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
