@@ -1,4 +1,5 @@
 import './TranscriptionWorkspace.scss';
+import Button from '@components/Button';
 // import CreateTaskModal from '@widgets/CreateTaskForm';
 // import { useAppDispatch, useAppSelector } from '@shared/hooks/redux.ts';
 // import { transcriptionSlice } from '@app/store/reducers/TranscriptionSlice.ts';
@@ -23,7 +24,7 @@ export const TranscriptionWorkspace = () => {
   return (
     <section className="hero">
       <div className="hero--inner container">
-        <h2 className="hero__title h3">{'Заголовок'}</h2>
+        <Button className="hero__title h3">{'Создать PINN задачу'}</Button>
         {/*<CreateTaskModal isOpen={} onClose={}*/}
       </div>
     </section>
