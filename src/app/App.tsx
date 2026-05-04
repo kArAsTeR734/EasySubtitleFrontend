@@ -1,10 +1,13 @@
-import MainPage from '../pages/MainPage/MainPage.tsx';
 import { AuthProvider } from '@app/context/UserContext.tsx';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { useMemo } from 'react';
+import getRoutesConfig from '@app/routes/config.tsx';
 
 function App() {
+  const router = useMemo(() => createBrowserRouter(getRoutesConfig()), []);
   return (
     <AuthProvider>
-      <MainPage />
+      <RouterProvider router={router}/>
     </AuthProvider>
   );
 }
