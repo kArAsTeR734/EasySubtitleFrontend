@@ -6,13 +6,14 @@ import AuthorizationForm from '../AuthorizationForm';
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux.ts';
 import { modalSlice } from '@app/store/reducers/ModalSlice.ts';
 import UserProfile from '../../shared/components/UserProfile/ui/UserProfile.tsx';
-import { userSlice } from '@app/store/reducers/UserSlice.ts';
+import { useQueryClient } from '@tanstack/react-query';
+import { useAuth } from '@/features/User/useAuth.ts';
 
 const Header = () => {
   const { isOpen } = useAppSelector((state) => state.modalReducer);
-  const { isAuth } = useAppSelector((state) => state.userReducer);
-  const { onClose } = modalSlice.actions;
-  const { logout } = userSlice.actions;
+  const { user } = useAuth();
+  const { toggleModal } = modalSlice.actions;
+  const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
 
   const menuItems = [
@@ -27,6 +28,15 @@ const Header = () => {
       active: false,
     },
   ];
+
+  const switchModal = () => {
+    dispatch(toggleModal());
+  }
+
+  const logout = () => {
+    localStorage.removeItem('access_token');
+    queryClient.removeQueries({ queryKey: ['me'] });
+  };
 
   return (
     <header className="header" data-js-overlay-menu="">
@@ -50,18 +60,18 @@ const Header = () => {
           </ul>
         </nav>
         <div className="header__actions">
-          {isAuth ? (
+          {user ? (
             <>
               <UserProfile />
-              <Button onClick={() => dispatch(logout())}>Выйти</Button>
+              <Button onClick={logout}>Выйти</Button>
             </>
           ) : (
-            <Button onClick={() => dispatch(onClose(true))}>Войти</Button>
+            <Button onClick={switchModal}>Войти</Button>
           )}
         </div>
         <AuthorizationForm
           isOpen={isOpen}
-          onClose={() => dispatch(onClose(false))}
+          onClose={switchModal}
         />
       </div>
     </header>

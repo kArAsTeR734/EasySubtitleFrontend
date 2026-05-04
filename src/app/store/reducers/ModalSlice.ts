@@ -18,9 +18,15 @@ export const modalSlice = createSlice({
       state.title = action.payload;
     },
 
-    onClose(state, action: PayloadAction<boolean>) {
-      state.isOpen = action.payload;
+    toggleModal(state) {
+      state.isOpen = !state.isOpen;
     },
+    // openModal(state) {
+    //   state.isOpen = true;
+    // },
+    // closeModal(state) {
+    //   state.isOpen = false;
+    // }
   },
 });
 
