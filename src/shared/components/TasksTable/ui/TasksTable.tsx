@@ -1,9 +1,12 @@
 'use client';
 
-import React, { useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Box,
+  Chip,
+  CircularProgress,
+  Pagination,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -11,11 +14,7 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
-  Paper,
-  Typography,
-  Pagination,
-  CircularProgress,
-  Chip
+  Typography
 } from '@mui/material';
 import { TasksService } from '@/api/services/TasksService.ts';
 import { type TaskResponse } from '@/api/types/api-types.ts';
@@ -66,8 +65,6 @@ function formatDate(iso: string): string {
 // ============================================================
 
 export default function TasksTable() {
-  const router = useRouter();
-
   // ---------- Данные ----------
   const [tasks, setTasks] = useState<TaskResponse[]>([]);
   const [total, setTotal] = useState(0);
@@ -131,11 +128,6 @@ export default function TasksTable() {
     setPage(1); // сброс на первую страницу
   };
 
-  /** Клик по строке — переход на карточку задачи */
-  const handleRowClick = (taskId: string) => {
-    router.push(`/tasks/${taskId}`);
-  };
-
   // ============================================================
   // Рендер
   // ============================================================
@@ -187,7 +179,6 @@ export default function TasksTable() {
                     <TableRow
                       key={task.id}
                       hover
-                      onClick={() => handleRowClick(task.id)}
                       sx={{ cursor: 'pointer' }}
                     >
                       {/* Название */}

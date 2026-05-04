@@ -8,7 +8,7 @@ import { modalSlice } from '@app/store/reducers/ModalSlice.ts';
 import UserProfile from '../../shared/components/UserProfile/ui/UserProfile.tsx';
 import { useAuth } from '@/features/User/useAuth.ts';
 import { useLogout } from '@/features/Logout/useLogout.ts';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const { activeModal } = useAppSelector((state) => state.modalReducer);
@@ -25,7 +25,7 @@ const Header = () => {
     },
     {
       label: 'Инструкция',
-      href: '#instructions',
+      href: '/documentation',
       active: false
     }
   ];
