@@ -1,9 +1,9 @@
-import TranscriptionWorkspace from '../../widgets/Hero';
-import Header from '../../widgets/Header';
-import Sidebar from '../../widgets/Sidebar';
+import TranscriptionWorkspace from '../../../widgets/Hero/index';
+import Header from '../../../widgets/Header/index';
+import Sidebar from '../../../widgets/Sidebar/index';
 import './MainPage.scss';
-import TranscriptionInstruction from '../../widgets/Hero/TranscriptionInstruction';
-import Footer from '../../widgets/Footer/ui/Footer';
+import TranscriptionInstruction from '../../../widgets/Hero/TranscriptionInstruction/index';
+import Footer from '../../../widgets/Footer/ui/Footer';
 
 const MainPage = () => {
   return (

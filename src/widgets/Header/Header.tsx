@@ -8,6 +8,7 @@ import { modalSlice } from '@app/store/reducers/ModalSlice.ts';
 import UserProfile from '../../shared/components/UserProfile/ui/UserProfile.tsx';
 import { useAuth } from '@/features/User/useAuth.ts';
 import { useLogout } from '@/features/Logout/useLogout.ts';
+import {Link} from 'react-router-dom';
 
 const Header = () => {
   const { activeModal } = useAppSelector((state) => state.modalReducer);
@@ -44,15 +45,15 @@ const Header = () => {
           <ul className="header__menu-list">
             {menuItems.map(({ label, href, active }, index) => (
               <li className="header__menu-item" key={index}>
-                <a
+                <Link
                   className={clsx(
                     'header__menu-link',
                     active ? 'is-active' : ''
                   )}
-                  href={href}
+                  to={href}
                 >
                   {label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
