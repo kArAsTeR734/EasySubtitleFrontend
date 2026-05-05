@@ -34,7 +34,7 @@ import { type TaskResponse } from '@/api/types/api-types.ts';
 // ============================================================
 // Константы
 // ============================================================
-const ROWS_PER_PAGE = 8;
+const ROWS_PER_PAGE = 9;
 
 interface Column {
   id: string;
@@ -335,7 +335,7 @@ export default function TasksTable() {
   return (
     <Box sx={{ width: '100%', mt: -2 }}>
       {loading && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', my: 1 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
           <CircularProgress />
         </Box>
       )}

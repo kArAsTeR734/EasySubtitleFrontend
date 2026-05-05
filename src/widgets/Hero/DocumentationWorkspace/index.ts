@@ -1,3 +1,3 @@
-import { DocumentationWorkspace } from './ui/DocumentationWorkspace.tsx';
+import { DocumentationWorkspace } from './DocumentationWorkspace.tsx';
 
 export default DocumentationWorkspace;
