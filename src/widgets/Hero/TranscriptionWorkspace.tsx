@@ -4,8 +4,15 @@ import { useAppDispatch, useAppSelector } from '@shared/hooks/redux.ts';
 import { modalSlice } from '@app/store/reducers/ModalSlice.ts';
 import { Button } from '@/shared/components/Button/Button';
 import TasksTable from '@components/TasksTable';
+import { useCallback, useState } from 'react';
 
 export const TranscriptionWorkspace = () => {
+  const [tableKey, setTableKey] = useState(0);
+
+  const handleTaskCreated = useCallback(() => {
+    setTableKey((prev) => prev + 1);
+  }, []);
+
   const dispatch = useAppDispatch();
   const { activeModal } = useAppSelector((state) => state.modalReducer);
   const { openModal, closeModal } = modalSlice.actions;
@@ -18,9 +25,15 @@ export const TranscriptionWorkspace = () => {
         <Button
           onClick={() => dispatch(openModal('createTask'))}
           className="hero__title h3">Создать задачу</Button>
-        <CreateTaskModal isOpen={isCreateOpen} onClose={() => dispatch(closeModal())} />
+        <CreateTaskModal
+          isOpen={isCreateOpen}
+          onClose={() => dispatch(closeModal())}
+          onTaskCreated={handleTaskCreated}
+        />
 
-        <TasksTable/>
+        <TasksTable
+          key={tableKey}
+        />
       </div>
     </section>
   );

@@ -11,6 +11,8 @@ run:
 	@docker run --rm --name $(CONTAINER_NAME) -p $(PORT) $(IMAGE_NAME)
 	@echo "Приложение доступно по адресу: http://localhost:$(word 1,$(subst :, ,$(PORT)))"
 
+build-and-run: build run
+
 stop:
 	@docker stop $(CONTAINER_NAME) || true
 

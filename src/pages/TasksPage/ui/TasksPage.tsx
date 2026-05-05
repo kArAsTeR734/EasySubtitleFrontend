@@ -1,9 +1,9 @@
 import TranscriptionWorkspace from '../../../widgets/Hero/index';
 import Header from '../../../widgets/Header/index';
-import './MainPage.scss';
+import './TasksPage.scss';
 import Footer from '../../../widgets/Footer/ui/Footer';
 
-const MainPage = () => {
+const TasksPage = () => {
   return (
     <>
       <Header />
@@ -15,4 +15,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default TasksPage;

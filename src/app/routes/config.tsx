@@ -1,5 +1,5 @@
 import type { RouteObject } from 'react-router-dom';
-import MainPage from '@pages/MainPage/ui/MainPage.tsx';
+import TasksPage from '@pages/TasksPage/ui/TasksPage.tsx';
 import DocumentationPage from '@pages/DocumentationPage/ui/DocumentationPage.tsx';
 
 export type AppRouteObject = RouteObject & {
@@ -8,18 +8,18 @@ export type AppRouteObject = RouteObject & {
 
 export const PATHS = {
   HOME: '/',
-  DOCUMENTATION: '/documentation',
-  NOT_FOUND: '*',
+  TASKS: '/tasks',
+  NOT_FOUND: '*'
 } as const;
 
 const getRoutesConfig = (): AppRouteObject[] => [
   {
     path: PATHS.HOME,
-    element: <MainPage />,
+    element: <DocumentationPage />
   },
   {
-    path: PATHS.DOCUMENTATION,
-    element: <DocumentationPage />,
-  },
+    path: PATHS.TASKS,
+    element: <TasksPage />
+  }
 ];
 export default getRoutesConfig;

@@ -19,13 +19,13 @@ const Header = () => {
 
   const menuItems = [
     {
-      label: 'Главная',
+      label: 'Документация',
       href: '/',
       active: true
     },
     {
-      label: 'Инструкция',
-      href: '/documentation',
+      label: 'PINN задачи',
+      href: '/tasks',
       active: false
     }
   ];

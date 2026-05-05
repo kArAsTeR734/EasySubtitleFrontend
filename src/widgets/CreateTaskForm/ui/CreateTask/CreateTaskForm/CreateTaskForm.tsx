@@ -97,7 +97,11 @@ function getSlotByExtension(file: File): FileSlot | null {
 // Компонент
 // ============================================================
 
-export default function CreateTaskForm() {
+interface CreateTaskFormProps {
+  onSuccess?: () => void;
+}
+
+export default function CreateTaskForm({ onSuccess }: CreateTaskFormProps) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [mode, setMode] = useState<TaskMode>('train');
@@ -142,7 +146,7 @@ export default function CreateTaskForm() {
       const req: TaskCreateRequestData = {
         name: name.trim(),
         description: description.trim() || undefined,
-        mode
+        mode,
       };
 
       await TasksService.createTask(
@@ -150,13 +154,17 @@ export default function CreateTaskForm() {
         files['functions.py'],
         files['config.yaml'],
         files['data.mat'],
-        files['checkpoint.ckpt']);
+        files['checkpoint.ckpt']
+      );
+
+      onSuccess?.(); // ← показать уведомление
     } catch (err: any) {
       setError(err?.response?.data?.message ?? 'Не удалось создать задачу');
     } finally {
       setIsSubmitting(false);
     }
   };
+
 
   // ============================================================
   // Drag-and-drop + выбор из ОС
