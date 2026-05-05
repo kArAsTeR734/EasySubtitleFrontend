@@ -26,6 +26,7 @@ export interface TaskResponse {
   mode: string;
   status: string;
   error?: string;
+  have_plot: boolean;
   created_at: string;
 }
 

@@ -23,8 +23,8 @@ import {
   Typography
 } from '@mui/material';
 import { Close, CloudUpload, Description, InsertDriveFile } from '@mui/icons-material';
-import { TasksService } from '@/api/services/TasksService.ts';
 import type { TaskCreateRequestData } from '@/entities/Task/models/types.ts';
+import { TasksService } from '@/api/services/TasksService.ts';
 
 // ============================================================
 // Типы
@@ -141,17 +141,16 @@ export default function CreateTaskForm() {
     try {
       const req: TaskCreateRequestData = {
         name: name.trim(),
-        mode,
-        description: description.trim() || undefined
+        description: description.trim() || undefined,
+        mode
       };
 
       await TasksService.createTask(
         req,
-        files['functions.py']!,
-        files['config.yaml']!,
+        files['functions.py'],
+        files['config.yaml'],
         files['data.mat'],
-        files['checkpoint.ckpt']
-      );
+        files['checkpoint.ckpt']);
     } catch (err: any) {
       setError(err?.response?.data?.message ?? 'Не удалось создать задачу');
     } finally {

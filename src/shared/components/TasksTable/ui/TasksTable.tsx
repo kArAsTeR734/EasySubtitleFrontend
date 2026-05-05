@@ -25,7 +25,7 @@ import { type TaskResponse } from '@/api/types/api-types.ts';
 // ============================================================
 // Константы
 // ============================================================
-const ROWS_PER_PAGE = 30;
+const ROWS_PER_PAGE = 7;
 
 // Описание колонок
 interface Column {
@@ -44,9 +44,18 @@ const COLUMNS: Column[] = [
 // Цвета чипсов для статусов
 const STATUS_COLORS: Record<string, 'default' | 'primary' | 'success' | 'warning' | 'error'> = {
   created: 'default',
-  running: 'primary',
-  error: 'error',
-  done: 'success'
+  in_queue: 'warning',     // жёлтый/оранжевый — ожидание
+  running: 'primary',      // синий — выполняется
+  error: 'error',          // красный — ошибка
+  done: 'success',         // зелёный — готово
+};
+
+const STATUS_TEXT: Record<string, string> = {
+  created: 'создана',
+  in_queue: 'в очереди',
+  running: 'выполняется',
+  error: 'ошибка',
+  done: 'выполнена',
 };
 
 // ============================================================
@@ -232,6 +241,7 @@ export default function TasksTable() {
                   tasks.map((task) => {
                     const canDownloadOutput = task.status === 'error' || task.status === 'done';
                     const canRun = task.status === 'created';
+                    const canDelete = task.status !== 'running' && task.status !== 'in_queue';
 
                     return (
                       <TableRow key={task.id} hover>
@@ -248,7 +258,7 @@ export default function TasksTable() {
                         {/* Статус */}
                         <TableCell>
                           <Chip
-                            label={task.status}
+                            label={STATUS_TEXT[task.status] ?? 'unexpected'}
                             size="small"
                             color={STATUS_COLORS[task.status] ?? 'default'}
                           />
@@ -316,7 +326,7 @@ export default function TasksTable() {
                                 <IconButton
                                   size="small"
                                   color="secondary"
-                                  disabled={!canDownloadOutput}
+                                  disabled={!task.have_plot}
                                   onClick={() => handlePlot(task.id)}
                                 >
                                   <Image />
@@ -329,6 +339,7 @@ export default function TasksTable() {
                               <IconButton
                                 size="small"
                                 color="error"
+                                disabled={!canDelete}
                                 onClick={() => handleDelete(task.id)}
                               >
                                 <Delete />
