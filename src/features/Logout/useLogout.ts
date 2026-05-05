@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AuthorizationService } from '@/api/services/AuthorizationService.ts';
+import { useNavigate } from 'react-router-dom';
 
 export const useLogout = () => {
   const queryClient = useQueryClient();
-
-  console.log('token before logout: ', localStorage.getItem('access_token'));
+  const navigate = useNavigate();
 
   return useMutation({
     mutationKey: ['logout'],
@@ -15,14 +15,11 @@ export const useLogout = () => {
       queryClient.removeQueries({ queryKey: ['me'] });
       localStorage.removeItem('access_token');
 
+      navigate('/');
       window.location.reload();
     },
     onError: (error) => {
       console.log('Произошла ошибка при выходе из аккаунта', error);
     },
-    onSettled: () => {
-      console.log('Запрос отправился');
-      console.log('token after logout: ', localStorage.getItem('access_token'));
-    }
   });
 };

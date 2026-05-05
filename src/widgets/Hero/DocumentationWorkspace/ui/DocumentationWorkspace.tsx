@@ -1,6 +1,6 @@
 import InstructionList from './InstructionList/InstructionList.tsx';
 
-export const TranscriptionInstruction = () => {
+export const DocumentationWorkspace = () => {
   const instructionItems = [
     {
       id: 1,

@@ -1,4 +1,4 @@
-import TranscriptionWorkspace from '../../../widgets/Hero/index';
+import TasksWorkspace from '@widgets/Hero/TasksWorkspace';
 import Header from '../../../widgets/Header/index';
 import './TasksPage.scss';
 import Footer from '../../../widgets/Footer/ui/Footer';
@@ -8,7 +8,7 @@ const TasksPage = () => {
     <>
       <Header />
       <main className="page-wrapper">
-        <TranscriptionWorkspace />
+        <TasksWorkspace />
       </main>
       <Footer />
     </>

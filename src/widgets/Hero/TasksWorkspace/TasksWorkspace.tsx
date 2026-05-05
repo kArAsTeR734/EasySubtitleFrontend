@@ -1,12 +1,12 @@
-import './TranscriptionWorkspace.scss';
+import './TasksWorkspace.scss';
 import CreateTaskModal from '@widgets/CreateTaskForm';
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux.ts';
 import { modalSlice } from '@app/store/reducers/ModalSlice.ts';
-import { Button } from '@/shared/components/Button/Button';
+import { Button } from '@components/Button/Button.tsx';
 import TasksTable from '@components/TasksTable';
 import { useCallback, useState } from 'react';
 
-export const TranscriptionWorkspace = () => {
+export const TasksWorkspace = () => {
   const [tableKey, setTableKey] = useState(0);
 
   const handleTaskCreated = useCallback(() => {
