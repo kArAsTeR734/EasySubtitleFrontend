@@ -14,45 +14,45 @@ epochs:         30000   # эпох обучения
 train_datasets:
   # Сэмплер сетки
   - mesh_sampler:
-      _target_: pinnstorch.data.MeshSampler # тип объекта
-      collection_points: [f_T]    # список уравнений PDE
+      _target_: pinnstorch.MeshSampler # тип объекта
+      collection_points: [f_T]         # список уравнений PDE
       # если не указывать число точек — система возьмёт все данные, без сэмплирования
-      num_sample: \${num_sample}   # число точек
+      num_sample: \${num_sample}        # число точек
       
   # Сэмплер начальных условий
   - initial_condition:
-      _target_: pinnstorch.data.InitialCondition  # тип объекта
-      solution: [T]               # ключи, по которым вычисляется начальное условие
-      num_sample: \${num_initial}  # число точек
+      _target_: pinnstorch.InitialCondition  # тип объекта
+      solution: [T]                    # ключи, по которым вычисляется начальное условие
+      num_sample: \${num_initial}       # число точек
       
   # Сэмплер граничных условий для левой границы
   - left_bc:
-      _target_: pinnstorch.data.BoundaryCondition1D # тип объекта
-      bc_func_name: left_bc       # ключ для поиска функции в словаре boundary_functions
-      location: left              # расположение границы (left, right, both)
-      num_sample: \${num_boundary} # число точек
+      _target_: pinnstorch.BoundaryCondition1D # тип объекта
+      bc_func_name: left_bc            # ключ для поиска функции в словаре boundary_functions
+      location: left                   # расположение границы (left, right, both)
+      num_sample: \${num_boundary}      # число точек
       
   # Сэмплер граничных условий для правой границы
   - right_bc:
-      _target_: pinnstorch.data.BoundaryCondition1D # тип объекта
-      bc_func_name: right_bc      # ключ для поиска функции в словаре boundary_functions
-      location: right             # расположение границы (left, right, both)
-      num_sample: \${num_boundary} # число точек
+      _target_: pinnstorch.BoundaryCondition1D # тип объекта
+      bc_func_name: right_bc           # ключ для поиска функции в словаре boundary_functions
+      location: right                  # расположение границы (left, right, both)
+      num_sample: \${num_boundary}      # число точек
 
 # Валидационный датасет
 val_dataset:
   # Сэмплер сетки
   - mesh_sampler:
-      _target_: pinnstorch.data.MeshSampler # тип объекта
-      solution: [T]               # ключи, по которым вычисляется начальное условие
-      num_sample: \${num_validation} # число точек
+      _target_: pinnstorch.MeshSampler # тип объекта
+      solution: [T]                    # ключи, по которым вычисляется начальное условие
+      num_sample: \${num_validation}    # число точек
 
 # Датасет для предугадывания (необходим для построения графика)
 pred_dataset:
   # Сэмплер сетки
   - mesh_sampler:
-      _target_: pinnstorch.data.MeshSampler # тип объекта
-      solution: [T]            # ключи, по которым вычисляется начальное условие
+      _target_: pinnstorch.MeshSampler # тип объекта
+      solution: [T]                    # ключи, по которым вычисляется начальное условие
 
 # Архитектура нейросети
 net:

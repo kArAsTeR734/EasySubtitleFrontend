@@ -57,7 +57,7 @@ def pde_fn(
     3. t — тензор времени
     
     Для вычисления градиента тензора dy на тензор dx можно использовать
-    pt.utils.gradient(
+    pt.gradient(
       dy: torch.Tensor,
       dx: Union[List[torch.Tensor], torch.Tensor],
       create_graph: bool = True
@@ -66,8 +66,8 @@ def pde_fn(
     """
     
     T = outputs["T"]
-    T_x, T_t = pt.utils.gradient(T, [x, t])
-    T_xx = pt.utils.gradient(T_x, x)[0]
+    T_x, T_t = pt.gradient(T, [x, t])
+    T_xx = pt.gradient(T_x, x)[0]
 
     # В декларативном формате опишите PDE
     # Описанное PDE является частью loss функция PINN сети
@@ -113,7 +113,7 @@ def bc_right(
     dT/dx(L, t) = 0 (Нейман, теплоизоляция)
     """
     
-    T_x = pt.utils.gradient(outputs["T"], x)[0]
+    T_x = pt.gradient(outputs["T"], x)[0]
     outputs["right_bc"] = T_x
     return outputs
 
@@ -125,16 +125,16 @@ boundary_functions = {
 }
 
 def plot_fn(
-  mesh: pt.data.MeshBase,
+  mesh: pt.MeshBase,
   preds: Dict[str, np.ndarray], 
-  train_datasets: List[pt.data.SamplerBase], 
-  val_dataset: pt.data.SamplerBase
+  train_datasets: List[pt.SamplerBase], 
+  val_dataset: pt.SamplerBase
 ):
     """
     (опционально) Функция описания итогового графики
     Отвечает за внешний вид fig.pdf и fig.eps
     
-    1. mesh: pt.data.MeshBase — облако сэмплированных точек
+    1. mesh: pt.MeshBase — облако сэмплированных точек
     mesh.ub: [x_max, t_max] — верхняя граница домена
     mesh.lb: [x_min, t_min] — нижняя граница домена
     mesh.spatial_domain: np.ndarray
@@ -142,7 +142,7 @@ def plot_fn(
     mesh.solution: Dict[str, np.ndarray]
     mesh.spatial_domain_mesh: np.ndarray, shape=(Nx, Nt, 1) 
     2. preds: Dict[str, np.ndarray] — предугаданные значения
-    3. train_datasets: List[pt.data.SamplerBase] — список сэмплеров обучения
+    3. train_datasets: List[pt.SamplerBase] — список сэмплеров обучения
     4. val_dataset: pt.SamplerBase — сэмплер валидации
     """
     
