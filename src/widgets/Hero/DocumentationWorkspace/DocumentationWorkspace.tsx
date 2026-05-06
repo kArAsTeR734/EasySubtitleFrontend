@@ -8,63 +8,92 @@ import { useAppDispatch } from '@shared/hooks/redux.ts';
 import { modalSlice } from '@app/store/reducers/ModalSlice.ts';
 import { functionsPy } from '@widgets/Hero/DocumentationWorkspace/files/functionsPy.tsx';
 import { configYaml } from '@widgets/Hero/DocumentationWorkspace/files/configYaml.tsx';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/features/User/useAuth.ts';
 
 export const DocumentationWorkspace = () => {
+  const { user } = useAuth();
+
   const dispatch = useAppDispatch();
   const { openModal } = modalSlice.actions;
 
+  const navigate = useNavigate();
+
+  const handleTryNow = () => {
+    if (!user) {
+      dispatch(openModal('auth'));
+      return;
+    }
+    navigate('/tasks');
+  };
+
   return (
-    <Box sx={{ bgcolor: 'grey.50', minHeight: '100%' }}>
+    <Box sx={{ bgcolor: '#F4F9FE', minHeight: '100%' }}>
       {/* ========== Hero-блок ========== */}
       <Box
         sx={{
           bgcolor: 'primary.main',
           color: 'white',
-          py: 8,
+          py: 4,
           textAlign: 'center',
         }}
       >
         <Container maxWidth="md">
-          <Typography variant="h3" fontWeight={700} gutterBottom>
+          <Typography variant="h4" fontWeight={700} gutterBottom>
             PINN нейросети
           </Typography>
-          <Typography variant="h6" fontWeight={400} sx={{ opacity: 0.9 }}>
+          <Typography variant="body1" fontWeight={400} sx={{ opacity: 0.9 }}>
             Physics-Informed Neural Networks — нейросети, которые уважают физику
           </Typography>
         </Container>
       </Box>
 
       {/* ========== Что такое PINN ========== */}
-      <Container maxWidth="md" sx={{ py: 6 }}>
+      <Container maxWidth="md" sx={{ py: 3 }}>
         <Typography variant="h4" fontWeight={600} gutterBottom>
           Что такое PINN?
         </Typography>
         <Typography variant="body1" color="text.secondary" paragraph>
-          Physics-Informed Neural Networks (PINN) — это класс нейросетей, которые обучаются
-          не только на данных, но и на физических законах. Вместо того чтобы просто
-          запоминать точки, сеть минимизирует невязку дифференциального уравнения.
+          Physics-Informed Neural Networks (PINN) — это класс нейросетей,
+          которые обучаются не только на данных, но и на физических законах.
+          Вместо того чтобы просто запоминать точки, сеть минимизирует невязку
+          дифференциального уравнения.
         </Typography>
         <Typography variant="body1" color="text.secondary" paragraph>
-          Это позволяет решать прямые и обратные задачи теплопроводности, гидродинамики,
-          квантовой механики и других областей. Вы задаёте уравнение — сеть находит решение.
+          Обученная модель позволяет мгновенно решать задачи одного семейства,
+          допуская изменение параметров уравнения. Что позволяет опровергать
+          ошибочные гипотезы и использовать тяжеловесные сеточные методы только
+          для самых очных гипотез.
         </Typography>
 
-        <Paper sx={{ p: 3, bgcolor: 'primary.50', borderLeft: 4, borderColor: 'primary.main', mt: 3 }}>
+        <Paper
+          sx={{
+            p: 3,
+            bgcolor: 'primary.50',
+            borderLeft: 4,
+            borderColor: 'primary.main',
+            mt: 3,
+          }}
+        >
           <Typography variant="body1" fontWeight={500}>
-            💡 PINN Automizer позволяет сосредоточиться на физике, а не на программировании.
-            Вы пишете только PDE и граничные условия — всё остальное делает система.
+            💡 PINN Automizer — программный комплекс, позволяющий
+            сосредоточиться на физике, а не на программировании. Вы пишете
+            только PDE и граничные условия в декларативном стиле — всё остальное
+            делает система. На текущий момент PINN Automizer может решать только
+            одномерные в пространстве PDE.
           </Typography>
         </Paper>
       </Container>
 
       {/* ========== Тестовая задача ========== */}
-      <Container maxWidth="md" sx={{ pb: 6 }}>
+      <Container maxWidth="md" sx={{ pb: 3 }}>
         <Typography variant="h4" fontWeight={600} gutterBottom>
           Тестовая задача
         </Typography>
         <Typography variant="body1" color="text.secondary" paragraph>
-          Примеры ниже приводятся для <b>одномерного уравнения теплопроводности</b>.
-          Это классическая задача распространения тепла в стержне.
+          Примеры ниже приводятся для{' '}
+          <b>одномерного уравнения теплопроводности</b>. Это классическая задача
+          распространения тепла в стержне.
         </Typography>
 
         {/* Параметры области */}
@@ -73,7 +102,8 @@ export const DocumentationWorkspace = () => {
             Параметры области
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Длина стержня <InlineMath math="L = 1" />, конечное время <InlineMath math="t_{\max} = 10" />.
+            Длина стержня <InlineMath math="L = 1" />, конечное время{' '}
+            <InlineMath math="t_{\max} = 10" />.
           </Typography>
         </Paper>
 
@@ -84,7 +114,8 @@ export const DocumentationWorkspace = () => {
           </Typography>
           <BlockMath math="\frac{\partial T}{\partial t} = 0.1 \cdot \frac{\partial^2 T}{\partial x^2}" />
           <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-            где <InlineMath math="T(x,t)" /> — температура в точке <InlineMath math="x" /> в момент времени <InlineMath math="t" />.
+            где <InlineMath math="T(x,t)" /> — температура в точке{' '}
+            <InlineMath math="x" /> в момент времени <InlineMath math="t" />.
           </Typography>
         </Paper>
 
@@ -95,7 +126,8 @@ export const DocumentationWorkspace = () => {
           </Typography>
           <BlockMath math="T(x, 0) = 20 + 2 \sin\left(-\frac{2\pi x}{2L}\right)" />
           <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-            В начальный момент температура распределена по синусоидальному закону.
+            В начальный момент температура распределена по синусоидальному
+            закону.
           </Typography>
         </Paper>
 
@@ -126,7 +158,7 @@ export const DocumentationWorkspace = () => {
           </Box>
         </Paper>
 
-        <Box sx={{ textAlign: 'center', mb: 4 }}>
+        <Box sx={{ textAlign: 'center', mb: -1 }}>
           <Button
             variant="outlined"
             size="large"
@@ -140,19 +172,22 @@ export const DocumentationWorkspace = () => {
       </Container>
 
       {/* ========== Как это работает ========== */}
-      <Container maxWidth="md" sx={{ pb: 4 }}>
+      <Container maxWidth="md" sx={{ pb: 2 }}>
         <Typography variant="h4" fontWeight={600} gutterBottom>
           Как это работает?
         </Typography>
         <Typography variant="body1" color="text.secondary" paragraph>
-          Вы загружаете два файла: <b>functions.py</b> с описанием PDE и граничных условий,
-          и <b>config.yaml</b> с параметрами обучения. Система запускает обучение на GPU,
-          и через несколько минут вы получаете решение.
+          Вы загружаете 3-4 файла: <b>functions.py</b> с описанием PDE и
+          граничных условий, <b>config.yaml</b> с параметрами обучения,{' '}
+          <b>data.mat</b> с численным решением PDE и (только для дообучения и
+          предсказания) чекпоинт с параметрами обученной модели{' '}
+          <b>checkpoint.ckpt</b>. Система запускает обучение на GPU, и через
+          несколько минут Вы получаете решение.
         </Typography>
       </Container>
 
       {/* ========== functions.py ========== */}
-      <Container maxWidth="md" sx={{ pb: 4 }}>
+      <Container maxWidth="md" sx={{ pb: 2 }}>
         <Typography variant="h5" fontWeight={600} gutterBottom>
           functions.py — описание задачи
         </Typography>
@@ -172,7 +207,7 @@ export const DocumentationWorkspace = () => {
       </Container>
 
       {/* ========== config.yaml ========== */}
-      <Container maxWidth="md" sx={{ pb: 6 }}>
+      <Container maxWidth="md" sx={{ pb: 3 }}>
         <Typography variant="h5" fontWeight={600} gutterBottom>
           config.yaml — параметры обучения
         </Typography>
@@ -192,12 +227,12 @@ export const DocumentationWorkspace = () => {
       </Container>
 
       {/* ========== Призыв к действию ========== */}
-      <Box sx={{ textAlign: 'center', pb: 8 }}>
+      <Box sx={{ textAlign: 'center', pb: 4 }}>
         <Button
           variant="contained"
           size="large"
           startIcon={<RocketLaunch />}
-          onClick={() => dispatch(openModal('auth'))}
+          onClick={handleTryNow}
           sx={{ px: 6, py: 1.5, fontSize: '1.1rem' }}
         >
           Попробовать прямо сейчас

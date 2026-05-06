@@ -5,6 +5,7 @@ import { modalSlice } from '@app/store/reducers/ModalSlice.ts';
 import { useAuth } from '@/features/User/useAuth.ts';
 import { useLogout } from '@/features/Logout/useLogout.ts';
 import AuthorizationForm from '../AuthorizationForm';
+import Logo from '@components/Logo';
 
 const Header = () => {
   const { activeModal } = useAppSelector((state) => state.modalReducer);
@@ -39,7 +40,7 @@ const Header = () => {
             to="/"
             sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flex: 1 }}
           >
-            <img src="/src/assets/Logo.svg" alt="PINN Automizer" style={{ height: 32 }} />
+            <Logo />
           </Box>
 
           {/* Центральная часть: навигация */}

@@ -1,19 +1,11 @@
-import type { FC } from 'react';
-import type { LogoProps } from '../types';
-import { clsx } from 'clsx';
+import { Box, Typography } from '@mui/material';
+import { VscCircuitBoard } from 'react-icons/vsc';
 
-export const Logo: FC<LogoProps> = ({ className }) => {
-  const title = 'Home';
-
-  return (
-    <>
-      <a
-        className={clsx('logo', className)}
-        href="/public"
-        title={title}
-        aria-label={title}
-      >
-      </a>
-    </>
-  );
-};
+export const Logo = () => (
+  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <VscCircuitBoard size={36} color="#1976d2" />
+    <Typography variant="h6" fontWeight={700} color="primary.main">
+      PINN Automizer
+    </Typography>
+  </Box>
+);

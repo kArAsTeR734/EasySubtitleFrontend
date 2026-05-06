@@ -1,6 +1,7 @@
 import './Footer.scss';
 import { GitHub } from '@mui/icons-material';
 import { Box, Link, Typography } from '@mui/material';
+import Logo from '@components/Logo';
 
 const Footer = () => {
   return (
@@ -26,7 +27,7 @@ const Footer = () => {
       >
         {/* Левая часть: логотип */}
         <Box>
-          <img src="/src/assets/Logo.svg" alt="PINN Automizer" style={{ height: 32 }} />
+          <Logo />
         </Box>
 
         {/* Центральная часть: О проекте + GitHub */}

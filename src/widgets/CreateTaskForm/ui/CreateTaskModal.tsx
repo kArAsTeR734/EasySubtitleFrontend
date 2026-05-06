@@ -24,10 +24,8 @@ export const CreateTaskModal: FC<CreateTaskModalProps> = ({
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <div style={{ maxHeight: '80vh', overflowY: 'auto', padding: '8px' }}>
+      <Modal isOpen={isOpen} onClose={onClose} >
           <CreateTaskForm onSuccess={handleSuccess} />
-        </div>
       </Modal>
 
       <Snackbar
