@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   Box,
-  Chip,
   CircularProgress,
   IconButton,
   Paper,
@@ -17,11 +16,15 @@ import {
   Typography,
 } from '@mui/material';
 import {
+  CheckCircle,
   ChevronLeft,
   ChevronRight,
   Delete,
   Download,
+  EditNote,
+  Error,
   FirstPage,
+  HourglassFull,
   Image,
   LastPage,
   Memory,
@@ -78,15 +81,20 @@ const COLUMNS: Column[] = [
   },
 ];
 
-const STATUS_COLORS: Record<
-  string,
-  'default' | 'primary' | 'success' | 'warning' | 'error'
-> = {
-  created: 'default',
-  in_queue: 'warning',
-  running: 'primary',
-  error: 'error',
-  done: 'success',
+const STATUS_ICON: Record<string, React.ReactNode> = {
+  created: (
+    <EditNote fontSize="small" sx={{ mr: 0.5, color: 'text.secondary' }} />
+  ),
+  in_queue: (
+    <HourglassFull fontSize="small" sx={{ mr: 0.5, color: 'warning.main' }} />
+  ),
+  running: (
+    <PlayArrow fontSize="small" sx={{ mr: 0.5, color: 'primary.main' }} />
+  ),
+  error: <Error fontSize="small" sx={{ mr: 0.5, color: 'error.main' }} />,
+  done: (
+    <CheckCircle fontSize="small" sx={{ mr: 0.5, color: 'success.main' }} />
+  ),
 };
 
 const STATUS_TEXT: Record<string, string> = {
@@ -509,11 +517,18 @@ export default function TasksTable() {
                         <TableCell
                           sx={{ width: COLUMNS[1].width, textAlign: 'center' }}
                         >
-                          <Chip
-                            label={STATUS_TEXT[task.status] ?? 'unexpected'}
-                            size="small"
-                            color={STATUS_COLORS[task.status] ?? 'default'}
-                          />
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                          >
+                            {STATUS_ICON[task.status]}
+                            <Typography variant="body2">
+                              {STATUS_TEXT[task.status] ?? task.status}
+                            </Typography>
+                          </Box>
                         </TableCell>
 
                         {/* Тип */}

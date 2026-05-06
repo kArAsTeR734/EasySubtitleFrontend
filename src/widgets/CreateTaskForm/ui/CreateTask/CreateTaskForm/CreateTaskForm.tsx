@@ -57,10 +57,7 @@ const EXTENSION_TO_SLOT: Record<string, FileSlot> = {
   '.pt': 'checkpoint.ckpt',
 };
 
-const FILE_REQUIREMENTS: Record<
-  FileSlot,
-  { label: string; required: TaskMode[] }
-> = {
+const FILE_REQUIREMENTS: Record<FileSlot, { label: string; required: TaskMode[] }> = {
   'functions.py': {
     label: 'Функции (.py)',
     required: ['train', 'retrain', 'predict'],
@@ -72,7 +69,7 @@ const FILE_REQUIREMENTS: Record<
   'data.mat': {
     label: 'Данные (.mat)',
     required: ['train', 'retrain', 'predict'],
-  }, // ← всегда обязателен
+  },
   'checkpoint.ckpt': {
     label: 'Чекпоинт (.ckpt / .pt)',
     required: ['retrain', 'predict'],
@@ -166,6 +163,11 @@ export default function CreateTaskForm({ onSuccess }: CreateTaskFormProps) {
       if (req.required.includes(mode) && !files[key]) {
         return `Файл «${req.label}» обязателен для режима «${MODE_LABELS[mode]}»`;
       }
+    }
+
+    // Если режим train и приложен checkpoint — ошибка
+    if (mode === 'train' && files['checkpoint.ckpt']) {
+      return 'Файл «Чекпоинт (.ckpt / .pt)» не нужен для режима «Обучить». Удалите его.';
     }
 
     return null;
