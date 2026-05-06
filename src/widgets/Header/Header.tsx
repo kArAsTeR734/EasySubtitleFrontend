@@ -64,7 +64,23 @@ const Header = () => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flex: 1, justifyContent: 'flex-end' }}>
             {user ? (
               <>
-                <Typography variant="body1" color="text.secondary">
+                <Box
+                  sx={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: '50%',
+                    bgcolor: 'primary.main',
+                    color: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontWeight: 600,
+                    fontSize: '0.85rem',
+                  }}
+                >
+                  {user.login.charAt(0).toUpperCase()}
+                </Box>
+                <Typography variant="body1" fontWeight={500} color="text.primary">
                   {user.login}
                 </Typography>
                 <Button

@@ -1,5 +1,5 @@
 import { Box, Button, Container, Paper, Typography } from '@mui/material';
-import { Download, RocketLaunch } from '@mui/icons-material';
+import { Download } from '@mui/icons-material';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import 'katex/dist/katex.min.css';
@@ -231,10 +231,19 @@ export const DocumentationWorkspace = () => {
         <Button
           variant="contained"
           size="large"
-          startIcon={<RocketLaunch />}
-          onClick={handleTryNow}
           sx={{ px: 6, py: 1.5, fontSize: '1.1rem' }}
+          onClick={handleTryNow}
         >
+          <img
+            src="/logo.svg"
+            alt=""
+            style={{
+              width: 32,
+              height: 32,
+              marginRight: 20,
+              filter: 'brightness(0) invert(1)', // ← инвертирует цвета: синий → белый
+            }}
+          />
           Попробовать прямо сейчас
         </Button>
       </Box>

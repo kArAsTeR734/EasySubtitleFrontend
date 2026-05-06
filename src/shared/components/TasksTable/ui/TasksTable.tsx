@@ -336,7 +336,14 @@ export default function TasksTable() {
     <Box sx={{ width: '100%', mt: -2 }}>
       {loading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
-          <CircularProgress />
+          <CircularProgress
+            sx={{
+              color: 'primary.100',
+              '& .MuiCircularProgress-circle': {
+                color: 'primary.main',
+              },
+            }}
+          />
         </Box>
       )}
 
@@ -472,7 +479,15 @@ export default function TasksTable() {
                                   onClick={() => handleRun(task.id)}
                                 >
                                   {runningTaskId === task.id ? (
-                                    <CircularProgress size={18} />
+                                    <CircularProgress
+                                      size={18}
+                                      sx={{
+                                        color: 'primary.100',
+                                        '& .MuiCircularProgress-circle': {
+                                          color: 'primary.main',
+                                        },
+                                      }}
+                                    />
                                   ) : (
                                     <PlayArrow />
                                   )}
