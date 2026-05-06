@@ -98,11 +98,11 @@ const STATUS_ICON: Record<string, React.ReactNode> = {
 };
 
 const STATUS_TEXT: Record<string, string> = {
-  created: 'создана',
-  in_queue: 'в очереди',
-  running: 'выполняется',
-  error: 'ошибка',
-  done: 'выполнена',
+  created: 'Создана',
+  in_queue: 'В очереди',
+  running: 'Выполняется',
+  error: 'Ошибка',
+  done: 'Выполнена',
 };
 
 const MODE_TEXT: Record<string, string> = {
@@ -529,6 +529,24 @@ export default function TasksTable() {
                               {STATUS_TEXT[task.status] ?? task.status}
                             </Typography>
                           </Box>
+                          {task.error && (
+                            <Tooltip title={task.error} arrow>
+                              <Typography
+                                variant="caption"
+                                color="error"
+                                sx={{
+                                  maxWidth: 180,
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                  whiteSpace: 'nowrap',
+                                  display: 'block',
+                                  mx: 'auto',
+                                }}
+                              >
+                                {task.error}
+                              </Typography>
+                            </Tooltip>
+                          )}
                         </TableCell>
 
                         {/* Тип */}
@@ -556,24 +574,6 @@ export default function TasksTable() {
                           <Typography variant="body2">
                             {formatDate(task.created_at)}
                           </Typography>
-                          {task.error && (
-                            <Tooltip title={task.error} arrow>
-                              <Typography
-                                variant="caption"
-                                color="error"
-                                sx={{
-                                  maxWidth: 180,
-                                  overflow: 'hidden',
-                                  textOverflow: 'ellipsis',
-                                  whiteSpace: 'nowrap',
-                                  display: 'block',
-                                  mx: 'auto',
-                                }}
-                              >
-                                {task.error}
-                              </Typography>
-                            </Tooltip>
-                          )}
                         </TableCell>
 
                         {/* Действия */}
