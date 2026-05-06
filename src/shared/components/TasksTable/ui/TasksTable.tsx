@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   Box,
@@ -26,7 +24,10 @@ import {
   FirstPage,
   Image,
   LastPage,
+  Memory,
   PlayArrow,
+  Refresh,
+  Search,
 } from '@mui/icons-material';
 import { TasksService } from '@/api/services/TasksService.ts';
 import { type TaskResponse } from '@/api/types/api-types.ts';
@@ -44,14 +45,43 @@ interface Column {
   align: 'left' | 'center';
 }
 
+// COLUMNS — добавить после status
 const COLUMNS: Column[] = [
-  { id: 'name', label: 'Название', sortable: true, width: '35%', align: 'left' },
-  { id: 'status', label: 'Статус', sortable: true, width: '15%', align: 'center' },
-  { id: 'created_at', label: 'Создана', sortable: true, width: '20%', align: 'center' },
-  { id: 'actions', label: 'Действия', sortable: false, width: '30%', align: 'center' },
+  {
+    id: 'name',
+    label: 'Название',
+    sortable: true,
+    width: '20%',
+    align: 'left',
+  },
+  {
+    id: 'status',
+    label: 'Статус',
+    sortable: true,
+    width: '20%',
+    align: 'center',
+  },
+  { id: 'mode', label: 'Тип', sortable: false, width: '12%', align: 'center' },
+  {
+    id: 'created_at',
+    label: 'Создана',
+    sortable: true,
+    width: '18%',
+    align: 'center',
+  },
+  {
+    id: 'actions',
+    label: 'Действия',
+    sortable: false,
+    width: '28%',
+    align: 'center',
+  },
 ];
 
-const STATUS_COLORS: Record<string, 'default' | 'primary' | 'success' | 'warning' | 'error'> = {
+const STATUS_COLORS: Record<
+  string,
+  'default' | 'primary' | 'success' | 'warning' | 'error'
+> = {
   created: 'default',
   in_queue: 'warning',
   running: 'primary',
@@ -65,6 +95,18 @@ const STATUS_TEXT: Record<string, string> = {
   running: 'выполняется',
   error: 'ошибка',
   done: 'выполнена',
+};
+
+const MODE_TEXT: Record<string, string> = {
+  train: 'Обучение',
+  retrain: 'Дообучение',
+  predict: 'Предугадывание',
+};
+
+const MODE_ICON: Record<string, React.ReactNode> = {
+  train: <Memory fontSize="small" sx={{ mr: 0.5, color: 'primary.main' }} />,
+  retrain: <Refresh fontSize="small" sx={{ mr: 0.5, color: 'success.main' }} />,
+  predict: <Search fontSize="small" sx={{ mr: 0.5, color: 'warning.main' }} />,
 };
 
 // ============================================================
@@ -136,7 +178,11 @@ interface CustomPaginationProps {
   onPageChange: (newPage: number) => void;
 }
 
-function CustomPagination({ page, totalPages, onPageChange }: CustomPaginationProps) {
+function CustomPagination({
+  page,
+  totalPages,
+  onPageChange,
+}: CustomPaginationProps) {
   const [inputValue, setInputValue] = useState(String(page));
 
   // Синхронизируем input со значением page извне
@@ -167,7 +213,11 @@ function CustomPagination({ page, totalPages, onPageChange }: CustomPaginationPr
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
       <Tooltip title="Первая страница">
         <span>
-          <IconButton size="small" disabled={page === 1} onClick={() => onPageChange(1)}>
+          <IconButton
+            size="small"
+            disabled={page === 1}
+            onClick={() => onPageChange(1)}
+          >
             <FirstPage />
           </IconButton>
         </span>
@@ -175,7 +225,11 @@ function CustomPagination({ page, totalPages, onPageChange }: CustomPaginationPr
 
       <Tooltip title="Предыдущая">
         <span>
-          <IconButton size="small" disabled={page === 1} onClick={() => onPageChange(page - 1)}>
+          <IconButton
+            size="small"
+            disabled={page === 1}
+            onClick={() => onPageChange(page - 1)}
+          >
             <ChevronLeft />
           </IconButton>
         </span>
@@ -238,7 +292,9 @@ export default function TasksTable() {
   const [loading, setLoading] = useState(true);
 
   const [page, setPage] = useState(initial.page);
-  const [sort, setSort] = useState<'name' | 'status' | 'created_at'>(initial.sort);
+  const [sort, setSort] = useState<'name' | 'status' | 'created_at'>(
+    initial.sort,
+  );
   const [order, setOrder] = useState<'asc' | 'desc'>(initial.order);
 
   const [runningTaskId, setRunningTaskId] = useState<string | null>(null);
@@ -250,7 +306,12 @@ export default function TasksTable() {
     setLoading(true);
     try {
       const offset = (page - 1) * ROWS_PER_PAGE;
-      const response = await TasksService.getAllTasks(ROWS_PER_PAGE, offset, sort, order);
+      const response = await TasksService.getAllTasks(
+        ROWS_PER_PAGE,
+        offset,
+        sort,
+        order,
+      );
       setTasks(Array.isArray(response?.tasks) ? response.tasks : []);
       setTotal(response?.total || 0);
     } catch (err) {
@@ -349,14 +410,21 @@ export default function TasksTable() {
 
       {!loading && (
         <>
-          <TableContainer component={Paper} sx={{ width: '100%', overflowX: 'auto' }}>
+          <TableContainer
+            component={Paper}
+            sx={{ width: '100%', overflowX: 'auto' }}
+          >
             <Table sx={{ tableLayout: 'fixed' }}>
               <TableHead>
                 <TableRow>
                   {COLUMNS.map((col) => (
                     <TableCell
                       key={col.id}
-                      sx={{ width: col.width, fontWeight: 600, textAlign: col.align }}
+                      sx={{
+                        width: col.width,
+                        fontWeight: 600,
+                        textAlign: col.align,
+                      }}
                     >
                       {col.sortable ? (
                         <TableSortLabel
@@ -382,7 +450,6 @@ export default function TasksTable() {
                 </TableRow>
               </TableHead>
 
-
               <TableBody>
                 {tasks.length === 0 ? (
                   <TableRow>
@@ -394,14 +461,19 @@ export default function TasksTable() {
                   </TableRow>
                 ) : (
                   tasks.map((task) => {
-                    const canDownloadOutput = task.status === 'error' || task.status === 'done';
+                    const canDownloadOutput =
+                      task.status === 'error' || task.status === 'done';
                     const canRun = task.status === 'created';
-                    const canDelete = task.status !== 'running' && task.status !== 'in_queue';
+                    const canDelete =
+                      task.status !== 'running' && task.status !== 'in_queue';
 
                     return (
                       <TableRow key={task.id} hover>
                         {/* Название */}
-                        <TableCell align={COLUMNS[0].align} sx={{ width: COLUMNS[0].width }}>
+                        <TableCell
+                          align={COLUMNS[0].align}
+                          sx={{ width: COLUMNS[0].width }}
+                        >
                           <Tooltip title={task.name} arrow>
                             <Typography
                               variant="body2"
@@ -434,7 +506,9 @@ export default function TasksTable() {
                         </TableCell>
 
                         {/* Статус */}
-                        <TableCell sx={{ width: COLUMNS[1].width, textAlign: 'center' }}>
+                        <TableCell
+                          sx={{ width: COLUMNS[1].width, textAlign: 'center' }}
+                        >
                           <Chip
                             label={STATUS_TEXT[task.status] ?? 'unexpected'}
                             size="small"
@@ -442,8 +516,28 @@ export default function TasksTable() {
                           />
                         </TableCell>
 
+                        {/* Тип */}
+                        <TableCell
+                          sx={{ width: COLUMNS[2].width, textAlign: 'center' }}
+                        >
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                          >
+                            {MODE_ICON[task.mode]}
+                            <Typography variant="body2">
+                              {MODE_TEXT[task.mode] ?? task.mode}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+
                         {/* Дата */}
-                        <TableCell sx={{ width: COLUMNS[2].width, textAlign: 'center' }}>
+                        <TableCell
+                          sx={{ width: COLUMNS[3].width, textAlign: 'center' }}
+                        >
                           <Typography variant="body2">
                             {formatDate(task.created_at)}
                           </Typography>
@@ -468,8 +562,17 @@ export default function TasksTable() {
                         </TableCell>
 
                         {/* Действия */}
-                        <TableCell align={COLUMNS[3].align} sx={{ width: COLUMNS[3].width }}>
-                          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 0.5 }}>
+                        <TableCell
+                          align={COLUMNS[4].align}
+                          sx={{ width: COLUMNS[4].width }}
+                        >
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              justifyContent: 'center',
+                              gap: 0.5,
+                            }}
+                          >
                             <Tooltip title="Запустить">
                               <span>
                                 <IconButton
@@ -509,7 +612,9 @@ export default function TasksTable() {
                                 <IconButton
                                   size="small"
                                   disabled={!canDownloadOutput}
-                                  onClick={() => handleDownload(task.id, 'output')}
+                                  onClick={() =>
+                                    handleDownload(task.id, 'output')
+                                  }
                                 >
                                   <Download />
                                 </IconButton>
