@@ -263,13 +263,13 @@ def plot_fn(
         
         if i == 1:
             ax.legend(
-                loc='upper center', 
-                bbox_to_anchor=(0.5, -0.35), 
-                ncol=2, 
+                loc='lower center',
+                ncol=2,
                 frameon=True,
+                bbox_to_anchor=(0.5, -0.27),
                 shadow=True
             )
-    
+
     fig.subplots_adjust(bottom=0.1)
     return fig
 `;
